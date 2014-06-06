@@ -182,6 +182,7 @@ class PublicacionController extends Controller {
      */
     public function newAction() {
         $publicacion = new Publicacion();
+        
         $max = $this->getDoctrine()->getRepository('PublicacionesBundle:Publicacion')
                 ->getMaxPosicion();
 
@@ -410,8 +411,8 @@ class PublicacionController extends Controller {
         return $response;
     }
 	
-	/**
-     * Ordenar las posiciones de los autobuses.
+    /**
+     * Ordenar las posiciones de las publicaciones.
      *
      * @Route("/ordenar/registros", name="publicaciones_ordenar")
      * @Method("PATCH")

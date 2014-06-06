@@ -40,17 +40,15 @@
       
       <!-- Page heading -->
       <div class="page-head">
-        <h2 class="pull-left">Categorias</h2>
+        <h2 class="pull-left">Servicios</h2>
         <div class="clearfix"></div>
         <!-- Breadcrumb -->
         <div class="bread-crumb">
           <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
           <Divider>
           <span class="divider">/</span> 
-          <a href="{{path('categorias_publicaciones')}}" class="bread-current">Categorias</a>
-          <a href="{{path('categorias_publicaciones_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear categoria</a>
-          <a href="{{path('categorias_publicaciones_importar')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Importar</a>
-          <a href="{{path('categorias_publicaciones_exportar')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Exportar</a>
+          <a href="{{path('servicios')}}" class="bread-current">Servicios</a>
+          <a href="{{path('servicios_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear servicio</a>
         </div>
         
         <div class="clearfix"></div>
@@ -72,7 +70,7 @@
                 <div class="widget">
 
                 <div class="widget-head">
-                  <div class="pull-left">Registro de Categorias Publicaciones</div>
+                  <div class="pull-left">Registro de servicios</div>
                   <!--div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                     <a href="#" class="wsettings"><i class="fa fa-wrench"></i></a>  
@@ -87,7 +85,9 @@
                       <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Categoria</th>
+                            <th>Servicio</th>
+                            <th>Descripcion</th>
+                            <th>Imagen</th>
                             <th>Activo?</th>
                             <th>Actions</th>
                         </tr>
@@ -95,8 +95,16 @@
                       <tbody id="cuerpoTabla">
                       {% for entity in entities %}
                             <tr id="registro-{{entity.id}}">
-                                <td><a href="{{ path('categorias_publicaciones_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                                <td>{{ entity.nombre }}</td>
+                                <td><a href="{{ path('servicios_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                                <td>{{ entity.servicio }}</td>
+                                <td>{{ entity.descripcion | raw }}</td>
+                                <td>
+                                    {% if entity.imagen | length > 0 %}
+                                        <img src="{{ entity.webPath }}" style="max-width: 200px;"/>
+                                    {% else %}    
+                                        sin imagen
+                                    {% endif %}
+                                </td>
                                 <td>
                                     {% if entity.isActive %}
                                         <i class="fa fa-check-circle"></i>
@@ -105,9 +113,8 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <button onclick="javascript:editarRegistro('{{ path('categorias_publicaciones_edit', { 'id': entity.id }) }}')" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> </button>
-                                    <button onclick="javascript:editarRegistro('{{ path('categorias_publicaciones_show', { 'id': entity.id }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-info"><i class="fa fa-folder-open"></i> </button>
-                                    <button onclick="javascript:editarRegistro('{{ path('publicaciones_categoria', { 'slug': entity.slug }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-info"><i class="fa fa-files-o"></i> </button>
+                                    <button onclick="javascript:editarRegistro('{{ path('servicios_edit', { 'id': entity.id }) }}')" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> </button>
+                                    <button onclick="javascript:editarRegistro('{{ path('servicios_show', { 'id': entity.id }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-info"><i class="fa fa-folder-open"></i> </button>
                                 </td>
                                 
                             </tr>
@@ -190,11 +197,8 @@ $(document).ready(function() {
         "sFirst":"Primero",
         "sPrevious": "Anterior",
     });*/
-	
 	iniciarlizarSorteable();
-	
 });
-
 function iniciarlizarSorteable(){
     $("#cuerpoTabla").sortable({
         items: "tr",
@@ -212,11 +216,12 @@ function sendOrderToServer() {
     $(".loader").fadeIn();
     var order = $("#cuerpoTabla").sortable('serialize');
     $.ajax({
-       url: '{{path('categorias_publicaciones_ordenar')}}?' + order,
+       url: '{{path('servicios_ordenar')}}?' + order,
        type: 'PATCH',
        data: order,
        dataType: 'json',
        success: function(data){
+          debugger;
           noty({
                 text: 'Actualizacion realizada',
                 layout:'topRight',
@@ -227,6 +232,7 @@ function sendOrderToServer() {
           $(".loader").fadeOut();
        },
        error: function(data){
+           debugger;
            noty({
                 text: 'Error de actualizacion',
                 layout:'topRight',

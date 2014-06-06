@@ -5,23 +5,20 @@ namespace Richpolis\PublicacionesBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
-
 use JMS\Serializer\Annotation as Serializer;
 
 
 /**
- * Publicacion
+ * Servicio
  *
- * @ORM\Table(name="publicaciones")
- * @ORM\Entity(repositoryClass="Richpolis\PublicacionesBundle\Repository\PublicacionRepository")
+ * @ORM\Table(name="servicios")
+ * @ORM\Entity(repositoryClass="Richpolis\PublicacionesBundle\Repository\ServicioRepository")
  * @ORM\HasLifecycleCallbacks()
  * 
  * @Serializer\ExclusionPolicy("all")
  */
-class Publicacion
+class Servicio
 {
     /**
      * @var integer
@@ -39,104 +36,31 @@ class Publicacion
     /**
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=255)
+     * @ORM\Column(name="servicio", type="string", length=255)
      * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
-     * @Serializer\SerializedName("titulo")
      * @Serializer\Groups({"list", "details"})
      */
-    private $titulo;
+    private $servicio;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="text",nullable=true)
+     * @ORM\Column(name="descripcion", type="text")
+     * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
-     * @Serializer\SerializedName("descripcion")
      * @Serializer\Groups({"list", "details"})
      */
     private $descripcion;
-
-    /**
-     * @ORM\Column(name="precio", type="decimal", scale=2)
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("double")
-     * @Serializer\SerializedName("precio")
-     * @Serializer\Groups({"list", "details"})
-     */
-    protected $precio;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="position", type="integer")
-     *  
-     * @Serializer\Expose
-     * @Serializer\Type("integer")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $position;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_active", type="boolean")
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("boolean")
-     * @Serializer\SerializedName("isActive")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $isActive;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255,nullable=true)
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("string")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $slug;
-    
-    /**
-     * @var Richpolis\BackendBundle\Entity\Usuario
-     *
-     * @ORM\ManyToOne(targetEntity="Richpolis\BackendBundle\Entity\Usuario", inversedBy="publicaciones")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     * })
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("Richpolis\BackendBundle\Entity\Usuario")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $usuario;
-    
-    /**
-     * @var \CategoriaPublicacion
-     *
-     * @ORM\ManyToOne(targetEntity="CategoriaPublicacion", inversedBy="publicaciones")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="categoria_publicacion_id", referencedColumnName="id")
-     * })
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $categoria;
-	
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="imagen", type="string", length=150, nullable=true)
+     * @ORM\Column(name="imagen", type="string", length=255, nullable=true)
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
@@ -148,7 +72,7 @@ class Publicacion
      * @var integer
      *
      * @ORM\ManyToMany(targetEntity="Richpolis\GaleriasBundle\Entity\Galeria")
-     * @ORM\JoinTable(name="publicaciones_galeria")
+     * @ORM\JoinTable(name="servicios_galeria")
      * @ORM\OrderBy({"position" = "ASC"})
      * 
      * @Serializer\Expose
@@ -157,14 +81,47 @@ class Publicacion
      * @Serializer\Groups({"details"})
      */
     private $galerias;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="position", type="integer")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $position;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isActive", type="boolean")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("boolean")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $isActive;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $slug;
+
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @ORM\Column(name="created_at", type="datetime")
      * 
      * @Serializer\Expose
-     * @Serializer\Type("DateTime")
+     * @Serializer\Type("datetime")
      * @Serializer\Groups({"list", "details"})
      */
     private $createdAt;
@@ -172,14 +129,14 @@ class Publicacion
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @ORM\Column(name="updated_at", type="datetime")
      * 
      * @Serializer\Expose
-     * @Serializer\Type("DateTime")
+     * @Serializer\Type("datetime")
      * @Serializer\Groups({"list", "details"})
      */
     private $updatedAt;
-
+    
     /**
      * Constructor
      */
@@ -187,12 +144,10 @@ class Publicacion
     {
         $this->galerias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->isActive = true;
-        $this->inCarrusel = true;
-        $this->precio = 0;
     }
     
     public function __toString(){
-        return $this->getTitulo();
+        return $this->getNombre();
     }
     
     /**
@@ -205,7 +160,7 @@ class Publicacion
         return $this->id;
     }
 
-      
+    
     
     /*
      * Timestable
@@ -244,15 +199,11 @@ class Publicacion
     */
     public function setSlugAtValue()
     {
-        $this->slug = RpsStms::slugify($this->getTitulo());
+        $this->slug = RpsStms::slugify($this->getNombre());
     }
-
     
     /*** uploads ***/
     
-    /**
-     * @Assert\File(maxSize="2M",maxSizeMessage="El archivo es demasiado grande. El tamaño máximo permitido es {{ limit }}")
-     */
     public $file;
     
     /**
@@ -319,54 +270,7 @@ class Publicacion
             $this->temp = null;
         }
         
-        $this->crearThumbnail();
-        
         $this->file = null;
-    }
-    
-    /*
-     * Crea el thumbnail y lo guarda en un carpeta dentro del webPath thumbnails
-     * 
-     * @return void
-     */
-    public function crearThumbnail($width=174,$height=295,$path=""){
-        $imagine    = new \Imagine\Gd\Imagine();
-        $collage    = $imagine->create(new \Imagine\Image\Box(190, 323));
-        $mode       = \Imagine\Image\ImageInterface::THUMBNAIL_INSET;
-        $image      = $imagine->open($this->getAbsolutePath());
-        $sizeImage  = $image->getSize();
-        if(strlen($path)==0){
-            $path = $this->getAbosluteThumbnailPath();
-        }
-        if($height == null){
-            $height = $sizeImage->getHeight();
-            if($height>323){
-                $height = 323;
-            }
-        }
-        if($width == null){
-            $width = $sizeImage->getWidth();
-            if($width>190){
-                $width = 190;
-            }
-        }
-        $size   =new \Imagine\Image\Box($width,$height);
-        $image->thumbnail($size,$mode)->save($path);
-        $image      = $imagine->open($path);
-        $size = $image->getSize();
-        if((190 - $size->getWidth())>1){
-            $width = ceil((190 - $size->getWidth())/2);
-        }else{
-            $width = 0;
-        }
-        if((323 - $size->getHeight())>1){
-            $height = ceil((323 - $size->getHeight())/2);
-        }else{
-            $height =0;
-        }    
-        $centrado = new \Imagine\Image\Point($width, $height);
-        $collage->paste($image,$centrado);
-        $collage->save($path);        
     }
 
     /**
@@ -379,16 +283,11 @@ class Publicacion
             unlink($file);
         }
       }
-      if($thumbnail=$this->getAbosluteThumbnailPath()){
-         if(file_exists($thumbnail)){
-            unlink($thumbnail);
-        }
-      }
     }
     
     protected function getUploadDir()
     {
-        return '/uploads/publicaciones';
+        return '/uploads/autobuses';
     }
 
     protected function getUploadRootDir()
@@ -396,66 +295,51 @@ class Publicacion
         return __DIR__.'/../../../../web'.$this->getUploadDir();
     }
     
+    /**
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("webPath")
+     * 
+     */
     public function getWebPath()
     {
         return null === $this->imagen ? null : $this->getUploadDir().'/'.$this->imagen;
-    }
-    
-    public function getThumbnailWebPath()
-    {
-        if(!file_exists($this->getAbosluteThumbnailPath())){
-            if(file_exists($this->getAbsolutePath())){
-                $this->crearThumbnail();
-            }
-        }
-        return null === $this->imagen ? null : $this->getUploadDir().'/thumbnails/'.$this->imagen;
-        
     }
     
     public function getAbsolutePath()
     {
         return null === $this->imagen ? null : $this->getUploadRootDir().'/'.$this->imagen;
     }
-    
-    public function getAbosluteThumbnailPath(){
-        return null === $this->imagen ? null : $this->getUploadRootDir().'/thumbnails/'.$this->imagen;
-    }
 
-    public function getDescripcionCorta(){
-        return RpsStms::cut_string2(RpsStms::strip_html_tags($this->getDescripcion()),250);
-    }
     
-    
-	
 
     /**
-     * Set titulo
+     * Set servicio
      *
-     * @param string $titulo
-     * @return Publicacion
+     * @param string $servicio
+     * @return Servicio
      */
-    public function setTitulo($titulo)
+    public function setServicio($servicio)
     {
-        $this->titulo = $titulo;
+        $this->servicio = $servicio;
 
         return $this;
     }
 
     /**
-     * Get titulo
+     * Get servicio
      *
      * @return string 
      */
-    public function getTitulo()
+    public function getServicio()
     {
-        return $this->titulo;
+        return $this->servicio;
     }
 
     /**
      * Set descripcion
      *
      * @param string $descripcion
-     * @return Publicacion
+     * @return Servicio
      */
     public function setDescripcion($descripcion)
     {
@@ -475,33 +359,33 @@ class Publicacion
     }
 
     /**
-     * Set precio
+     * Set imagen
      *
-     * @param string $precio
-     * @return Publicacion
+     * @param string $imagen
+     * @return Servicio
      */
-    public function setPrecio($precio)
+    public function setImagen($imagen)
     {
-        $this->precio = $precio;
+        $this->imagen = $imagen;
 
         return $this;
     }
 
     /**
-     * Get precio
+     * Get imagen
      *
      * @return string 
      */
-    public function getPrecio()
+    public function getImagen()
     {
-        return $this->precio;
+        return $this->imagen;
     }
 
     /**
      * Set position
      *
      * @param integer $position
-     * @return Publicacion
+     * @return Servicio
      */
     public function setPosition($position)
     {
@@ -524,7 +408,7 @@ class Publicacion
      * Set isActive
      *
      * @param boolean $isActive
-     * @return Publicacion
+     * @return Servicio
      */
     public function setIsActive($isActive)
     {
@@ -547,7 +431,7 @@ class Publicacion
      * Set slug
      *
      * @param string $slug
-     * @return Publicacion
+     * @return Servicio
      */
     public function setSlug($slug)
     {
@@ -567,33 +451,10 @@ class Publicacion
     }
 
     /**
-     * Set imagen
-     *
-     * @param string $imagen
-     * @return Publicacion
-     */
-    public function setImagen($imagen)
-    {
-        $this->imagen = $imagen;
-
-        return $this;
-    }
-
-    /**
-     * Get imagen
-     *
-     * @return string 
-     */
-    public function getImagen()
-    {
-        return $this->imagen;
-    }
-
-    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Publicacion
+     * @return Servicio
      */
     public function setCreatedAt($createdAt)
     {
@@ -616,7 +477,7 @@ class Publicacion
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return Publicacion
+     * @return Servicio
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -636,56 +497,10 @@ class Publicacion
     }
 
     /**
-     * Set usuario
-     *
-     * @param \Richpolis\BackendBundle\Entity\Usuario $usuario
-     * @return Publicacion
-     */
-    public function setUsuario(\Richpolis\BackendBundle\Entity\Usuario $usuario = null)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return \Richpolis\BackendBundle\Entity\Usuario 
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
-    }
-
-    /**
-     * Set categoria
-     *
-     * @param \Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion $categoria
-     * @return Publicacion
-     */
-    public function setCategoria(\Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion $categoria = null)
-    {
-        $this->categoria = $categoria;
-
-        return $this;
-    }
-
-    /**
-     * Get categoria
-     *
-     * @return \Richpolis\PublicacionesBundle\Entity\CategoriaPublicacion 
-     */
-    public function getCategoria()
-    {
-        return $this->categoria;
-    }
-
-    /**
      * Add galerias
      *
      * @param \Richpolis\GaleriasBundle\Entity\Galeria $galerias
-     * @return Publicacion
+     * @return Servicio
      */
     public function addGaleria(\Richpolis\GaleriasBundle\Entity\Galeria $galerias)
     {

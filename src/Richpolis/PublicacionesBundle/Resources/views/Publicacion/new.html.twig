@@ -74,37 +74,13 @@
                                 <div class="padd">
                                     <!-- Form starts.  -->
                                     <form action="{{ path('publicaciones_create') }}" class="validate" id="formPublicaciones" method="post" {{ form_enctype(form)}}>
-                                        <fieldset>
-                                            <legend>Español:</legend>
-                                            {{form_row(form.tituloEs)}}
-                                            {{form_row(form.descripcionEs)}}
-                                            {{form_row(form.paqueteEs)}}
-                                            {{form_row(form.precioEs)}}
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend>Ingles:</legend>
-                                            {{form_row(form.tituloEn)}}
-                                            {{form_row(form.descripcionEn)}}
-                                            {{form_row(form.paqueteEn)}}
-                                            {{form_row(form.precioEn)}}
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend>Frances:</legend>
-                                            {{form_row(form.tituloFr)}}
-                                            {{form_row(form.descripcionFr)}}
-                                            {{form_row(form.paqueteFr)}}
-                                            {{form_row(form.precioFr)}}
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend>Generales:</legend>
-                                            {{form_rest(form)}}
-                                        </fieldset>
+                                        {{form_widget(form)}}
                                     </form>
                                 </div>
                             </div>
                             <div class="widget-foot">
                                 <button id="botonRegresar" class="btn btn-default">Regresar</button>
-                                <button id="botonGuardar" class="btn btn-primary">Crear Pagina</button>
+                                <button id="botonGuardar" class="btn btn-primary">Crear {{categoria}}</button>
 
                             </div>
                         </div>  

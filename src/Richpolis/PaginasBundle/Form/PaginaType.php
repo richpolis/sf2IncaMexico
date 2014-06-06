@@ -36,14 +36,6 @@ class PaginaType extends AbstractType
                    'data-theme' => 'advanced',
                     )
                 ))
-            ->add('contenidoFr',null,array(
-                'label'=>'Contenido frances',
-                'required'=>true,
-                'attr'=>array(
-                    'class'=>'tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
-                    )
-                ))
             ->add('file','file',array('label'=>'Imagen','attr'=>array(
                 'class'=>'form-control placeholder',
                 'placeholder'=>'Imagen pagina',

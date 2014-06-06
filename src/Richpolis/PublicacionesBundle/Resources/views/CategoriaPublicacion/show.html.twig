@@ -65,7 +65,7 @@
                                         <div class="col-md-12">
                                             <div class="widget">
                                                 <div class="widget-head">
-                                                    <div class="pull-left">{{entity.pagina}}</div>
+                                                    <div class="pull-left">{{entity.nombre}}</div>
                                                     <div class="clearfix"></div>
                                                 </div>
 
@@ -78,29 +78,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Pagina:</td>
-                                                                    <td>{{entity.pagina}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contenido Español:</td>
-                                                                    <td>{{ entity.contenidoEs | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contenido Ingles:</td>
-                                                                    <td>{{ entity.contenidoEn | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contenido Frances:</td>
-                                                                    <td>{{ entity.contenidoFr | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Imagen:</td>
-                                                                    <td>
-                                                                        {% if entity.imagen | length > 0 %}
-                                                                            <img src="{{ entity.webPath }}" style="max-width: 400px;"/>
-                                                                        {% else %}    
-                                                                            sin imagen
-                                                                        {% endif %}
-                                                                    </td>
+                                                                    <td>{{entity.nombre}}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Activo?:</td>
@@ -122,10 +100,10 @@
                                                     <button id="botonEditar" class="btn btn-info" onclick="javascript:editarRegistro('{{path('categorias_publicaciones_edit',{id: entity.id})}}')">Editar</button>
                                                     <div style="float: left; margin-right: 3px;">
                                                         <form id="formEliminar" action="{{ path('categorias_publicaciones_delete', { 'id': entity.id }) }}" method="post">
-                                                                <input name="_method" value="DELETE" type="hidden"/>
+                                                                <input type="hidden" name="_method" value="DELETE">
 																{{ form_widget(delete_form) }}
-														</form>
-														<button class="btn btn-danger " onclick="eliminarRegistro();">Eliminar</button>
+                                                        </form>
+														<button class="btn btn-danger" onclick="eliminarRegistro();">Eliminar</button>
                                                     </div>        
                                                 </div>
                                             </div>  
@@ -190,7 +168,7 @@ var editarRegistro = function(url){
 };
     
 var eliminarRegistro = function(){
-  {% if is_granted('ROLE_SUPER_ADMIN') %}
+  {% if is_granted('ROLE_ADMIN') %}
     bootbox.confirm("Esta seguro de eliminar el registro?", function(result) {
       if(result){
          $("#formEliminar").submit();

@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * CategoriaPublicacion
  *
- * @ORM\Table()
+ * @ORM\Table(name="categorias_publicaciones")
  * @ORM\Entity(repositoryClass="Richpolis\PublicacionesBundle\Repository\CategoriaPublicacionRepository")
  * @ORM\HasLifecycleCallbacks()
  * @Serializer\ExclusionPolicy("all")

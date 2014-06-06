@@ -53,13 +53,6 @@ class Pagina
      * @ORM\Column(name="contenido_en", type="text", nullable=true)
      */
     private $contenidoEn;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="contenido_fr", type="text", nullable=true)
-     */
-    private $contenidoFr;
 
     /**
      * @var integer
@@ -123,8 +116,6 @@ class Pagina
             $this->contenidoEs = $contenido;
         }else if($locale == "en"){
             $this->contenidoEn = $contenido;
-        }else{
-            $this->contenidoFr = $contenido;
         }
         return $this;
     }
@@ -140,8 +131,6 @@ class Pagina
             $contenido = $this->contenidoEs;
         }else if($locale == "en"){
             $contenido = $this->contenidoEn;
-        }else{
-            $contenido = $this->contenidoFr;
         }
         return $contenido;
     }
@@ -190,29 +179,6 @@ class Pagina
     public function getContenidoEn()
     {
         return $this->contenidoEn;
-    }
-
-    /**
-     * Set contenidoFr
-     *
-     * @param string $contenidoFr
-     * @return Pagina
-     */
-    public function setContenidoFr($contenidoFr)
-    {
-        $this->contenidoFr = $contenidoFr;
-
-        return $this;
-    }
-
-    /**
-     * Get contenidoFr
-     *
-     * @return string 
-     */
-    public function getContenidoFr()
-    {
-        return $this->contenidoFr;
     }
 
     

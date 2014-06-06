@@ -15,7 +15,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Publicacion
  *
- * @ORM\Table()
+ * @ORM\Table(name="publicaciones")
  * @ORM\Entity(repositoryClass="Richpolis\PublicacionesBundle\Repository\PublicacionRepository")
  * @ORM\HasLifecycleCallbacks()
  * 
@@ -39,146 +39,37 @@ class Publicacion
     /**
      * @var string
      *
-     * @ORM\Column(name="titulo_es", type="string", length=255)
+     * @ORM\Column(name="titulo", type="string", length=255)
      * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
-     * @Serializer\SerializedName("tituloEs")
+     * @Serializer\SerializedName("titulo")
      * @Serializer\Groups({"list", "details"})
      */
-    private $tituloEs;
+    private $titulo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion_es", type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="descripcion", type="text",nullable=true)
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
-     * @Serializer\SerializedName("descripcionEs")
+     * @Serializer\SerializedName("descripcion")
      * @Serializer\Groups({"list", "details"})
      */
-    private $descripcionEs;
+    private $descripcion;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="paquete_es", type="string", length=255, nullable=true)
-     *  
-     * @Serializer\Expose
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("paqueteEs")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $paqueteEs;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="titulo_en", type="string", length=255)
-     * @Assert\NotBlank()
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("tituloEn")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $tituloEn;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="descripcion_en", type="text")
-     * @Assert\NotBlank()
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("descripcionEn")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $descripcionEn;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="paquete_en", type="string", length=255, nullable=true)
-     *  
-     * @Serializer\Expose
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("paqueteEn")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $paqueteEn;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="titulo_fr", type="string", length=255)
-     * @Assert\NotBlank()
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("tituloFr")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $tituloFr;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="descripcion_fr", type="text")
-     * @Assert\NotBlank()
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("descripcionFr")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $descripcionFr;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="paquete_fr", type="string", length=255,nullable=true)
-     *  
-     * @Serializer\Expose
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("paqueteFr")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $paqueteFr;
-    
-    /**
-     * @ORM\Column(name="precio_es", type="decimal", scale=2)
+     * @ORM\Column(name="precio", type="decimal", scale=2)
      * 
      * @Serializer\Expose
      * @Serializer\Type("double")
-     * @Serializer\SerializedName("precioEs")
+     * @Serializer\SerializedName("precio")
      * @Serializer\Groups({"list", "details"})
      */
-    protected $precioEs;
-
-    /**
-     * @ORM\Column(name="precio_en", type="decimal", scale=2)
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("double")
-     * @Serializer\SerializedName("precioEn")
-     * @Serializer\Groups({"list", "details"})
-     */
-    protected $precioEn;
-    
-    /**
-     * @ORM\Column(name="precio_fr", type="decimal", scale=2)
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("double")
-     * @Serializer\SerializedName("precioFr")
-     * @Serializer\Groups({"list", "details"})
-     */
-    protected $precioFr;    
+    protected $precio;
     
     /**
      * @var integer
@@ -202,19 +93,6 @@ class Publicacion
      * @Serializer\Groups({"list", "details"})
      */
     private $isActive;
-    
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="in_carrusel", type="boolean")
-     * 
-     * @Serializer\Expose
-     * @Serializer\Type("boolean")
-     * @Serializer\SerializedName("inCarrusel")
-     * @Serializer\Groups({"list", "details"})
-     */
-    private $inCarrusel;
-    
     
     /**
      * @var string
@@ -270,7 +148,7 @@ class Publicacion
      * @var integer
      *
      * @ORM\ManyToMany(targetEntity="Richpolis\GaleriasBundle\Entity\Galeria")
-     * @ORM\JoinTable(name="publicacion_galeria")
+     * @ORM\JoinTable(name="publicaciones_galeria")
      * @ORM\OrderBy({"position" = "ASC"})
      * 
      * @Serializer\Expose
@@ -310,9 +188,7 @@ class Publicacion
         $this->galerias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->isActive = true;
         $this->inCarrusel = true;
-        $this->precioEn = 0;
-        $this->precioEs = 0;
-        $this->precioFr = 0;
+        $this->precio = 0;
     }
     
     public function __toString(){
@@ -329,290 +205,7 @@ class Publicacion
         return $this->id;
     }
 
-    /**
-     * Set titulo
-     *
-     * @param string $titulo
-     * @return Publicacion
-     */
-    public function setTitulo($titulo,$locale)
-    {
-        if($locale == "es"){
-            $this->tituloEs = $titulo;
-        }else if($locale == "en"){
-            $this->tituloEn = $titulo;
-        }else{
-            $this->tituloFr = $titulo;
-        }
-        return $this;
-    }
-
-    /**
-     * Get titulo
-     *
-     * @return string 
-     */
-    public function getTitulo($locale)
-    {
-        if($locale == "es"){
-            $titulo = $this->tituloEs;
-        }else if($locale == "en"){
-            $titulo = $this->tituloEn;
-        }else{
-            $titulo = $this->tituloFr;
-        }
-        return $titulo;
-    }
-
-    /**
-     * Set descripcion
-     *
-     * @param string $descripcion
-     * @return Publicacion
-     */
-    public function setDescripcion($descripcion,$locale)
-    {
-        if($locale == "es"){
-            $this->descripcionEs = $descripcion;
-        }else if($locale == "en"){
-            $this->descripcionEn = $descripcion;
-        }else{
-            $this->descripcionFr = $descripcion;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get descripcion
-     *
-     * @return string 
-     */
-    public function getDescripcion($locale)
-    {
-        if($locale == "es"){
-            $descripcion = $this->descripcionEs;
-        }else if($locale == "en"){
-            $descripcion = $this->descripcionEn;
-        }else{
-            $descripcion = $this->descripcionFr;
-        }
-        return $descripcion;
-    }
-
-    /**
-     * Set paquete
-     *
-     * @param string $paquete
-     * @return Publicacion
-     */
-    public function setPaquete($paquete,$locale)
-    {
-        if($locale == "es"){
-            $this->paqueteEs = $paquete;
-        }else if($locale == "en"){
-            $this->paqueteEn = $paquete;
-        }else{
-            $this->paqueteFr = $paquete;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get paquete
-     *
-     * @return string 
-     */
-    public function getPaquete($locale)
-    {
-        if($locale == "es"){
-            $paquete = $this->paqueteEs;
-        }else if($locale == "en"){
-            $paquete = $this->paqueteEn;
-        }else{
-            $paquete = $this->paqueteFr;
-        }
-        return $paquete;
-    }
-    
-    /**
-     * Set precioEs
-     *
-     * @param string $precioEs
-     * @return Publicacion
-     */
-    public function setPrecio($precioEs,$locale)
-    {
-        if($locale == "es"){
-            $this->precioEs = $precio;
-        }else if($locale == "en"){
-            $this->precioEn = $precio;
-        }else{
-            $this->precioFr = $precio;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get precioEs
-     *
-     * @return string 
-     */
-    public function getPrecio($locale)
-    {
-        if($locale == "es"){
-            $precio = $this->precioEs;
-        }else if($locale == "en"){
-            $precio = $this->precioEn;
-        }else{
-            $precio = $this->precioFr;
-        }
-        return $precio;
-    }
-    
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Publicacion
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-    
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string 
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-    
-    /**
-     * Set position
-     *
-     * @param integer $position
-     * @return Publicacion
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return integer 
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * Set isActive
-     *
-     * @param boolean $isActive
-     * @return Publicacion
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    /**
-     * Get isActive
-     *
-     * @return boolean 
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Publicacion
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Publicacion
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-    
-    
-
-    /**
-     * Set inCarrusel
-     *
-     * @param boolean $inCarrusel
-     * @return Publicacion
-     */
-    public function setInCarrusel($inCarrusel)
-    {
-        $this->inCarrusel = $inCarrusel;
-    
-        return $this;
-    }
-
-    /**
-     * Get inCarrusel
-     *
-     * @return boolean 
-     */
-    public function getInCarrusel()
-    {
-        return $this->inCarrusel;
-    }
-
-   
+      
     
     /*
      * Timestable
@@ -655,283 +248,7 @@ class Publicacion
     }
 
     
-    /**
-     * Set tituloEs
-     *
-     * @param string $tituloEs
-     * @return Publicacion
-     */
-    public function setTituloEs($tituloEs)
-    {
-        $this->tituloEs = $tituloEs;
-
-        return $this;
-    }
-
-    /**
-     * Get tituloEs
-     *
-     * @return string 
-     */
-    public function getTituloEs()
-    {
-        return $this->tituloEs;
-    }
-
-    /**
-     * Set descripcionEs
-     *
-     * @param string $descripcionEs
-     * @return Publicacion
-     */
-    public function setDescripcionEs($descripcionEs)
-    {
-        $this->descripcionEs = $descripcionEs;
-
-        return $this;
-    }
-
-    /**
-     * Get descripcionEs
-     *
-     * @return string 
-     */
-    public function getDescripcionEs()
-    {
-        return $this->descripcionEs;
-    }
-
-    /**
-     * Set paqueteEs
-     *
-     * @param string $paqueteEs
-     * @return Publicacion
-     */
-    public function setPaqueteEs($paqueteEs)
-    {
-        $this->paqueteEs = $paqueteEs;
-
-        return $this;
-    }
-
-    /**
-     * Get paqueteEs
-     *
-     * @return string 
-     */
-    public function getPaqueteEs()
-    {
-        return $this->paqueteEs;
-    }
-
-    /**
-     * Set tituloEn
-     *
-     * @param string $tituloEn
-     * @return Publicacion
-     */
-    public function setTituloEn($tituloEn)
-    {
-        $this->tituloEn = $tituloEn;
-
-        return $this;
-    }
-
-    /**
-     * Get tituloEn
-     *
-     * @return string 
-     */
-    public function getTituloEn()
-    {
-        return $this->tituloEn;
-    }
-
-    /**
-     * Set descripcionEn
-     *
-     * @param string $descripcionEn
-     * @return Publicacion
-     */
-    public function setDescripcionEn($descripcionEn)
-    {
-        $this->descripcionEn = $descripcionEn;
-
-        return $this;
-    }
-
-    /**
-     * Get descripcionEn
-     *
-     * @return string 
-     */
-    public function getDescripcionEn()
-    {
-        return $this->descripcionEn;
-    }
-
-    /**
-     * Set paqueteEn
-     *
-     * @param string $paqueteEn
-     * @return Publicacion
-     */
-    public function setPaqueteEn($paqueteEn)
-    {
-        $this->paqueteEn = $paqueteEn;
-
-        return $this;
-    }
-
-    /**
-     * Get paqueteEn
-     *
-     * @return string 
-     */
-    public function getPaqueteEn()
-    {
-        return $this->paqueteEn;
-    }
-
-    /**
-     * Set tituloFr
-     *
-     * @param string $tituloFr
-     * @return Publicacion
-     */
-    public function setTituloFr($tituloFr)
-    {
-        $this->tituloFr = $tituloFr;
-
-        return $this;
-    }
-
-    /**
-     * Get tituloFr
-     *
-     * @return string 
-     */
-    public function getTituloFr()
-    {
-        return $this->tituloFr;
-    }
-
-    /**
-     * Set descripcionFr
-     *
-     * @param string $descripcionFr
-     * @return Publicacion
-     */
-    public function setDescripcionFr($descripcionFr)
-    {
-        $this->descripcionFr = $descripcionFr;
-
-        return $this;
-    }
-
-    /**
-     * Get descripcionFr
-     *
-     * @return string 
-     */
-    public function getDescripcionFr()
-    {
-        return $this->descripcionFr;
-    }
-
-    /**
-     * Set paqueteFr
-     *
-     * @param string $paqueteFr
-     * @return Publicacion
-     */
-    public function setPaqueteFr($paqueteFr)
-    {
-        $this->paqueteFr = $paqueteFr;
-
-        return $this;
-    }
-
-    /**
-     * Get paqueteFr
-     *
-     * @return string 
-     */
-    public function getPaqueteFr()
-    {
-        return $this->paqueteFr;
-    }
-
-    /**
-     * Set precioEs
-     *
-     * @param string $precioEs
-     * @return Publicacion
-     */
-    public function setPrecioEs($precioEs)
-    {
-        $this->precioEs = $precioEs;
-
-        return $this;
-    }
-
-    /**
-     * Get precioEs
-     *
-     * @return string 
-     */
-    public function getPrecioEs()
-    {
-        return $this->precioEs;
-    }
-
-    /**
-     * Set precioEn
-     *
-     * @param string $precioEn
-     * @return Publicacion
-     */
-    public function setPrecioEn($precioEn)
-    {
-        $this->precioEn = $precioEn;
-
-        return $this;
-    }
-
-    /**
-     * Get precioEn
-     *
-     * @return string 
-     */
-    public function getPrecioEn()
-    {
-        return $this->precioEn;
-    }
-
-    /**
-     * Set precioFr
-     *
-     * @param string $precioFr
-     * @return Publicacion
-     */
-    public function setPrecioFr($precioFr)
-    {
-        $this->precioFr = $precioFr;
-
-        return $this;
-    }
-
-    /**
-     * Get precioFr
-     *
-     * @return string 
-     */
-    public function getPrecioFr()
-    {
-        return $this->precioFr;
-    }
-	
-	/*** uploads ***/
+    /*** uploads ***/
     
     /**
      * @Assert\File(maxSize="2M",maxSizeMessage="El archivo es demasiado grande. El tamaño máximo permitido es {{ limit }}")
@@ -1038,9 +355,149 @@ class Publicacion
     }
 
     public function getDescripcionCorta(){
-        return RpsStms::cut_string2(RpsStms::strip_html_tags($this->getContenidoEs()),250);
+        return RpsStms::cut_string2(RpsStms::strip_html_tags($this->getDescripcion()),250);
     }
+    
+    
 	
+
+    /**
+     * Set titulo
+     *
+     * @param string $titulo
+     * @return Publicacion
+     */
+    public function setTitulo($titulo)
+    {
+        $this->titulo = $titulo;
+
+        return $this;
+    }
+
+    /**
+     * Get titulo
+     *
+     * @return string 
+     */
+    public function getTitulo()
+    {
+        return $this->titulo;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Publicacion
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set precio
+     *
+     * @param string $precio
+     * @return Publicacion
+     */
+    public function setPrecio($precio)
+    {
+        $this->precio = $precio;
+
+        return $this;
+    }
+
+    /**
+     * Get precio
+     *
+     * @return string 
+     */
+    public function getPrecio()
+    {
+        return $this->precio;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     * @return Publicacion
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer 
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Publicacion
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Publicacion
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 
     /**
      * Set imagen
@@ -1064,8 +521,52 @@ class Publicacion
     {
         return $this->imagen;
     }
-    
-    
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Publicacion
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Publicacion
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
 
     /**
      * Set usuario

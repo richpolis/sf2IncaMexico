@@ -40,14 +40,17 @@
       
       <!-- Page heading -->
       <div class="page-head">
-        <h2 class="pull-left">Publicaciones</h2>
+        <h2 class="pull-left">Productos</h2>
         <div class="clearfix"></div>
         <!-- Breadcrumb -->
         <div class="bread-crumb">
           <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
           <Divider>
           <span class="divider">/</span> 
-          <a href="{{path('publicaciones')}}" class="bread-current">Publicaciones tipo "{{categoria}}"</a>
+          <a href="{{path('categorias_publicaciones')}}" class="bread-current">Categorias</a>
+          <Divider>
+          <span class="divider">/</span> 
+          <a href="{{path('publicaciones')}}" class="bread-current">Productos tipo "{{categoria}}"</a>
           <a href="{{path('publicaciones_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear {{categoria}}</a>
         </div>
         
@@ -87,8 +90,8 @@
                             <th>Id</th>
                             <th>Categoria</th>
                             <th>Imagen</th>
-                            <th>Titulo</th>
-                            <th>Descripcion</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
                             <th>Activo?</th>
                             <th>Actions</th>
                         </tr>
@@ -100,13 +103,13 @@
                                 <td>{{ entity.categoria }}</td>
                                 <td>
                                 {% if entity.imagen | length > 0 %}
-                                    <img src="{{entity.webPath}}" style="max-width: 100px;"/>
+                                    <img src="{{entity.thumbnailWebPath}}" style="max-height: 100px; max-width: 100px;"/>
                                 {% else  %}
                                     sin imagen 
                                 {% endif %}
                                 </td>
-                                <td>{{ entity.tituloEs }}</td>
-                                <td>{{ entity.descripcionEs | raw }}</td>
+                                <td>{{ entity.titulo }}</td>
+                                <td>${{ entity.precio|number_format(2,'.',',') }}</td>
                                 <td>
                                     {% if entity.isActive %}
                                         <i class="fa fa-check-circle"></i>
