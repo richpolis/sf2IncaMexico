@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'antipastoregular';
+    src: url('../fonts/sitio/antipasto_regular_1-webfont.eot');
+    src: url('../fonts/sitio/antipasto_regular_1-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sitio/antipasto_regular_1-webfont.woff') format('woff'),
+         url('../fonts/sitio/antipasto_regular_1-webfont.ttf') format('truetype'),
+         url('../fonts/sitio/antipasto_regular_1-webfont.svg#antipastoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

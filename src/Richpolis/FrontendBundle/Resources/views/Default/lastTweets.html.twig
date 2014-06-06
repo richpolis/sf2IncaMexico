@@ -1,0 +1,18 @@
+<ul class="twitter-feed">
+    {% for tweet in tweets %}
+        <li class="twit">
+            <figure class="logo-twit">
+               <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt=""/>
+            </figure>
+            <h3 class="titulo-twit">TurismoPlusMG</h3>
+            <p>
+               {{ tweet.text|knp_tweet_urlize }}
+            </p>
+            <span class="time-twit">
+               <i class="fa fa-twitter"></i>{{tweet.createdAt|twitter_time}}
+            </span>
+        </li>
+    {% else %}
+        <li>Sin twits</li>
+    {% endfor %}
+</ul>

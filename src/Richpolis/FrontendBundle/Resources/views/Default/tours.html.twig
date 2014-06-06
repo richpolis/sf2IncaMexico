@@ -1,0 +1,125 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+    <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
+{% endblock %}
+
+{% block extra_header %}
+    <div class="container-extra-header" style="height:90px;">
+    </div>
+{% endblock %}
+
+{% block contenido %}
+        <article class="destinos-eventos-tours">
+            <h2>{{"destinos"|trans}}</h2>
+            {% for fila in categorias['destinos'] %}
+            <div class="destinos row">
+                {% for publicacion in fila %}
+                    <div class="destino col-lg-4" id="destino-{{publicacion.slug}}">
+                        <figure>
+                            <a href="{{publicacion.webPath}}" class="fancybox image-wrap" >
+                                <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
+                                <span class="lupa"></span>
+                            </a>
+                            <span class="lupa"></span>
+                            {% if publicacion.precio(locale) > 0 %}
+                                <span class="precio">${{publicacion.precio(locale) | number_format(2,'.',',')}}</span>
+                            {% endif%}
+                        </figure>
+                        <h3>
+                            {{publicacion.titulo(locale)}}
+                        </h3>
+                        {% if publicacion.paquete(locale)|length > 0 %}
+                        <h4>
+                            {{publicacion.paquete(locale)}}
+                        </h4>
+                        {% endif%}
+                        {{publicacion.descripcion(locale)|raw}}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <h2>{{"eventos"|trans}}</h2>
+            {% for fila in categorias['eventos'] %}
+            <div class="destinos row">
+                {% for publicacion in fila %}
+                    <div class="destino col-lg-4"  id="evento-{{publicacion.slug}}">
+                        <figure>
+                            <a href="{{publicacion.webPath}}" class="fancybox image-wrap" >
+                                <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
+                                <span class="lupa"></span>
+                            </a>
+                            <span class="lupa"></span>
+                            {% if publicacion.precio(locale) > 0 %}
+                                <span class="precio">${{publicacion.precio(locale) | number_format(2,'.',',')}}</span>
+                            {% endif%}
+                        </figure>
+                        <h3>
+                            {{publicacion.titulo(locale)}}
+                        </h3>
+                        {% if publicacion.paquete(locale)|length > 0 %}
+                        <h4>
+                            {{publicacion.paquete(locale)}}
+                        </h4>
+                        {% endif%}
+                        {{publicacion.descripcion(locale)|raw}}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+             <h2>{{"tours"|trans}}</h2>
+            {% for fila in categorias['tours'] %}
+            <div class="destinos row">
+                {% for publicacion in fila %}
+                    <div class="destino col-lg-4"  id="tour-{{publicacion.slug}}">
+                        <figure>
+                            <a href="{{publicacion.webPath}}" class="fancybox image-wrap" >
+                                <img src="{{ publicacion.webPath | apply_filter('publicaciones')  }}" title="{{ publicacion.titulo(locale)}}">
+                                <span class="lupa"></span>
+                            </a>
+                            <span class="lupa"></span>
+                            {% if publicacion.precio(locale) > 0 %}
+                                <span class="precio">${{publicacion.precio(locale) | number_format(2,'.',',')}}</span>
+                            {% endif%}
+                        </figure>
+                        <h3>
+                            {{publicacion.titulo(locale)}}
+                        </h3>
+                        {% if publicacion.paquete(locale)|length > 0 %}
+                        <h4>
+                            {{publicacion.paquete(locale)}}
+                        </h4>
+                        {% endif%}
+                        {{publicacion.descripcion(locale)|raw}}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+           
+        </article>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $("a.fancybox").fancybox();
+                
+        $("a.fancybox-media").fancybox({
+            helpers : {
+                media: true
+            },
+            youtube : {
+                autoplay: 0
+            }
+        });
+                
+        $.iniciarCircle();
+    });
+
+</script>
+{% endblock %}
+

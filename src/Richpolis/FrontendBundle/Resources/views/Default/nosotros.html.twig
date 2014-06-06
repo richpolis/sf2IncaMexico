@@ -1,0 +1,19 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block extra_header %}
+    <div class="container-extra-header" style="height: 258px; background-color: white;">
+        <img src="{{nosotros.webPath}}" alt="" class="autobuses">
+    </div>
+{% endblock %}
+
+{% block contenido %}
+        <article class="nosotros">
+            {{nosotros.contenido(locale) | raw }}
+        </article>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+</script>
+{% endblock %}
+

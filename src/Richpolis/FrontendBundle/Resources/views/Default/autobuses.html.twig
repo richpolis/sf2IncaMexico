@@ -1,0 +1,164 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+    <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
+    <style>
+    .bx-wrapper .bx-viewport{
+        padding: 0px;
+        border: none;
+        top: 0px;
+        left: 0px;
+        background: transparent;
+    }
+    </style>
+{% endblock %}
+
+{% block extra_header %}
+    <div class="container-extra-header" style="height:90px;">
+    </div>
+{% endblock %}
+
+{% block contenido %}
+        <article class="autobuses">
+            <div class="lista">
+                {% for autobus in autobuses %}
+                    <div class="item">
+                        <a href="#autobus/{{autobus.slug}}">
+                        <figure>
+                            <img src="{{ autobus.galerias[0].webPath | apply_filter('autobuses')  }}" title="{{ autobus.nombre}}">
+                            <div class="descripcion-autobus" style="width: 100%;">
+                                <h3>
+                                    {{autobus.nombre}}
+                                </h3>
+                                {{ autobus.descripcion(locale)|raw }}
+                            </div>
+                        </figure>
+                        </a>    
+                    </div>
+                {% endfor %}
+            </div>
+        </article>
+        <article class="autobus"></article>
+                    
+{# show autobus #}
+{% raw %}
+<script type="text/template" id="show_template">
+    <div class="controlesAutbuses">
+    {% if anterior %}
+    <span class="control-anterior" data-anterior="{{anterior}}"></span>
+    {% endif %}
+    <h2>{{nombre}}</h2>
+    {% if siguiente %}
+    <span class="control-siguiente" data-siguiente="{{siguiente}}">
+    {{siguienteNombre}}
+    </span>
+    {% endif %}
+    </div>
+    <div class="galeria">
+        <!--img src="http://placehold.it/310x197&text=Galeria{{galeria}}" alt=""-->
+        <ul class="galeriaContenedor">
+        {% for galeria in galerias %}
+            {% if galeria.logo==false %}
+            <li>
+                <a href="{{galeria.archivo}}" class="fancybox {% if galeria.isImagen %} image-wrap {% else %} video-wrap {% endif %}">
+                    <img src="{{galeria.thumbnail}}"  style="min-width: 310px;min-height: 197px; max-width: 310px; max-height: 197px;" alt="">
+                    <span class="lupa"></span>
+                </a>
+            </li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    <span id="slider-prev"></span>
+    <span id="slider-next"></span>
+    </div>
+    <div class="logos">
+    <!--img src="http://placehold.it/310x197&text=logo1" alt=""-->
+    {% for galeria in galerias %}
+        {% if galeria.logo == true %}
+        <img src="{{galeria.archivo}}" style="max-width: 310px; max-height: 197px;" alt="logo"/>
+        {% endif %}
+    {% endfor %}
+    </div>
+    <div class="descripcion">
+        {{descripcion|raw}}
+    </div>
+    <div class="detalles-asientos row">
+        <div class="detalles col-lg-6">
+            {{detalles|raw}}
+        </div>
+        <div class="asientos col-lg-6">
+            <a href="{{imagen}}" class="fancybox image-wrap">
+                <img src="{{imagen}}" style="width: 100%;" alt="">
+                <span class="lupa"></span>
+            </a>
+        </div>
+    </div>
+   <a href="#">Regresar a listado</a>
+</script>
+{% endraw %}
+
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/jquery.bxslider.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+<script src="{{asset('bundles/frontend/js/app_autobuses.js')}}"></script> 
+<script>
+$(document).ready(function() {
+    window.api = {
+      url: '{{path('get_autobuses',{'_locale':locale})}}',
+      cont: {{ autobuses | length }},
+      accion: {
+          list: false,
+          show: false,
+          idShow: 0,
+      },
+    };
+    $(".loader").fadeIn();
+    window.routers.app = new Autobuses.Routers.App();
+    window.collections.autobuses = new Autobuses.Collections.Autobuses();
+    window.collections.autobuses.url=window.api.url;
+    var xhr = window.collections.autobuses.fetch();
+    xhr.done(function(){
+        $(".loader").fadeOut();
+        Backbone.history.start({
+            root : '/',
+            pushState:false
+        });
+    });
+    
+    
+});
+
+function iniciarSlider(){
+    $('.galeriaContenedor').bxSlider({
+          slideWidth: 310,
+          minSlides: 2,
+          maxSlides: 3,
+          slideMargin: 7,
+          pager: false,
+          nextSelector: '#slider-next',
+          prevSelector: '#slider-prev',
+          nextText: '',
+          prevText: ''
+      });
+}
+
+function iniciarFancybox(){
+    $("a.fancybox").fancybox();
+    $("a.fancybox-media").fancybox({
+      helpers : {
+        media: true
+      },
+      youtube : {
+        autoplay: 0
+      }
+    });
+}
+
+</script>
+{% endblock %}

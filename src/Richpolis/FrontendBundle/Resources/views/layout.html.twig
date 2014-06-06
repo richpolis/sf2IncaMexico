@@ -1,0 +1,171 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Turismo Plus MG{% endblock %}
+
+{% set urlAbsolutaFoto = 'http://'
+                             ~ app.request.server.get('SERVER_NAME')
+                             ~ asset('images/keyarts/inicio/logomenu.png') %}
+                             
+{% set locale = app.request.locale %}
+    
+{% set route = app.request.get('_route') %}    
+                             
+{% block stylesheets %}
+    
+    {% block redes_sociales %}
+
+    <meta property="og:url" content="{{url('homepage')}}" />
+    <meta property="og:title" content="Turismo Plus MG" />
+    <meta property="og:image" content="{{urlAbsolutaFoto}}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="TurismoPlusMG.com" />
+    <!--meta property="fb:admins" content="USER_ID1,USER_ID2"/-->
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@siglov">
+    <meta name="twitter:title" content="Turismo Plus MG">
+    <meta name="twitter:description" content="Descripcion de la publicaicon">
+    <meta name="twitter:creator" content="@richpolis">
+    <meta name="twitter:image:src" content="{{urlAbsolutaFoto}}">
+    <meta name="twitter:domain" content="{{url('homepage')}}">
+    <meta name="twitter:app:name:iphone" content="">
+    <meta name="twitter:app:name:ipad" content="">
+    <meta name="twitter:app:name:googleplay" content="">
+    <meta name="twitter:app:url:iphone" content="">
+    <meta name="twitter:app:url:ipad" content="">
+    <meta name="twitter:app:url:googleplay" content="">
+    <meta name="twitter:app:id:iphone" content="">
+    <meta name="twitter:app:id:ipad" content="">
+    <meta name="twitter:app:id:googleplay" content="">
+
+
+    {% endblock %}
+
+<link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+<link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
+<link rel="stylesheet" href="{{asset('css/bootstrap-responsive.html')}}">
+<link rel="stylesheet" href="{{asset('css/fuentes.css')}}">
+<link rel="stylesheet" href="{{asset('css/menu.css')}}">
+<link rel="stylesheet" href="{{asset('css/main.css')}}">
+<style>
+    .loader {
+        display: none;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/images/page-loader.gif') 50% 50% no-repeat transparent;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="encabezado {% block header_class %}{% endblock %}">
+            <div id="lenguajes-redes-sociales">
+                <div class="redes-sociales">
+                    <a href="https://twitter.com/TurismoPlusMG" target="_blank">
+                    <span class="twitter"></span>
+                    </a>
+                    <a href="https://www.facebook.com/TurismoPlusMG" target="_blank">
+                    <span class="facebook"></span>
+                    </a>
+                    <span class="youtube"></span>
+                    <a href="#" data-toggle="modal" data-target="#formMensajeSitio">
+                    <span class="email"></span>
+                    </a>
+                </div>
+                <div class="lenguajes">
+                  <label for="selectLanguage" style="font-weight: normal;">{% trans %}Select language{% endtrans %}</label>  
+                  <select name="selectLanguage" id="selectLanguage" onchange="selectLanguage()">
+                      <option value="es" {% if locale == "es" %}selected{% endif %}>{% trans %}Español{% endtrans %}</option>
+                      <option value="en" {% if locale == "en" %}selected{% endif %}>{% trans %}English{% endtrans %}</option>
+                      <!--option value="fr" {% if locale == "fr" %}selected{% endif %}>{% trans %}Français{% endtrans %}</option-->
+                  </select>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <figure class="logo">
+                    <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt="">
+                </figure>
+                <ul class="menu">
+                    <li>
+                        <a href="{{path('homepage')}}"  {% if route == 'homepage' %}class="active"{% endif %}>
+                            <span data-hover="{{"inicio"|trans}}">{{"inicio"|trans}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{path('frontend_nosotros',{'_locale':locale})}}"  {% if route == 'frontend_nosotros' %}class="active"{% endif %}>
+                            <span data-hover="{{"nosotros"|trans}}">{{"nosotros"|trans}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{path('frontend_autobuses',{'_locale':locale})}}"  {% if route == 'frontend_autobuses' %}class="active"{% endif %}>
+                            <span data-hover="{{"autobuses"|trans}}">{{"autobuses"|trans}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{path('frontend_servicios',{'_locale':locale})}}"  {% if route == 'frontend_servicios' %}class="active"{% endif %}>
+                            <span data-hover="{{"servicios"|trans}}">{{"servicios"|trans}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{path('frontend_cotizador',{'_locale':locale})}}"  {% if route == 'frontend_cotizador' %}class="active"{% endif %}>
+                            <span data-hover="{{"cotizador"|trans}}">{{"cotizador"|trans}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{path('frontend_tours',{'_locale':locale})}}"  {% if route == 'frontend_tours' %}class="active"{% endif %}>
+                            <span data-hover="{{"tours"|trans}}">{{"tours"|trans}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{path('frontend_contacto',{'_locale':locale})}}"  {% if route == 'frontend_contacto' %}class="active"{% endif %}>
+                            <span data-hover="{{"contacto"|trans}}">{{"contacto"|trans}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            {% block extra_header %}
+                <div class="container-extra-header">
+                    <img src="{{asset('images/keyarts/inicio/camiones.png')}}" alt="" class="autobuses">
+                    <img src="{{asset('images/keyarts/inicio/escudo.png')}}" alt="" class="escudo">
+                    <img src="{{asset('images/keyarts/inicio/slogan.png')}}" alt="" class="slogan">
+                </div>
+            {% endblock %}
+        </header>
+        <section id="sectionPrincipal">
+            {% block contenido %} 
+            {% endblock %}
+            <div class="modal fade" id="formMensajeSitio" tabindex="-1" role="dialog" aria-labelledby="myMensajeSitio" aria-hidden="true">
+                <div class="modal-dialog">
+                     {{ render(controller("FrontendBundle:Default:getMensajeSitio",{'_locale': locale })) }}
+                </div>    
+            </div>
+        </section>
+        <footer>
+            <p class="col-lg-12">Turismo Plus MG Confort Premier - Calle Reforma Manzana #3 Local #4 Col. La Bamba, Chalco Edo. de Mex. Télefono +521 55 59730999</p>
+        </footer>
+        <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
+        <div class="loader"></div>
+
+                
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {# JS #}
+    <script src="{{asset('js/jquery.js')}}"></script>
+    <script src="{{asset('js/underscore-min.js')}}"></script>
+    <script src="{{asset('js/backbone-min.js')}}"></script>
+    <script src="{{asset('js/swig.js')}}"></script>
+    <script src="{{asset('js/bootstrap.js')}}"></script>
+    <script>
+        window.lenguajes = {};
+        window.lenguajes.espanol = '{{url(route,{'_locale':'es'})}}';
+        window.lenguajes.ingles = '{{url(route,{'_locale':'en'})}}';
+        window.lenguajes.frances = '{{url(route,{'_locale':'fr'})}}';
+    </script>    
+{% endblock %}

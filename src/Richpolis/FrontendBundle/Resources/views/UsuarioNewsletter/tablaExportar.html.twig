@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr style="color:rgb(255,255,255);font-size:12px;line-height:19.200000762939453px;background-color:rgb(61,133,198)">
+            <th>#</th>
+            <th>nombre</th>
+            <th>email</th>
+            <th>Activo</th>
+            <th>Creado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+            <tr>
+            <td>{{entity.id}}</td>
+            <td>{{entity.nombre}}</td>
+            <td>{{entity.email}}</td>
+            <td>{% if entity.isActive %}Si{% else %}No{% endif %}</td>
+            <td>{{ entity.createdAt|date('d/m/Y H:i a') }}</td>
+            </tr>
+        {% endfor %}    
+    </tbody>
+</table>

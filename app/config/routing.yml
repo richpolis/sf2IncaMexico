@@ -1,0 +1,43 @@
+galerias:
+    resource: "@GaleriasBundle/Controller/"
+    type:     annotation
+    prefix:   /backend
+
+paginas:
+    resource: "@PaginasBundle/Controller/"
+    type:     annotation
+    prefix:   /backend
+
+frontend:
+    resource: "@FrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+backend:
+    resource: "@BackendBundle/Controller/"
+    type:     annotation
+    prefix:   /backend
+
+publicaciones:
+    resource: "@PublicacionesBundle/Controller/"
+    type:     annotation
+    prefix:   /backend
+    
+#usuarios:
+#    type:     rest
+#    prefix:   /api
+#    resource: "@BackendBundle/Resources/config/routing.yml"
+
+#publicaciones_fosrest_api:
+#    type:     rest
+#    prefix:   /api
+#    resource: "@PublicacionesBundle/Resources/config/routing.yml"
+    
+
+#NelmioApiDocBundle:
+#  resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+#  prefix:   /api/doc
+
+_imagine:
+    resource: .
+    type:     imagine

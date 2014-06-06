@@ -1,0 +1,135 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Solicitud de Cotizacion{% endblock %}
+
+{% block body %}
+<table>
+	<tr>
+		<th  colspan="2">Desde TurismoPlusMG.com</th>
+	</tr>	
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Nombre:
+		<td>
+		<td>
+			{{datos.name}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Email:
+		<td>
+		<td>
+			{{datos.email}}
+		<td>
+	</tr>
+    <tr>
+		<td style="background-color: gray;color: white;">
+			Telefono:
+		<td>
+		<td>
+			{{datos.telefono}}
+		<td>
+	</tr>
+	 <tr>
+		<td style="background-color: gray;color: white;">
+			Pais:
+		<td>
+		<td>
+			{{datos.pais}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Ciudad:
+		<td>
+		<td>
+			{{datos.ciudad}}
+		<td>
+	</tr>
+    <tr>
+		<td style="background-color: gray;color: white;">
+			Origen:
+		<td>
+		<td>
+			{{datos.salida}}
+		<td>
+	</tr>
+        <tr>
+		<td style="background-color: gray;color: white;">
+			Fecha salida:
+		<td>
+		<td>
+			{{datos.fechaSalida|date('d/m/Y')}}
+		<td>
+	</tr>
+        <tr>
+		<td style="background-color: gray;color: white;">
+			Hora salida:
+		<td>
+		<td>
+			{{datos.horaSalida|date('h:m:s')}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Destino:
+		<td>
+		<td>
+			{{datos.destino}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			No. de pasajeros:
+		<td>
+		<td>
+			{{datos.pasajeros}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Tipo unidad:
+		<td>
+		<td>
+			{{datos.autobus}}
+		<td>
+	</tr>
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Itinerario:
+		<td>
+		<td>
+			{{datos.itinerario}}
+		<td>
+	</tr>
+        {% if datos.fechaRegreso | length > 0 %}
+        <tr>
+		<td style="background-color: gray;color: white;">
+			Fecha regreso:
+		<td>
+		<td>
+			{{datos.fechaRegreso|date('d/m/Y')}}
+		<td>
+	</tr>
+        {% endif %}
+        {% if datos.horaRegreso | length > 0 %}
+        <tr>
+		<td style="background-color: gray;color: white;">
+			Hora regreso:
+		<td>
+		<td>
+			{{datos.horaRegreso|date('h:m:s')}}
+		<td>
+	</tr>
+        {% endif %}
+	<tr>
+		<td style="background-color: gray;color: white;">
+			Comentarios:
+		<td>
+		<td>
+			{{datos.comentarios | raw }}
+		<td>
+	</tr>		
+</table>
+{% endblock %}

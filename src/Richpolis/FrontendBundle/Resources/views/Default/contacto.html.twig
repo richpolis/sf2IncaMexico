@@ -1,0 +1,70 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+{% endblock %}
+
+
+{% block extra_header %}
+    <div class="container-extra-header" style="height:90px;">
+    </div>
+{% endblock %}
+
+{% block contenido %}
+    <article class="contacto">
+        <h3 class="centrado">{{"contacto"|trans}}</h3>
+        <div class="mapa row">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.2941356781876!2d-98.89239099999993!3d19.26957099999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce1ece555e3e0f%3A0x6abd410ee1a33173!2sTurismo+Luz+Mg!5e0!3m2!1sen!2s!4v1400185555784" width="1024" height="350" frameborder="0" style="border:0"></iframe>
+        </div>
+        <div class="formulario-informacion row">
+            <div class="formulario col-lg-4">
+                {% include 'FrontendBundle:Default:formContacto.html.twig' with {'form': form } %}
+            </div>
+            <div class="imagen-contacto col-lg-4">
+                <img src="{{asset('images/keyarts/contacto/recepcionista.png')}}" alt=""/>
+            </div>
+            <div class="informacion col-lg-4">
+                <p>
+                    Calle Reforma Manzana #3 Local #4
+                    Col. La Bomba
+                    Chalco, Edo. de Mex.
+                    <br/>
+                    tel1. 5555-5555
+                    tel2. 5555-5555
+                    <br/>
+                    email@turismoplusmg.com.mx
+                </p>
+                <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt=""/>
+            </div>
+        </div>
+    </article>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+<script>
+$(document).on('ready',iniciarlizarFormContacto); 
+
+function iniciarlizarFormContacto(){
+    $("input.form-submit").click( function() {
+        $('img.ajax-loader').css({visibility: 'visible'});
+        $("img.ajax-loader").fadeIn("fast",function(){
+            $.post("{{path('frontend_contacto')}}",$("form.form-contacto").serialize(),
+            function(data){
+                actualizaFormularioContacto(data);
+                setTimeout(function(){
+                    $("#formulario_contacto").find(".form-response-output").fadeOut("fast");
+                },2000);
+                
+            });    
+        });
+    });
+}
+
+function actualizaFormularioContacto(data){
+  $("#formulario_contacto").parent().html(data);
+  iniciarlizarFormContacto();
+}
+
+</script>
+{% endblock %}

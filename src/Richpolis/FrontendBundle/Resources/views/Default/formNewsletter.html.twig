@@ -1,0 +1,33 @@
+{%if error is not defined%}
+    {%set error=false%}
+{%endif%}
+{%if ok is not defined%}
+    {%set ok=false%}
+{%endif%}
+{%if mensaje is not defined%}
+    {%set mensaje=""%}
+{%endif%}
+
+<div id="formulario_newsletter">
+     <form onsubmit="return false;" action="{{path('frontend_form_newsletter')}}" method="post" class="form-newsletter {%if error == true%}invalid{%endif%} {%if ok == true%}sent{%endif%}" novalidate="novalidate" role="form">
+         {{form_widget(form)}}
+         <div class="form-group" style="margin-top: 20px;">
+             <input type="submit" value="{{"Enviar"|trans}}" class="form-newsletter-control form-submit btn btn-info">
+             <img class="ajax-loader" src="/images/bx_loader.gif" alt="Enviando ..." style="visibility: hidden;">
+         </div>
+         {% if ok == true and error == false%}    
+         <div class="form-response-output form-mail-sent-ok">
+             {{mensaje}}
+         </div>
+         {% elseif ok == false and error == true %}
+         <div class="form-response-output form-mail-sent-ng form-validation-errors">
+             {{mensaje}}{{form_errors(form)}}
+         </div>    
+         {% else %}
+         <div class="form-response-output">
+             {{mensaje}}
+         </div>    
+         {% endif %}    
+         {{ form_rest(form) }}    
+     </form>
+ </div>

@@ -1,0 +1,85 @@
+<?php
+
+namespace Richpolis\PublicacionesBundle\Entity;
+
+use JMS\Serializer\Annotation as Serializer;
+
+/**
+ * Resultado de Upload de Galeria
+ * @Serializer\ExclusionPolicy("all")
+ * 
+ */
+class ResultGaleria
+{
+
+    /**
+     * @var string
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
+    public $filename;
+
+    /**
+     * @var string
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
+    public $original;
+
+    /**
+     * @var string
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
+    public $success;
+
+    
+    /**
+     * @var string
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
+    public $titulo;
+
+    
+    /**
+     * @var string
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
+    public $contenido;
+    
+    /**
+     * @var string
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
+    public $error;
+    
+    public function __construct($result){
+        if(isset($result['error'])){
+            $this->error = $result['error'];
+            $this->titulo = "";
+            $this->filename = "";
+            $this->original = "";
+            $this->success = "";
+            $this->contenido = "";
+        }else{
+            $this->error = "";
+            $this->titulo = $result['titulo'];
+            $this->filename = $result['filename'];
+            $this->original = $result['original'];
+            $this->success = $result['success'];
+            $this->contenido = $result['contenido'];
+        }
+    }
+    
+    
+
+}
