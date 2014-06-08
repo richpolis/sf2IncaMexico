@@ -15,22 +15,37 @@ class ServicioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('servicio','text',array(
-                'label'=>'Servicio','required'=>true,'attr'=>array(
+            ->add('servicioEs','text',array(
+                'label'=>'Servicio en español','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
                     'placeholder'=>'Servicio',
                     'data-bind'=>'value: servicio'
                     )
                 ))
-            ->add('descripcion',null,array(
-                'label'=>'Descripcion',
+            ->add('descripcionEs',null,array(
+                'label'=>'Descripcion en español',
                 'required'=>true,
                 'attr'=>array(
                     'class'=>'cleditor tinymce form-control placeholder',
                    'data-theme' => 'advanced',
                     )
                 ))
-             ->add('file','file',array('label'=>'Imagen','attr'=>array(
+            ->add('servicioEn','text',array(
+                'label'=>'Servicio en ingles','required'=>true,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Servicio',
+                    'data-bind'=>'value: servicio'
+                    )
+                ))
+            ->add('descripcionEn',null,array(
+                'label'=>'Descripción en ingles',
+                'required'=>true,
+                'attr'=>array(
+                    'class'=>'cleditor tinymce form-control placeholder',
+                   'data-theme' => 'advanced',
+                    )
+                ))
+            ->add('file','file',array('label'=>'Imagen','attr'=>array(
                 'class'=>'form-control placeholder',
                 'placeholder'=>'Imagen',
                 'data-bind'=>'value: imagen'

@@ -25,14 +25,28 @@ class ServicioRepository extends EntityRepository
         return $max[0]['value'];
     }
     
-    public function findActivos(){
+    public function findAll(){
         $em=$this->getEntityManager();
         $query=$em->createQuery('
                SELECT a
                FROM PublicacionesBundle:Servicio a 
-               WHERE a.isActive = :servicio
-               ORDER BY a.position ASC
+               WHERE a.isActive = :servicio 
+               ORDER BY a.position ASC 
         ')->setParameters(array('servicio'=> true));
+        
+        return $query->getResult();
+    }
+	
+    public function findActivos(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('
+               SELECT a, g
+               FROM PublicacionesBundle:Servicio a 
+               JOIN a.galerias g 
+               WHERE a.isActive = :servicio 
+               AND g.isActive = :galeria 
+               ORDER BY a.position ASC, g.position ASC 
+        ')->setParameters(array('servicio'=> true,'galeria'=>true));
         
         return $query->getResult();
     }

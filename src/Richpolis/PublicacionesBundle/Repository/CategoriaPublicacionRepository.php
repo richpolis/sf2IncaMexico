@@ -26,46 +26,31 @@ class CategoriaPublicacionRepository extends EntityRepository
         return $max[0]['value'];
     }
     
-    public function findForSlugConObjetos($slug){
+    public function findAll(){
         $em=$this->getEntityManager();
         $query=$em->createQuery('
-               SELECT c,p,u,g 
+               SELECT c
                FROM PublicacionesBundle:CategoriaPublicacion c 
-               JOIN c.publicaciones p 
-               JOIN p.usuario u 
-               JOIN p.galerias g  
-               WHERE c.slug = :categoria 
-               AND g.isActive = :active 
-               ORDER BY p.createdAt, g.position ASC
-        ')->setParameters(array('categoria'=> $slug,'active'=>true));
+               WHERE c.isActive = :categoria 
+               ORDER BY c.position ASC 
+        ')->setParameters(array('categoria'=> true));
         
-        $categorias=$query->getResult();
-        if(isset($categorias[0])){
-            return $categorias[0];
-        }else{
-            return null;
-        }
+        return $query->getResult();
     }
-    
-    public function findConObjetos($id){
+  
+    public function findActivos(){
         $em=$this->getEntityManager();
         $query=$em->createQuery('
-               SELECT c,p,u,g 
+               SELECT c, p, g
                FROM PublicacionesBundle:CategoriaPublicacion c 
                JOIN c.publicaciones p 
-               JOIN p.usuario u 
-               JOIN p.galerias g  
-               WHERE c.id = :categoria 
-               AND g.isActive = :active 
-               ORDER BY p.createdAt, g.position ASC
-        ')->setParameters(array('categoria'=> $id,'active'=>true));
+               JOIN p.galerias g 
+               WHERE c.isActive = :categoria 
+               AND p.isActive = :publicacion 
+               ORDER BY p.position ASC, p.position ASC 
+        ')->setParameters(array('categoria'=> true,'publicacion'=>true));
         
-        $categorias=$query->getResult();
-        if(isset($categorias[0])){
-            return $categorias[0];
-        }else{
-            return null;
-        }
+        return $query->getResult();
     }
     
     public function getCategoriaConGaleriaPorId($categoria_id,$active=true){

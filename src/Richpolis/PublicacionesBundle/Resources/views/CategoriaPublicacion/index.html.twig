@@ -49,8 +49,8 @@
           <span class="divider">/</span> 
           <a href="{{path('categorias_publicaciones')}}" class="bread-current">Categorias</a>
           <a href="{{path('categorias_publicaciones_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear categoria</a>
-          <a href="{{path('categorias_publicaciones_importar')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Importar</a>
-          <a href="{{path('categorias_publicaciones_exportar')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Exportar</a>
+          <!--a href="{{path('categorias_publicaciones_importar')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Importar</a>
+          <a href="{{path('categorias_publicaciones_exportar')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Exportar</a-->
         </div>
         
         <div class="clearfix"></div>
@@ -96,7 +96,7 @@
                       {% for entity in entities %}
                             <tr id="registro-{{entity.id}}">
                                 <td><a href="{{ path('categorias_publicaciones_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                                <td>{{ entity.nombre }}</td>
+                                <td>{{ entity.nombreEs }}</td>
                                 <td>
                                     {% if entity.isActive %}
                                         <i class="fa fa-check-circle"></i>

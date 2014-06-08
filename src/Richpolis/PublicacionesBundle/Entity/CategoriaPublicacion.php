@@ -34,14 +34,25 @@ class CategoriaPublicacion
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=150)
+     * @ORM\Column(name="nombre_es", type="string", length=150)
      * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
      */
-    private $nombre;
-
+    private $nombreEs;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_en", type="string", length=150)
+     * @Assert\NotBlank()
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
+    private $nombreEn;
+    
     /**
      * @var integer
      *
@@ -92,7 +103,7 @@ class CategoriaPublicacion
     }
     
     public function __toString(){
-        return $this->getNombre();
+        return $this->getNombreEs();
     }
 
     /**
@@ -123,9 +134,15 @@ class CategoriaPublicacion
      *
      * @return string 
      */
-    public function getNombre()
+    public function getNombre($locale)
     {
-        return $this->nombre;
+        if($locale == "es"){
+            $this->nombreEs = $value;
+        }else if($locale == "en"){
+            $this->nombreEn = $value;
+        }
+
+        return $this;
     }
 
     /**
@@ -240,6 +257,52 @@ class CategoriaPublicacion
     */
     public function setSlugAtValue()
     {
-        $this->slug = RpsStms::slugify($this->getNombre());
+        $this->slug = RpsStms::slugify($this->getNombreEs());
+    }
+
+    /**
+     * Set nombreEs
+     *
+     * @param string $nombreEs
+     * @return CategoriaPublicacion
+     */
+    public function setNombreEs($nombreEs)
+    {
+        $this->nombreEs = $nombreEs;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreEs
+     *
+     * @return string
+     */
+    public function getNombreEs()
+    {
+        return $this->nombreEs;
+    }
+
+    /**
+     * Set nombreEn
+     *
+     * @param string $nombreEn
+     * @return CategoriaPublicacion
+     */
+    public function setNombreEn($nombreEn)
+    {
+        $this->nombreEn = $nombreEn;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreEn
+     *
+     * @return string
+     */
+    public function getNombreEn()
+    {
+        return $this->nombreEn;
     }
 }

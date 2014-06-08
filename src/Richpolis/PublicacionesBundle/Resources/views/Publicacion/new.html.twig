@@ -40,11 +40,11 @@
 
         <!-- Page heading -->
         <div class="page-head">
-            <h2 class="pull-left">Publicaciones</h2>
+            <h2 class="pull-left">Proyectos</h2>
             <div class="clearfix"></div>
             <!-- Breadcrumb -->
             <div class="bread-crumb">
-                <a href="{{path('publicaciones')}}"><i class="fa fa-home"></i>Publicaciones</a> 
+                <a href="{{path('publicaciones')}}"><i class="fa fa-home"></i>Proyectos</a> 
                 <!-- Divider -->
                 <span class="divider">/</span> 
                 <a href="{{path('publicaciones_new')}}" class="bread-current">Nuevo {{categoria}}</a>
@@ -74,7 +74,20 @@
                                 <div class="padd">
                                     <!-- Form starts.  -->
                                     <form action="{{ path('publicaciones_create') }}" class="validate" id="formPublicaciones" method="post" {{ form_enctype(form)}}>
-                                        {{form_widget(form)}}
+                                        <fieldset>
+                                            <legend>Español:</legend>
+                                            {{form_row(form.tituloEs)}}
+                                            {{form_row(form.descripcionEs)}}
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>Ingles:</legend>
+                                            {{form_row(form.tituloEn)}}
+                                            {{form_row(form.descripcionEn)}}
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>Generales:</legend>
+                                            {{form_rest(form)}}
+                                        </fieldset>
                                     </form>
                                 </div>
                             </div>

@@ -50,7 +50,7 @@
           <a href="{{path('categorias_publicaciones')}}" class="bread-current">Categorias</a>
           <Divider>
           <span class="divider">/</span> 
-          <a href="{{path('publicaciones')}}" class="bread-current">Productos tipo "{{categoria}}"</a>
+          <a href="{{path('publicaciones')}}" class="bread-current">Proyectos categoria "{{categoria}}"</a>
           <a href="{{path('publicaciones_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear {{categoria}}</a>
         </div>
         
@@ -90,8 +90,10 @@
                             <th>Id</th>
                             <th>Categoria</th>
                             <th>Imagen</th>
-                            <th>Producto</th>
-                            <th>Precio</th>
+                            <th>Proyecto</th>
+                            <th>Cliente</th>
+                            <th>Empezo</th>
+                            <th>Termino</th>
                             <th>Activo?</th>
                             <th>Actions</th>
                         </tr>
@@ -108,8 +110,10 @@
                                     sin imagen 
                                 {% endif %}
                                 </td>
-                                <td>{{ entity.titulo }}</td>
-                                <td>${{ entity.precio|number_format(2,'.',',') }}</td>
+                                <td>{{ entity.tituloEs }}</td>
+                                <td>{{ entity.cliente}}</td>
+                                <td>{{ entity.empezo}}</td>
+                                <td>{{ entity.termino}}</td>
                                 <td>
                                     {% if entity.isActive %}
                                         <i class="fa fa-check-circle"></i>

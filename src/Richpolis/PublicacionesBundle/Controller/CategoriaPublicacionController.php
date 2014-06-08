@@ -56,7 +56,7 @@ class CategoriaPublicacionController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')->findAll();
-
+        
         return array(
             'entities' => $entities,
         );

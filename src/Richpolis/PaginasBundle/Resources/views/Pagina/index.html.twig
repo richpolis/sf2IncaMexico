@@ -99,7 +99,7 @@
                                 <td>{{ entity.contenidoEs | striptags | slice(0,250) }}</td>
                                 <td>
                                     {% if entity.imagen | length > 0 %}
-                                        <img src="{{ entity.webPath }}" style="max-width: 400px;"/>
+                                        <img src="{{ entity.webPath }}" style="max-width: 120px; max-width: 120px;"/>
                                     {% else %}    
                                         sin imagen
                                     {% endif %}

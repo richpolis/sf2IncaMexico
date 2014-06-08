@@ -39,7 +39,7 @@ class Publicacion
     /**
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=255)
+     * @ORM\Column(name="titulo_es", type="string", length=255)
      * @Assert\NotBlank()
      * 
      * @Serializer\Expose
@@ -47,29 +47,67 @@ class Publicacion
      * @Serializer\SerializedName("titulo")
      * @Serializer\Groups({"list", "details"})
      */
-    private $titulo;
+    private $tituloEs;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo_en", type="string", length=255)
+     * @Assert\NotBlank()
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("titulo")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $tituloEn;
+    
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="text",nullable=true)
+     * @ORM\Column(name="descripcion_es", type="text",nullable=true)
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
      * @Serializer\SerializedName("descripcion")
      * @Serializer\Groups({"list", "details"})
      */
-    private $descripcion;
-
+    private $descripcionEs;
+    
     /**
-     * @ORM\Column(name="precio", type="decimal", scale=2)
+     * @var string
+     *
+     * @ORM\Column(name="descripcion_en", type="text",nullable=true)
      * 
      * @Serializer\Expose
-     * @Serializer\Type("double")
-     * @Serializer\SerializedName("precio")
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("descripcion")
      * @Serializer\Groups({"list", "details"})
      */
-    protected $precio;
+    private $descripcionEn;    
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="empezo", type="integer")
+     *  
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $empezo;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="termino", type="integer")
+     *  
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $termino;    
     
     /**
      * @var integer
@@ -104,6 +142,49 @@ class Publicacion
      * @Serializer\Groups({"list", "details"})
      */
     private $slug;
+    
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cliente", type="string", length=255)
+     * @Assert\NotBlank()
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("titulo")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $cliente;
+    
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ubicacion", type="string", length=255)
+     * @Assert\NotBlank()
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("titulo")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $ubicacion;
+    
+    
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="monto", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("titulo")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $monto;
     
     /**
      * @var Richpolis\BackendBundle\Entity\Usuario
@@ -244,7 +325,7 @@ class Publicacion
     */
     public function setSlugAtValue()
     {
-        $this->slug = RpsStms::slugify($this->getTitulo());
+        $this->slug = RpsStms::slugify($this->getTituloEs());
     }
 
     
@@ -434,9 +515,13 @@ class Publicacion
      * @param string $titulo
      * @return Publicacion
      */
-    public function setTitulo($titulo)
+    public function setTitulo($value, $locale)
     {
-        $this->titulo = $titulo;
+        if($locale == "es"){
+            $this->tituloEs = $value;
+        }else{
+            $this->tituloEn = $value;
+        }
 
         return $this;
     }
@@ -446,9 +531,14 @@ class Publicacion
      *
      * @return string 
      */
-    public function getTitulo()
+    public function getTitulo($locale)
     {
-        return $this->titulo;
+        if($locale == "es"){
+            $value = $this->tituloEs;
+        }else{
+            $value = $this->tituloEn;
+        }
+        return $value;
     }
 
     /**
@@ -457,9 +547,13 @@ class Publicacion
      * @param string $descripcion
      * @return Publicacion
      */
-    public function setDescripcion($descripcion)
+    public function setDescripcion($value, $locale)
     {
-        $this->descripcion = $descripcion;
+        if($locale == "es"){
+            $this->descripcionEs = $value;
+        }else{
+            $this->descripcionEn = $value;
+        }
 
         return $this;
     }
@@ -469,32 +563,14 @@ class Publicacion
      *
      * @return string 
      */
-    public function getDescripcion()
+    public function getDescripcion($locale)
     {
-        return $this->descripcion;
-    }
-
-    /**
-     * Set precio
-     *
-     * @param string $precio
-     * @return Publicacion
-     */
-    public function setPrecio($precio)
-    {
-        $this->precio = $precio;
-
-        return $this;
-    }
-
-    /**
-     * Get precio
-     *
-     * @return string 
-     */
-    public function getPrecio()
-    {
-        return $this->precio;
+        if($locale == "es"){
+            $value = $this->descripcionEs;
+        }else{
+            $value = $this->descripcionEn;
+        }
+        return $value;
     }
 
     /**
@@ -712,5 +788,212 @@ class Publicacion
     public function getGalerias()
     {
         return $this->galerias;
+    }
+
+    /**
+     * Set tituloEs
+     *
+     * @param string $tituloEs
+     * @return Publicacion
+     */
+    public function setTituloEs($tituloEs)
+    {
+        $this->tituloEs = $tituloEs;
+
+        return $this;
+    }
+
+    /**
+     * Get tituloEs
+     *
+     * @return string 
+     */
+    public function getTituloEs()
+    {
+        return $this->tituloEs;
+    }
+
+    /**
+     * Set tituloEn
+     *
+     * @param string $tituloEn
+     * @return Publicacion
+     */
+    public function setTituloEn($tituloEn)
+    {
+        $this->tituloEn = $tituloEn;
+
+        return $this;
+    }
+
+    /**
+     * Get tituloEn
+     *
+     * @return string 
+     */
+    public function getTituloEn()
+    {
+        return $this->tituloEn;
+    }
+
+    /**
+     * Set descripcionEs
+     *
+     * @param string $descripcionEs
+     * @return Publicacion
+     */
+    public function setDescripcionEs($descripcionEs)
+    {
+        $this->descripcionEs = $descripcionEs;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionEs
+     *
+     * @return string 
+     */
+    public function getDescripcionEs()
+    {
+        return $this->descripcionEs;
+    }
+
+    /**
+     * Set descripcionEn
+     *
+     * @param string $descripcionEn
+     * @return Publicacion
+     */
+    public function setDescripcionEn($descripcionEn)
+    {
+        $this->descripcionEn = $descripcionEn;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionEn
+     *
+     * @return string 
+     */
+    public function getDescripcionEn()
+    {
+        return $this->descripcionEn;
+    }
+
+    /**
+     * Set empezo
+     *
+     * @param integer $empezo
+     * @return Publicacion
+     */
+    public function setEmpezo($empezo)
+    {
+        $this->empezo = $empezo;
+
+        return $this;
+    }
+
+    /**
+     * Get empezo
+     *
+     * @return integer 
+     */
+    public function getEmpezo()
+    {
+        return $this->empezo;
+    }
+
+    /**
+     * Set termino
+     *
+     * @param integer $termino
+     * @return Publicacion
+     */
+    public function setTermino($termino)
+    {
+        $this->termino = $termino;
+
+        return $this;
+    }
+
+    /**
+     * Get termino
+     *
+     * @return integer 
+     */
+    public function getTermino()
+    {
+        return $this->termino;
+    }
+
+    /**
+     * Set cliente
+     *
+     * @param string $cliente
+     * @return Publicacion
+     */
+    public function setCliente($cliente)
+    {
+        $this->cliente = $cliente;
+
+        return $this;
+    }
+
+    /**
+     * Get cliente
+     *
+     * @return string 
+     */
+    public function getCliente()
+    {
+        return $this->cliente;
+    }
+
+    /**
+     * Set ubicacion
+     *
+     * @param string $ubicacion
+     * @return Publicacion
+     */
+    public function setUbicacion($ubicacion)
+    {
+        $this->ubicacion = $ubicacion;
+
+        return $this;
+    }
+
+    /**
+     * Get ubicacion
+     *
+     * @return string 
+     */
+    public function getUbicacion()
+    {
+        return $this->ubicacion;
+    }
+
+    /**
+     * Set monto
+     *
+     * @param string $monto
+     * @return Publicacion
+     */
+    public function setMonto($monto)
+    {
+        $this->monto = $monto;
+
+        return $this;
+    }
+
+    /**
+     * Get monto
+     *
+     * @return string 
+     */
+    public function getMonto()
+    {
+        return $this->monto;
     }
 }

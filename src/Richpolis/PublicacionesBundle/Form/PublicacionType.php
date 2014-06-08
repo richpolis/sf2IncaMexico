@@ -18,23 +18,69 @@ class PublicacionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titulo','text',array(
-                'label'=>'Producto','required'=>true,'attr'=>array(
+            ->add('tituloEs','text',array(
+                'label'=>'Proyecto en español','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
-                    'placeholder'=>'Producto',
-                    'data-bind'=>'value: producto'
+                    'placeholder'=>'Proyecto',
+                    'data-bind'=>'value: proyecto'
                     )
                 ))    
-            ->add('descripcion','hidden')
-            ->add('precio','money',array(
-                'label'=>'Precio',
+            ->add('descripcionEs',null,array(
+                'label'=>'Descripcion en español',
                 'required'=>true,
-                'currency'=>'MXN',
                 'attr'=>array(
+                    'class'=>'cleditor tinymce form-control placeholder',
+                   'data-theme' => 'advanced',
+                    )
+                ))
+            ->add('tituloEn','text',array(
+                'label'=>'Proyecto en ingles','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
-                    'placeholder'=>'Precio',
-                    'data-bind'=>'value: precio',
-                    'style'=>'width:250px;'
+                    'placeholder'=>'Proyecto',
+                    'data-bind'=>'value: proyecto'
+                    )
+                ))    
+            ->add('descripcionEn',null,array(
+                'label'=>'Descripcion en ingles',
+                'required'=>true,
+                'attr'=>array(
+                    'class'=>'cleditor tinymce form-control placeholder',
+                   'data-theme' => 'advanced',
+                    )
+                ))
+            ->add('cliente','text',array(
+                'label'=>'Nombre del cliente','required'=>true,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Cliente',
+                    'data-bind'=>'value: cliente'
+                    )
+                ))
+            ->add('ubicacion','text',array(
+                'label'=>'Ubicacion','required'=>true,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Ubicacion',
+                    'data-bind'=>'value: ubicacion'
+                    )
+                ))
+            ->add('monto','text',array(
+                'label'=>'Monto','required'=>true,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Monto',
+                    'data-bind'=>'value: monto'
+                    )
+                ))
+            ->add('empezo','text',array(
+                'label'=>'Año de inicio','required'=>true,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Empezo',
+                    'data-bind'=>'value: empezo'
+                    )
+                ))
+            ->add('termino','text',array(
+                'label'=>'Año de termino','required'=>true,'attr'=>array(
+                    'class'=>'form-control placeholder',
+                    'placeholder'=>'Termino',
+                    'data-bind'=>'value: termino'
                     )
                 ))
             ->add('categoria',null,array(

@@ -359,7 +359,7 @@ class Galeria
     */
     public function preSaveGaleria()
     {
-      if ($this->getTipoArchivo()== RpsStms::TIPO_ARCHIVO_LINK) {
+      if($this->getTipoArchivo()== RpsStms::TIPO_ARCHIVO_LINK){
         $infoVideo=  RpsStms::getTitleAndImageVideoYoutube($this->getArchivo());
         $this->setThumbnail($infoVideo['thumbnail']);
         $this->setArchivo($infoVideo['urlVideo']);

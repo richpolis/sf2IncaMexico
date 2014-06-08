@@ -96,11 +96,11 @@
                       {% for entity in entities %}
                             <tr id="registro-{{entity.id}}">
                                 <td><a href="{{ path('servicios_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                                <td>{{ entity.servicio }}</td>
-                                <td>{{ entity.descripcion | raw }}</td>
+                                <td>{{ entity.servicioEs }}</td>
+                                <td>{{ entity.descripcionEs | striptags | slice(0,250) }}</td>
                                 <td>
                                     {% if entity.imagen | length > 0 %}
-                                        <img src="{{ entity.webPath }}" style="max-width: 200px;"/>
+                                        <img src="{{ entity.webPath }}" style="max-width: 200px; max-height: 200px;"/>
                                     {% else %}    
                                         sin imagen
                                     {% endif %}

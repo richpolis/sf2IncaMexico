@@ -36,26 +36,50 @@ class Servicio
     /**
      * @var string
      *
-     * @ORM\Column(name="servicio", type="string", length=255)
+     * @ORM\Column(name="servicio_es", type="string", length=255)
      * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
      * @Serializer\Groups({"list", "details"})
      */
-    private $servicio;
+    private $servicioEs;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="servicio_en", type="string", length=255)
+     * @Assert\NotBlank()
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $servicioEn;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="text")
+     * @ORM\Column(name="descripcion_es", type="text")
      * @Assert\NotBlank()
      * 
      * @Serializer\Expose
      * @Serializer\Type("string")
      * @Serializer\Groups({"list", "details"})
      */
-    private $descripcion;
+    private $descripcionEs;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion_en", type="text")
+     * @Assert\NotBlank()
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"list", "details"})
+     */
+    private $descripcionEn;    
     
     /**
      * @var string
@@ -199,7 +223,7 @@ class Servicio
     */
     public function setSlugAtValue()
     {
-        $this->slug = RpsStms::slugify($this->getServicio());
+        $this->slug = RpsStms::slugify($this->getServicioEs());
     }
     
     /*** uploads ***/
@@ -318,9 +342,13 @@ class Servicio
      * @param string $servicio
      * @return Servicio
      */
-    public function setServicio($servicio)
+    public function setServicio($value,$locale)
     {
-        $this->servicio = $servicio;
+        if($locale == "es"){
+            $this->servicioEs = $value;
+        }else if($locale == "en"){
+            $this->servicioEn = $value;
+        }
 
         return $this;
     }
@@ -330,9 +358,14 @@ class Servicio
      *
      * @return string 
      */
-    public function getServicio()
+    public function getServicio($locale)
     {
-        return $this->servicio;
+        if($locale == "es"){
+            $value = $this->servicioEs;
+        }else if($locale == "en"){
+            $value = $this->servicioEn;
+        }
+        return $value;
     }
 
     /**
@@ -341,9 +374,13 @@ class Servicio
      * @param string $descripcion
      * @return Servicio
      */
-    public function setDescripcion($descripcion)
+    public function setDescripcion($value,$locale)
     {
-        $this->descripcion = $descripcion;
+        if($locale == "es"){
+            $this->descripcionEs = $value;
+        }else if($locale == "en"){
+            $this->descripcionEn = $value;
+        }
 
         return $this;
     }
@@ -353,9 +390,14 @@ class Servicio
      *
      * @return string 
      */
-    public function getDescripcion()
+    public function getDescripcion($locale)
     {
-        return $this->descripcion;
+        if($locale == "es"){
+            $value = $this->descripcionEs;
+        }else if($locale == "en"){
+            $value = $this->descripcionEn;
+        }
+        return $value;
     }
 
     /**
@@ -527,5 +569,97 @@ class Servicio
     public function getGalerias()
     {
         return $this->galerias;
+    }
+
+    /**
+     * Set servicioEs
+     *
+     * @param string $servicioEs
+     * @return Servicio
+     */
+    public function setServicioEs($servicioEs)
+    {
+        $this->servicioEs = $servicioEs;
+
+        return $this;
+    }
+
+    /**
+     * Get servicioEs
+     *
+     * @return string 
+     */
+    public function getServicioEs()
+    {
+        return $this->servicioEs;
+    }
+
+    /**
+     * Set servicioEn
+     *
+     * @param string $servicioEn
+     * @return Servicio
+     */
+    public function setServicioEn($servicioEn)
+    {
+        $this->servicioEn = $servicioEn;
+
+        return $this;
+    }
+
+    /**
+     * Get servicioEn
+     *
+     * @return string 
+     */
+    public function getServicioEn()
+    {
+        return $this->servicioEn;
+    }
+
+    /**
+     * Set descripcionEs
+     *
+     * @param string $descripcionEs
+     * @return Servicio
+     */
+    public function setDescripcionEs($descripcionEs)
+    {
+        $this->descripcionEs = $descripcionEs;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionEs
+     *
+     * @return string 
+     */
+    public function getDescripcionEs()
+    {
+        return $this->descripcionEs;
+    }
+
+    /**
+     * Set descripcionEn
+     *
+     * @param string $descripcionEn
+     * @return Servicio
+     */
+    public function setDescripcionEn($descripcionEn)
+    {
+        $this->descripcionEn = $descripcionEn;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionEn
+     *
+     * @return string 
+     */
+    public function getDescripcionEn()
+    {
+        return $this->descripcionEn;
     }
 }

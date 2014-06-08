@@ -45,7 +45,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $richpolis->setNombre("Ricardo Alcantara Gomez");
         $richpolis->setEmail('richpolis@gmail.com');
         $richpolis->setSalt(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
-        $passwordEnClaro = 'D3m3s1s1';
+        $passwordEnClaro = 'sfR0xC4s';
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($richpolis);
         $passwordCodificado = $encoder->encodePassword($passwordEnClaro, $richpolis->getSalt());
         $richpolis->setPassword($passwordCodificado);
@@ -60,7 +60,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         
         $usuarioAdmin->setUsername('Admin');
         $usuarioAdmin->setNombre("Administrador general");
-        $usuarioAdmin->setEmail('admin@siglov.com');
+        $usuarioAdmin->setEmail('admin@incamexico.com');
         $usuarioAdmin->setSalt(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
         $passwordEnClaro = '12345678';
         $encorder = $this->container->get('security.encoder_factory')->getEncoder($usuarioAdmin);
@@ -75,7 +75,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         
         $usuarioNormal->setUsername('Usuario1');
         $usuarioNormal->setNombre("Usuario 1");
-        $usuarioNormal->setEmail('usuario1@siglov.com');
+        $usuarioNormal->setEmail('usuario1@incamexico.com');
         $usuarioNormal->setSalt(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
         $passwordEnClaro = '12345678';
         $encorder = $this->container->get('security.encoder_factory')->getEncoder($usuarioNormal);

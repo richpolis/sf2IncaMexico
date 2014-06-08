@@ -18,16 +18,19 @@
   {% set usuarios = "" %}
   {% set categorias = "" %}
   {% set publicaciones = "" %}
+  {% set servicios = "" %}
   {% set galerias = "" %}
   {% set configuraciones = "" %}
 
-  {% if route == "backend_categorias" %}
+  {% if route == "categorias_publicaciones" %}
     {% set categorias = "class=open" %}
   {% elseif route == "backend_usuarios" %}
     {% set usuarios = "class=open" %}
-  {% elseif route == "backend_publicaciones" %}
+  {% elseif route == "publicaciones" %}
     {% set publicaciones = "class=open" %}
-  {% elseif route == "backend_galerias" %}
+  {% elseif route == "servicios" %}
+    {% set servicios = "class=open" %}
+  {% elseif route == "galerias" %}
     {% set galerias = "class=open" %}     
   {% elseif route == "configuraciones" %}
     {% set configuraciones = "class=open" %}       
@@ -102,33 +105,14 @@
                     <i class="fa fa-sitemap"></i> <span>Paginas</span>
                 </a>
             </li>
-            <li class="has_sub">
-                <a href="#">
-                    <i class="fa fa-list"></i> 
-                    <span>Publicaciones</span> 
-                    <span class="pull-right">
-                        <i class="fa fa-chevron-left"></i>
-                    </span>
-                </a>
-                <ul>
-                    <li><a href="{{path('publicaciones_categoria',{'slug':'destinos'})}}">Destinos</a></li>
-                    <li><a href="{{path('publicaciones_categoria',{'slug':'eventos'})}}">Eventos</a></li>
-                    <li><a href="{{path('publicaciones_categoria',{'slug':'tours'})}}">Tours</a></li>
-                </ul>
-            </li>
             <li>
-                <a href="{{path('autobuses')}}">
-                    <i class="fa fa-dashboard"></i> <span>Autobuses</span>
+                <a href="{{path('categorias_publicaciones')}}">
+                    <i class="fa fa-comment"></i> <span>Proyectos</span>
                 </a>
             </li>
             <li>
-                <a href="{{path('experiencias')}}">
-                    <i class="fa fa-comment"></i> <span>Experiencias</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{path('users_newsletter')}}">
-                    <i class="fa fa-users"></i> <span>Usuarios Newsletter</span>
+                <a href="{{path('servicios')}}">
+                    <i class="fa fa-dashboard"></i> <span>Servicios</span>
                 </a>
             </li>
             {% if is_granted('ROLE_ADMIN') %}

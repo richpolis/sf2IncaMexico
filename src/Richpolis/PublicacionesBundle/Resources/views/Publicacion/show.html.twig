@@ -40,14 +40,14 @@
 
         <!-- Page heading -->
         <div class="page-head">
-            <h2 class="pull-left">Publicaciones</h2>
+            <h2 class="pull-left">Proyectos</h2>
             <div class="clearfix"></div>
             <!-- Breadcrumb -->
             <div class="bread-crumb">
                 <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
                     <Divider>
                         <span class="divider">/</span> 
-                        <a href="{{path('publicaciones')}}" class="bread-current">Publicaciones</a>
+                        <a href="{{path('publicaciones')}}" class="bread-current">Proyectos</a>
                         <a href="{{path('publicaciones_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear {{categoria}}</a>
                         </div>
 
@@ -81,12 +81,40 @@
                                                                     <td>{{entity.categoria}}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>Producto:</td>
-                                                                    <td>{{ entity.titulo }}</td>
+                                                                    <td>Proyecto en español:</td>
+                                                                    <td>{{ entity.tituloEs }}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>Precio :</td>
-                                                                    <td>$ {{ entity.precio | number_format }}</td>
+                                                                    <td>Descripcion en español :</td>
+                                                                    <td>{{ entity.descripcionEs | raw }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Proyecto en ingles:</td>
+                                                                    <td>{{ entity.tituloEn }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Descripcion en ingles :</td>
+                                                                    <td>{{ entity.descripcionEn | raw }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Empezo:</td>
+                                                                    <td>{{entity.empezo}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Termino:</td>
+                                                                    <td>{{entity.termino}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Cliente:</td>
+                                                                    <td>{{entity.cliente}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Ubicacion:</td>
+                                                                    <td>{{entity.ubicacion}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Monto:</td>
+                                                                    <td>{{entity.monto}}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Imagen:</td>
