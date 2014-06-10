@@ -1,40 +1,7 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
-{% set paginaGalerias = pagina.galerias %}
-{% if paginaGalerias[0] is defined %}    
-    {% set fondo1 = (paginaGalerias[0].webPath | apply_filter('inicio_carrusel') )%}
-{% else %}
-    {% set fondo1 = 'http://placehold.it/1025x537&text=1' %}
-{% endif %}
-
-{% if paginaGalerias[1] is defined %}    
-    {% set fondo2 = (paginaGalerias[1].webPath | apply_filter('inicio_carrusel')) %}
-{% else %}
-    {% set fondo2 = 'http://placehold.it/1025x537&text=2' %}
-{% endif %} 
-    
-{% if paginaGalerias[2] is defined %}    
-    {% set fondo3 = (paginaGalerias[2].webPath | apply_filter('inicio_carrusel')) %}
-{% else %}
-    {% set fondo3 = 'http://placehold.it/1025x537&text=3' %}
-{% endif %} 
-    
-{% if paginaGalerias[3] is defined %}    
-    {% set fondo4 = (paginaGalerias[3].webPath | apply_filter('inicio_carrusel')) %}
-{% else %}
-    {% set fondo4 = 'http://placehold.it/1025x537&text=4' %}
-{% endif %}
-
-{% if paginaGalerias[4] is defined %}    
-    {% set fondo5 = (paginaGalerias[4].webPath | apply_filter('inicio_carrusel')) %}
-{% else %}
-    {% set fondo5 = 'http://placehold.it/1025x537&text=5' %}
-{% endif %}
-
 {% block stylesheets %}
     {{  parent()  }}
-    <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
-    <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
     <style>
     .bx-wrapper .bx-viewport{
         padding: 0px;
@@ -42,228 +9,25 @@
         top: 0px;
         left: 0px;
     }
-    .container header.encabezado.inicio{
-        background: url("{{fondo1}}") no-repeat top center;
-        -webkit-animation: autobusesInicio 100s ease-in infinite 2s;
-        -moz-animation: autobusesInicio 100s ease-in infinite 2s;
-        -ms-animation: autobusesInicio 100s ease-in infinite 2s;
-        -o-animation: autobusesInicio 100s ease-in infinite 2s;
-        animation: autobusesInicio 100s ease-in infinite 2s;
-    }
-    @-moz-keyframes autobusesInicio {
-   		0%   { background: url("{{fondo1}}") no-repeat top center; }
-		20%  { background: url("{{fondo2}}") no-repeat top center; }
-		40%  { background: url("{{fondo3}}") no-repeat top center; }
-		60%  { background: url("{{fondo4}}") no-repeat top center; }
-	    80%  { background: url("{{fondo5}}") no-repeat top center; }
-		100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
-  @-webkit-keyframes autobusesInicio {
-        0%   { background: url("{{fondo1}}") no-repeat top center; }
-        20%  { background: url("{{fondo2}}") no-repeat top center; }
-        40%  { background: url("{{fondo3}}") no-repeat top center; }
-        60%  { background: url("{{fondo4}}") no-repeat top center; }
-        80%  { background: url("{{fondo5}}") no-repeat top center; }
-        100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
-  @-o-keyframes autobusesInicio {
-        0%   { background: url("{{fondo1}}") no-repeat top center; }
-        20%  { background: url("{{fondo2}}") no-repeat top center; }
-        40%  { background: url("{{fondo3}}") no-repeat top center; }
-        60%  { background: url("{{fondo4}}") no-repeat top center; }
-        80%  { background: url("{{fondo5}}") no-repeat top center; }
-        100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
-  @-ms-keyframes autobusesInicio {
-        0%   { background: url("{{fondo1}}") no-repeat top center; }
-        20%  { background: url("{{fondo2}}") no-repeat top center; }
-        40%  { background: url("{{fondo3}}") no-repeat top center; }
-        60%  { background: url("{{fondo4}}") no-repeat top center; }
-        80%  { background: url("{{fondo5}}") no-repeat top center; }
-        100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
-  @keyframes autobusesInicio {
-        0%   { background: url("{{fondo1}}") no-repeat top center; }
-        20%  { background: url("{{fondo2}}") no-repeat top center; }
-        40%  { background: url("{{fondo3}}") no-repeat top center; }
-        60%  { background: url("{{fondo4}}") no-repeat top center; }
-        80%  { background: url("{{fondo5}}") no-repeat top center; }
-        100% { background: url("{{fondo1}}") no-repeat top center; }
-  }
-
+    
     </style>
 {% endblock %}
 
-{% block header_class 'inicio' %}
-
 {% block contenido %}
-            <div class="cotizador-promociones">
-                <div class="cotizador-linea">
-                    <a href="{{path('frontend_cotizador')}}" style="color: white;">
-                        {{"Visite nuestro cotizador en linea"|trans}}
-                    </a>
-                </div>
-                <div class="newsletter">
-                    {{"Reciba ofertas y promociones en su correo"|trans}}
-                    <span class="newsletter-correo">
-                        <a href="#" data-toggle="modal" data-target="#formNewsletter" class="newsletter">   
-                        </a>    
-                    </span>
-                </div>
-            </div>
-            <article class="destinos-eventos">
-                <div class="destinos">
-                    <span class="titulo">{{"destinos"|trans}}</span>
-                    <ul class="sliderDestinos">
-                        {% for categoria in categoriasPublicacion if categoria.slug == "destinos" %}
-                            {% for publicacion in categoria.publicaciones %}
-                            <li>
-                                <a href="{{path('frontend_tours')}}#destino-{{publicacion.slug}}">
-                                    <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="">
-                                    <div class="descripcion-publicacion" style="width: 100%;">
-										<h3>
-											{{publicacion.titulo(locale)}}
-										</h3>
-										{{ publicacion.descripcion(locale)|raw }}
-									</div>
-                                </a>
-                            </li>
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="eventos">
-                    <span class="titulo">{{"eventos"|trans}}</span>
-                    <ul class="sliderEventos">
-                        {% for categoria in categoriasPublicacion if categoria.slug == "eventos" %}
-                            {% for publicacion in categoria.publicaciones %}
-                            <li>
-                                <a href="{{path('frontend_tours')}}#evento-{{publicacion.slug}}">
-                                    <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="">
-                                    <div class="descripcion-publicacion" style="width: 100%;">
-										<h3>
-											{{publicacion.titulo(locale)}}
-										</h3>
-										{{ publicacion.descripcion(locale)|raw }}
-									</div>
-                                </a>
-                            </li>
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
+            <article class="inicio">
+                
             </article>
-            <article class="twitters">
-                {{ render(controller("FrontendBundle:Default:lastTweets",{'username': 'TurismoPlusMG'})) }}
-                <div class="experiencias">
-                    <span class="titulo-experiencias">{{"Experiencias MG"|trans}}</span>
-                    <div class="contenedor-experiencias carousel-inner">
-                        {% for experiencia in experiencias %}
-                        <div class="experiencia item {% if loop.index == 1%}active{% endif %}">
-                                {{experiencia.contenido(locale) | raw }}
-                            <span class="autor-experiencia">
-                                -{{experiencia.autor}}
-                            </span>
-                        </div>
-                        {% endfor %}	
-                    </div>
-                </div>
-            </article>
-<!-- Modal -->
-<div class="modal fade" id="formNewsletter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        {% include 'FrontendBundle:Default:formNewsletter.html.twig' with {'form': form}%}
-    </div>    
-</div>                                
                                 
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script src="{{asset('js/jquery.bxslider.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
-<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
-<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
 <script>
 $(document).on("ready",function(){
-        setTimeout(function(){
-            iniciarCircle();
-        },6000);
-
-        $('.sliderDestinos').bxSlider({
-            randomStart: false,
-            pager: false,
-            auto: true,
-            controls: false,
-            speed: 1000,
-            autoHover: true,
-        });
-		
-        $('.sliderEventos').bxSlider({
-            randomStart: false,
-            pager: false,
-            auto: true,
-            controls: false,
-            speed: 1000,
-            autoHover: true,
-        });
-
         
-        $("a.fancybox").fancybox();
-                
-        $("a.fancybox-media").fancybox({
-            helpers : {
-                media: true
-            },
-            youtube : {
-                autoplay: 0
-            }
-        });
-        iniciarlizarFormNewsletter();
-        
-        $('.experiencias').carousel({
-            interval: 5000,
-            pause: "hover",
-        })
 
 });
-var iniciarCircle=function(){
-        $('ul.twitter-feed li:first-child').slideUp("slow",function(){
-            $('ul.twitter-feed').append($(this).slideDown("fast"));
-        });
-                 
-        setTimeout(function(){
-            iniciarCircle();
-        },6000);
-                    
-}
-function iniciarlizarFormNewsletter(){
-    $("input.form-submit").click( function() {
-        debugger;
-        $('img.ajax-loader').css({visibility: 'visible'});
-        $("img.ajax-loader").fadeIn("fast",function(){
-            $.post("{{path('frontend_form_newsletter')}}",
-            $("form.form-newsletter").serialize(),
-            function(data){
-                actualizaFormularioNewsletter(data.vista);
-                if(data.ok){
-                    setInterval(function(){
-                        $( "#formNewsletter" ).modal( "hide" );
-                    },2000);
-                }
-                setInterval(function(){
-                    $("#formulario_newsletter").find(".form-response-output").fadeOut("fast");
-                },2000);
-                
-            });    
-        });
-    });
-}
 
-function actualizaFormularioNewsletter(data){
-  $("#formulario_newsletter").parent().html(data);
-  iniciarlizarFormNewsletter();
-}
-    
 </script>
 {% endblock %}
 

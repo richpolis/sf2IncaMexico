@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Turismo Plus MG{% endblock %}
+{% block title %}Inca México{% endblock %}
 
 {% set urlAbsolutaFoto = 'http://'
                              ~ app.request.server.get('SERVER_NAME')
@@ -15,15 +15,15 @@
     {% block redes_sociales %}
 
     <meta property="og:url" content="{{url('homepage')}}" />
-    <meta property="og:title" content="Turismo Plus MG" />
+    <meta property="og:title" content="Inca México" />
     <meta property="og:image" content="{{urlAbsolutaFoto}}" />
     <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="TurismoPlusMG.com" />
+    <meta property="og:site_name" content="IncaMexico.com" />
     <!--meta property="fb:admins" content="USER_ID1,USER_ID2"/-->
     
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@siglov">
-    <meta name="twitter:title" content="Turismo Plus MG">
+    <meta name="twitter:site" content="@incamexico">
+    <meta name="twitter:title" content="Inca México">
     <meta name="twitter:description" content="Descripcion de la publicaicon">
     <meta name="twitter:creator" content="@richpolis">
     <meta name="twitter:image:src" content="{{urlAbsolutaFoto}}">
@@ -45,7 +45,6 @@
 <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
 <link rel="stylesheet" href="{{asset('css/bootstrap-responsive.html')}}">
 <link rel="stylesheet" href="{{asset('css/fuentes.css')}}">
-<link rel="stylesheet" href="{{asset('css/menu.css')}}">
 <link rel="stylesheet" href="{{asset('css/main.css')}}">
 <style>
     .loader {
@@ -63,90 +62,70 @@
 
 {% block body %}
     <div class="container">
-        <header class="encabezado {% block header_class %}{% endblock %}">
-            <div id="lenguajes-redes-sociales">
-                <div class="redes-sociales">
-                    <a href="https://twitter.com/TurismoPlusMG" target="_blank">
-                    <span class="twitter"></span>
+        <header>
+            <div class="lenguajes">
+                {% if locale == 'es' %}
+                    <a href="{{url(route,{'_locale':'es'})}}" class="lenguaje lenguaje-espanol">
+                        Español
                     </a>
-                    <a href="https://www.facebook.com/TurismoPlusMG" target="_blank">
-                    <span class="facebook"></span>
+                {% else %}
+                    <span class="lenguaje lenguaje-espanol">Español</span>
+                {% endif %}
+                {% if locale == 'en' %}
+                    <a href="{{url(route,{'_locale':'en'})}}" class="lenguaje lenguaje-ingles">
+                        English
                     </a>
-                    <span class="youtube"></span>
-                    <a href="#" data-toggle="modal" data-target="#formMensajeSitio">
-                    <span class="email"></span>
-                    </a>
-                </div>
-                <div class="lenguajes">
-                  <label for="selectLanguage" style="font-weight: normal;">{% trans %}Select language{% endtrans %}</label>  
-                  <select name="selectLanguage" id="selectLanguage" onchange="selectLanguage()">
-                      <option value="es" {% if locale == "es" %}selected{% endif %}>{% trans %}Español{% endtrans %}</option>
-                      <option value="en" {% if locale == "en" %}selected{% endif %}>{% trans %}English{% endtrans %}</option>
-                      <!--option value="fr" {% if locale == "fr" %}selected{% endif %}>{% trans %}Français{% endtrans %}</option-->
-                  </select>
-                </div>
+                {% else %}
+                    <span class="lenguaje lenguaje-ingles">English</span>
+                {% endif %}
             </div>
-            <nav class="main-nav">
-                <figure class="logo">
-                    <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt="">
-                </figure>
-                <ul class="menu">
-                    <li>
-                        <a href="{{path('homepage')}}"  {% if route == 'homepage' %}class="active"{% endif %}>
-                            <span data-hover="{{"inicio"|trans}}">{{"inicio"|trans}}</span>
+            <a id="logo" href="{{path('homepage')}}">
+                <img src="{{ asset('images/keyarts/logomenu.png') }}" alt="fresh design web">
+            </a>
+            <a id="menu-toggle" class="button dark" href="#">
+                <img src="{{ asset('images/nav.png') }}" alt="" />
+            </a>
+            <nav class="navegador">
+                  <ul id="menu">
+                    <li class="parent {% if route == 'homepage' %}active{% endif %}">
+                        <a href="{{path('homepage')}}"  class="dropdown-toggle" data-toggle="dropdown">
+                            {{"inicio"|trans}}
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="{{path('frontend_nosotros')}}">{{"Quienes somos"|trans}}</a></li>
+                        </ul>
+                    </li>
+                    <li class="parent {% if route == 'frontend_proyectos' %}active{% endif %}">
+                        <a href="{{path('frontend_proyectos')}}"  class="dropdown-toggle" data-toggle="dropdown">
+                            {{"Proyectos"|trans}}
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#">{{"Por sector o región"|trans}}</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item {% if route == 'frontend_servicios' %} active{% endif %}">
+                        <a href="{{path('frontend_servicios',{'_locale':locale})}}"  >
+                            {{ "servicios"| trans }}
                         </a>
                     </li>
-                    <li>
-                        <a href="{{path('frontend_nosotros',{'_locale':locale})}}"  {% if route == 'frontend_nosotros' %}class="active"{% endif %}>
-                            <span data-hover="{{"nosotros"|trans}}">{{"nosotros"|trans}}</span>
+                    <li class="menu-item {% if route == 'frontend_clientes' %} active{% endif %}">
+                        <a href="{{path('frontend_clientes',{'_locale':locale})}}"  >
+                            {{ "clientes"| trans }}
                         </a>
                     </li>
-                    <li>
-                        <a href="{{path('frontend_autobuses',{'_locale':locale})}}"  {% if route == 'frontend_autobuses' %}class="active"{% endif %}>
-                            <span data-hover="{{"autobuses"|trans}}">{{"autobuses"|trans}}</span>
+                    <li class="menu-item {% if route == 'frontend_contacto' %} active{% endif %}">
+                        <a href="{{path('frontend_contacto',{'_locale':locale})}}"  >
+                            {{ "contacto"| trans }}
                         </a>
                     </li>
-                    <li>
-                        <a href="{{path('frontend_servicios',{'_locale':locale})}}"  {% if route == 'frontend_servicios' %}class="active"{% endif %}>
-                            <span data-hover="{{"servicios"|trans}}">{{"servicios"|trans}}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{path('frontend_cotizador',{'_locale':locale})}}"  {% if route == 'frontend_cotizador' %}class="active"{% endif %}>
-                            <span data-hover="{{"cotizador"|trans}}">{{"cotizador"|trans}}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{path('frontend_tours',{'_locale':locale})}}"  {% if route == 'frontend_tours' %}class="active"{% endif %}>
-                            <span data-hover="{{"tours"|trans}}">{{"tours"|trans}}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{path('frontend_contacto',{'_locale':locale})}}"  {% if route == 'frontend_contacto' %}class="active"{% endif %}>
-                            <span data-hover="{{"contacto"|trans}}">{{"contacto"|trans}}</span>
-                        </a>
-                    </li>
-                </ul>
+                  </ul>
             </nav>
-            {% block extra_header %}
-                <div class="container-extra-header">
-                    <img src="{{asset('images/keyarts/inicio/camiones.png')}}" alt="" class="autobuses">
-                    <img src="{{asset('images/keyarts/inicio/escudo.png')}}" alt="" class="escudo">
-                    <img src="{{asset('images/keyarts/inicio/slogan.png')}}" alt="" class="slogan">
-                </div>
-            {% endblock %}
         </header>
         <section id="sectionPrincipal">
             {% block contenido %} 
             {% endblock %}
-            <div class="modal fade" id="formMensajeSitio" tabindex="-1" role="dialog" aria-labelledby="myMensajeSitio" aria-hidden="true">
-                <div class="modal-dialog">
-                     {{ render(controller("FrontendBundle:Default:getMensajeSitio",{'_locale': locale })) }}
-                </div>    
-            </div>
         </section>
         <footer>
-            <p class="col-lg-12">Turismo Plus MG Confort Premier - Calle Reforma Manzana #3 Local #4 Col. La Bamba, Chalco Edo. de Mex. Télefono +521 55 59730999</p>
         </footer>
         <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
         <div class="loader"></div>
@@ -166,6 +145,25 @@
         window.lenguajes = {};
         window.lenguajes.espanol = '{{url(route,{'_locale':'es'})}}';
         window.lenguajes.ingles = '{{url(route,{'_locale':'en'})}}';
-        window.lenguajes.frances = '{{url(route,{'_locale':'fr'})}}';
-    </script>    
+    </script> 
+    <script>
+        $(document).ready(function() {
+
+            /* MAIN MENU */
+            $('#menu > li:has(ul.submenu)').addClass('parent');
+            $('ul.submenu > li:has(ul.submenu) > a').addClass('parent');
+
+            $('#menu-toggle').click(function() {
+                $('#menu').slideToggle(300);
+                return false;
+            });
+
+            $(window).resize(function() {
+                if ($(window).width() > 700) {
+                    $('#menu').removeAttr('style');
+                }
+            });
+
+        });
+    </script>   
 {% endblock %}
