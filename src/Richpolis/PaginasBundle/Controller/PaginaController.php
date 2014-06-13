@@ -352,7 +352,7 @@ class PaginaController extends Controller
     /**
      * Crea una galeria link video de una pagina.
      *
-     * @Route("/{id}/galerias/link/video", name="pagina_galerias_link_video_2", requirements={"id" = "\d+"})
+     * @Route("/{id}/galerias/link/video", name="paginas_galerias_link_video", requirements={"id" = "\d+"})
      * @Method({"POST","GET"})
      */
     public function galeriasLinkVideoAction(Request $request,$id){

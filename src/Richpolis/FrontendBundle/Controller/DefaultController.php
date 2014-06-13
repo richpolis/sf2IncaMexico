@@ -43,7 +43,8 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        
+        $inicio = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'inicio'));
         
         return array(
 
