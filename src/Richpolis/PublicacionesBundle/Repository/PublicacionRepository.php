@@ -25,7 +25,32 @@ class PublicacionRepository extends EntityRepository
         $max=$query->getResult();
         return $max[0]['value'];
     }
-    
+
+    public function getMinEmpezo(){
+        $em=$this->getEntityManager();
+       
+        $query=$em->createQuery('
+            SELECT MIN(c.empezo) as value 
+            FROM PublicacionesBundle:Publicacion c 
+            ORDER BY c.position ASC
+        ');
+        
+        $min=$query->getResult();
+        return $min[0]['value'];
+    }
+
+    public function getMaxTermino(){
+        $em=$this->getEntityManager();
+       
+        $query=$em->createQuery('
+            SELECT MIN(c.termino) as value 
+            FROM PublicacionesBundle:Publicacion c 
+            ORDER BY c.position ASC
+        ');
+        
+        $max=$query->getResult();
+        return $max[0]['value'];
+    }
     
     public function getPublicacionConGaleriaPorId($publicacion_id,$active=true){
         $em=$this->getEntityManager();
@@ -47,25 +72,19 @@ class PublicacionRepository extends EntityRepository
         }
     }
     
-    public function findConObjetos($id){
+    public function findActivos(){
         $em=$this->getEntityManager();
         $query=$em->createQuery('
-               SELECT p,c,u,g 
+               SELECT p,c,g 
                FROM PublicacionesBundle:Publicacion p 
                JOIN p.galerias g 
-               JOIN p.usuario u 
                JOIN p.categoria c 
-               WHERE p.id = :publicacion 
-               AND g.isActive = :active 
-               ORDER BY g.position ASC
-        ')->setParameters(array('publicacion'=> $id,'active'=>true));
+               WHERE p.isActive = :publicacion 
+               AND g.isActive = :galeria 
+               ORDER BY p.empezo ASC, p.termino DESC, g.position ASC
+        ')->setParameters(array('publicacion'=> true,'galeria'=>true));
         
-        $publicacions=$query->getResult();
-        if(isset($publicacions[0])){
-            return $publicacions[0];
-        }else{
-            return null;
-        }
+        return $query->getResult();
     }
     
     public function findForSlugConObjetos($slug){

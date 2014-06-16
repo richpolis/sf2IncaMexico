@@ -1,6 +1,6 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
-{% block stylesheets%}
+{% block stylesheets %}
     <!-- Stylesheets -->
   <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
   <!-- Font awesome icon -->
@@ -49,8 +49,6 @@
           <span class="divider">/</span> 
           <a href="{{path('categorias_publicaciones')}}" class="bread-current">Categorias</a>
           <a href="{{path('categorias_publicaciones_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear categoria</a>
-          <!--a href="{{path('categorias_publicaciones_importar')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Importar</a>
-          <a href="{{path('categorias_publicaciones_exportar')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Exportar</a-->
         </div>
         
         <div class="clearfix"></div>

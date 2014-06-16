@@ -13,6 +13,9 @@ use Richpolis\PublicacionesBundle\Entity\Publicacion;
 use Richpolis\PublicacionesBundle\Form\PublicacionType;
 
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+use Richpolis\BackendBundle\Utils\qqFileUploader;
+use Richpolis\GaleriasBundle\Entity\Galeria;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -225,9 +228,12 @@ class PublicacionController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'categoria' => $this->getCategoriaDefault(),
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
+            'get_galerias' => $this->generateUrl('publicaciones_galerias', array('id' => $entity->getId())),
+            'post_galerias' => $this->generateUrl('publicaciones_galerias_upload', array('id' => $entity->getId())),
+            'post_galerias_link_video' => $this->generateUrl('publicaciones_galerias_link_video', array('id' => $entity->getId())),
+            'url_delete' => $this->generateUrl('publicaciones_galerias_delete', array('id' => $entity->getId(), 'idGaleria' => '0')),
         );
     }
 
@@ -444,5 +450,139 @@ class PublicacionController extends Controller {
             return $response;
         }
     }
+    
+    /**
+     * Lists all Proyecto galerias entities.
+     *
+     * @Route("/{id}/galerias", name="publicaciones_galerias", requirements={"id" = "\d+"})
+     * @Method("GET")
+     */
+    public function galeriasAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $autobus = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
+        
+        $galerias = $autobus->getGalerias();
+        $get_galerias = $this->generateUrl('publicaciones_galerias',array('id'=>$autobus->getId()));
+        $post_galerias = $this->generateUrl('publicaciones_galerias_upload', array('id'=>$autobus->getId()));
+	$post_galerias_link_video = $this->generateUrl('publicaciones_galerias_link_video',array('id'=>$autobus->getId()));
+        $url_delete = $this->generateUrl('publicaciones_galerias_delete',array('id'=>$autobus->getId(),'idGaleria'=>'0'));
+        
+        return $this->render('GaleriasBundle:Galeria:galerias.html.twig', array(
+            'galerias'=>$galerias,
+            'get_galerias' =>$get_galerias,
+            'post_galerias' =>$post_galerias,
+            'post_galerias_link_video' =>$post_galerias_link_video,
+            'url_delete' => $url_delete,
+        ));
+    }
+    
+    /**
+     * Crea una galeria de una autobus.
+     *
+     * @Route("/{id}/galerias", name="publicaciones_galerias_upload", requirements={"id" = "\d+"})
+     * @Method("POST")
+     */
+    public function galeriasUploadAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $autobus=$em->getRepository('PublicacionesBundle:Publicacion')->find($id);
+       
+        if(!$request->request->has('tipoArchivo')){ 
+            // list of valid extensions, ex. array("jpeg", "xml", "bmp")
+            $allowedExtensions = array("jpeg","png","gif","jpg");
+            // max file size in bytes
+            $sizeLimit = 6 * 1024 * 1024;
+            $uploader = new qqFileUploader($allowedExtensions, $sizeLimit,$request->server);
+            $uploads= $this->container->getParameter('richpolis.uploads');
+            $result = $uploader->handleUpload($uploads."/galerias/");
+            // to pass data through iframe you will need to encode all html tags
+            /*****************************************************************/
+            //$file = $request->getParameter("qqfile");
+            $max = $em->getRepository('GaleriasBundle:Galeria')->getMaxPosicion();
+            if($max == null){
+                $max=0;
+            }
+            if(isset($result["success"])){
+                $registro = new Galeria();
+                $registro->setArchivo($result["filename"]);
+                $registro->setThumbnail($result["filename"]);
+                $registro->setTitulo($result["titulo"]);
+                $registro->setIsActive(true);
+                $registro->setPosition($max+1);
+                $registro->setTipoArchivo(RpsStms::TIPO_ARCHIVO_IMAGEN);
+                //unset($result["filename"],$result['original'],$result['titulo'],$result['contenido']);
+                $em->persist($registro);
+                $registro->crearThumbnail();
+                $autobus->getGalerias()->add($registro);
+                $em->flush();
+            }
+        }else{
+            $result = $request->request->all(); 
+            $registro = new Galeria();
+            $registro->setArchivo($result["archivo"]);
+            $registro->setIsActive($result['isActive']);
+            $registro->setPosition($result['position']);
+            $registro->setTipoArchivo($result['tipoArchivo']);
+            $em->persist($registro);
+            $autobus->getGalerias()->add($registro);
+            $em->flush();  
+        }
+        
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData($result);
+        return $response;
+    }
+    
+    /**
+     * Crea una galeria link video de una autobus.
+     *
+     * @Route("/{id}/galerias/link/video", name="publicaciones_galerias_link_video", requirements={"id" = "\d+"})
+     * @Method({"POST","GET"})
+     */
+    public function galeriasLinkVideoAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $autobus=$em->getRepository('PublicacionesBundle:Publicacion')->find($id);
+        $parameters = $request->request->all();
+      
+        if(isset($parameters['archivo'])){ 
+            $registro = new Galeria();
+            $registro->setArchivo($parameters['archivo']);
+            $registro->setIsActive($parameters['isActive']);
+            $registro->setPosition($parameters['position']);
+            $registro->setTipoArchivo($parameters['tipoArchivo']);
+            $em->persist($registro);
+            $autobus->getGalerias()->add($registro);
+            $em->flush();  
+        }
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData($parameters);
+        return $response;
+    }
+    
+    /**
+     * Deletes una Galeria entity de una Proyecto.
+     *
+     * @Route("/{id}/galerias/{idGaleria}", name="publicaciones_galerias_delete", requirements={"id" = "\d+","idGaleria"="\d+"})
+     * @Method("DELETE")
+     */
+    public function deleteGaleriaAction(Request $request, $id, $idGaleria)
+    {
+            $em = $this->getDoctrine()->getManager();
+            $autobus = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
+            $galeria = $em->getRepository('GaleriasBundle:Galeria')->find(intval($idGaleria));
+
+            if (!$autobus) {
+                throw $this->createNotFoundException('Unable to find Proyecto entity.');
+            }
+            
+            $autobus->getGalerias()->removeElement($galeria);
+            $em->remove($galeria);
+            $em->flush();
+        
+
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData(array("ok"=>true));
+        return $response;
+    }
 }

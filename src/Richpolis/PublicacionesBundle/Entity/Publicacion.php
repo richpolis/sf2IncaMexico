@@ -328,6 +328,16 @@ class Publicacion
         $this->slug = RpsStms::slugify($this->getTituloEs());
     }
 
+    public function getSlugLocale($locale)
+    {
+        $slug = '';
+        if($locale == 'es'){
+            $slug = RpsStms::slugify($this->getTituloEs());    
+        }elseif($locale == 'en'){
+            $slug = RpsStms::slugify($this->getTituloEn());
+        }
+        return $slug;
+    }
     
     /*** uploads ***/
     

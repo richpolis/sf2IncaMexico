@@ -10,7 +10,7 @@ use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 /**
  * Pagina
  *
- * @ORM\Table()
+ * @ORM\Table(name="paginas")
  * @ORM\Entity(repositoryClass="Richpolis\PaginasBundle\Repository\PaginaRepository")
  * @ORM\HasLifecycleCallbacks
  */
@@ -273,12 +273,13 @@ class Pagina
         return $this->file;
     }
     
-    /**
-    * @ORM\PrePersist
-    * @ORM\PreUpdate
+   /**
+    * @ORM\PrePersist()
+    * @ORM\PreUpdate()
     */
     public function preUpload()
     {
+      $var = true;  
       if (null !== $this->getFile()) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
@@ -287,11 +288,12 @@ class Pagina
     }
 
     /**
-    * @ORM\PostPersist
-    * @ORM\PostUpdate
+    * @ORM\PostPersist()
+    * @ORM\PostUpdate()
     */
     public function upload()
     {
+      $var = true;  
       if (null === $this->getFile()) {
             return;
         }

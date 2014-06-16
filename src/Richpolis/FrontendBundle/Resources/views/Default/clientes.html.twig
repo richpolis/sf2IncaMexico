@@ -1,0 +1,43 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+    <style type="text/css" media="all">
+        .bwWrapper {
+            position:relative;
+            display:block;
+        }
+    </style>
+{% endblock %}
+
+{% block contenido %}
+        <article class="clientes">
+            <div class="listado">
+              {% for galeria in pagina.galerias %}  
+              <div class="cliente bwWrapper">
+                <img src="{{galeria.webPath | apply_filter('clientes') }}" alt="" width="110" height="110"/>
+              </div>
+              {% endfor %}
+            </div>
+        </article>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/jquery.blackandwhite.min.js')}}"></script>
+<script type="text/javascript">
+$(window).load(function(){
+    $('.bwWrapper').BlackAndWhite({
+        hoverEffect:true,
+        webworkerPath: '/uploads/galerias/',
+        intensity:1,
+        onImageReady:function(img){
+            $(img).parent().animate({
+                opacity:1
+            });
+        }
+    });
+});
+
+</script>
+{% endblock %}

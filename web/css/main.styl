@@ -52,7 +52,10 @@ a:hover
 body
 	font-size 16px
 	background-color white
-	font-family 'antipastoregular'
+	font-family 'futura_lt_btlight'
+
+body.inicio
+	overflow hidden
 	
 .container
 	margin 0 auto
@@ -165,8 +168,291 @@ nav
 				background-position 95% center
 		& li:hover > ul.submenu
 			display block
-					
 
+article.inicio
+	position absolute
+	bottom 10px
+	right 0px
+	width 100%
+	height 210px
+	& .mostrarServicios
+		float right
+		margin-top 20px
+		opacity 1
+		transition all 1s ease
+		& a.flecha
+			font-size 24px
+			height 50px
+			width 400px
+			color white
+			font-weight bold
+			text-transform capitalize
+			 background-color #79004A
+			 margin-left 10px
+			 padding 20px
+	& ul.servicios
+		margin 0 auto
+		padding 0
+		text-align right 
+		position absolute
+		right -100%
+		transition all 1s ease-out
+		& .item
+			width 200px
+			height 215px
+			background-color rgba(0,0,0,0.8)
+			display inline-block
+			vertical-align top
+			box-sizing border-box
+			margin-left 10px
+			overflow hidden
+			& img
+				width 190px
+				height 150px
+				margin 5px
+			& figure
+				margin 0px
+				width 100%
+			& .titulo
+				background-color #79004A
+				color white
+				font-size 20px
+				height 50px
+				line-height 50px
+				text-align center
+				text-transform capitalize
+				margin 0px 5px 5px
+
+	&:hover
+		& ul.servicios
+			right 10px
+		& .mostrarServicios
+			opacity 0	
+
+article.nosotros
+	margin 10px
+	overflow hidden
+	& .col-izquierda
+		width 350px
+		float left
+	& .col-derecha
+		width calc(100% - 350px)
+		float right
+		text-align left
+		box-sizing border-box
+		padding-right 10px
+		
+article.servicios
+	margin 10px
+	position relative
+	& ul.navegador
+		margin 0px
+		padding 0px
+		position absolute
+		right 10px
+		top 10px
+		z-index 1000
+		overflow hidden
+		& li.item
+			list-style none
+			display inline-block
+			vertical-align top
+			padding 0px 10px
+			border-left 2px solid grey
+			height 20px
+			& a
+				text-transform uppercase
+				text-decoration none
+				color red
+				transition all .5 ease-in
+				font-size 22px
+				line-height 22px
+				font-weight bold
+				&:hover 
+					color orange		
+		& li.active	a
+			color orange
+		& li.item:first-child
+			border-left none
+	& .servicios
+		width 100%
+		box-sizing border-box
+		padding 70px 10px 10px
+		position relative
+		& .servicio
+			display none
+			& .galeria
+				height 370px
+				margin-bottom 20px
+				& > li
+					width 900px
+					height 350px
+					& img
+						width 100%
+						height 100%
+			& .descripcion
+				text-align left
+		& .servicio.active
+			display block
+			
+article.clientes
+	margin 10px
+	box-sizing border-box
+	padding 0px 10px
+	& .listado
+		margin 0 auto
+		padding 0px
+		list-style none
+		& .cliente
+			border 1px solid grey
+			display inline-block
+			vertical-align top
+			height 110px
+			width 110px
+			& img
+				width 100%
+				max-height 100%
+
+article.contacto
+	box-sizing border-box
+	width 100%
+	margin 10px
+	text-align left
+	& h3.encabezadoInca
+		margin 30px 0px 10px
+		color #79004A
+		text-align left
+		font-size 24px
+		line-height 24px
+		text-transform capitalize
+	& #formulario_contacto
+		& label
+			text-transform capitalize
+				
+
+article.mapas
+	position relative
+	& ul.mapas
+		margin 0 auto
+		padding 0
+		& > li 
+			position absolute
+			top 0px
+			left 0px
+			width -webkit-calc(100% - 300px)
+			width calc(100% - 300px)
+			& > img
+				opacity 0
+				max-width 100%
+				height 550px
+			&.show > img
+				opacity 1
+		& #mapa-fondo img
+			opacity 1
+	& .formulario
+		position absolute
+		top 10px
+		right 10px
+		width 300px
+		text-align left
+		border 1px solid #79004A
+		border-radius 5px
+		padding 5px
+		& h3
+			color #79004A
+		& input
+			padding 2px
+			font-size 16px
+			color #79004A
+		& .grupo-checkbox-icono input
+		& .grupo-checkbox-icono img
+		& .grupo-checkbox-icono span
+			display inline-block
+			vertical-align middle
+		& .grupo-checkbox-icono span
+			vertical-align top	
+		& span
+			width 230px
+article.proyectos
+	margin 10px
+	& .contenedorProyectos
+		padding 10px 50px
+	& .controles
+		height 50px
+		margin-top 10px
+	& .controles .rango label
+		color red
+		text-transform uppercase
+		font-size 20px
+	& .controles .combobox label
+		color green
+		text-transform uppercase
+		font-size 20px		
+	& .controles .combobox select
+		width 300px
+	& .proyecto
+		height 400px
+		text-align left
+		transition all 2s ease-in
+		& figure.imagen img
+			box-shadow 0 0 1px 1px rgba(100,100,100,.8)
+			cursor pointer			
+		& h3.titulo
+			text-transform uppercase
+			font-size 20px
+			color red
+			margin 10px 0px 0px
+			font-weight bold 
+		& span.rango
+			font-size 18px
+			color green
+			font-weight bold		
+		&.seleccionado
+			border 1px solid grey
+			border-radius 5px
+			box-shadow 0 2px 1px 0 rgba(100,100,100,.8)
+			padding 50px
+			position relative
+			& span.closeProyecto
+				height 18px
+				width 18px
+				position absolute
+				top -40px
+				right -200px
+				z-index 100
+				cursor pointer
+				background url("../images/keyarts/cerrarproyecto.png") no-repeat center center
+				display block
+			& h3.titulo
+				text-transform capitalize
+				margin 0px 0px 5px 0px
+				font-size 24px
+			& span.rango
+				font-size 20px
+				color red
+				margin 0px 0px 10px
+			& ul.detalles
+				margin 0px 0px 10px
+				padding 0
+				& li.detalle
+					color #79004A
+					font-size 16px
+					text-transform capitalize
+					list-style none
+					font-weight bold
+					& span
+						color grey
+						font-size 14px
+						width 100px
+						text-align right
+						display inline-block
+						vertical-align top
+						padding-right 5px
+			& .descripcion
+				color grey
+				font-size 16px				
+
+			
 @media all and (max-width: 700px)
 	.container
 		& nav

@@ -1,19 +1,73 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
-{% block extra_header %}
-    <div class="container-extra-header" style="height: 258px; background-color: white;">
-        <img src="{{nosotros.webPath}}" alt="" class="autobuses">
-    </div>
+{% block stylesheets %}
+    {{  parent()  }}
+    <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
+    <style>
+    .bx-wrapper .bx-viewport{
+        padding: 0px;
+        border: none;
+        top: 0px;
+        left: 0px;
+    }
+    </style>
 {% endblock %}
 
 {% block contenido %}
         <article class="nosotros">
-            {{nosotros.contenido(locale) | raw }}
+            <div class="col-izquierda">
+	        	<ul class="slider">
+	        		{% for galeria in pagina.galerias %}
+	        			<li><img src="{{galeria.webPath | apply_filter('quienes_somos_carrusel') }}" /></li>		
+	        		{% endfor %}
+	        	</ul>
+            </div>
+        	<div class="col-derecha">
+        		{{pagina.contenido(locale) | raw }}	
+        	</div>
+            
         </article>
 {% endblock %}
+
 {% block javascripts %}
-{{ parent() }}
-<script src="{{asset('js/main.js')}}"></script>
-</script>
+    {{ parent() }}
+    <script src="{{asset('js/jquery.bxslider.js')}}"></script>
+    <script src="{{asset('js/main.js')}}"></script>
+    <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+    <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+    <script>
+        $(document).on("ready", function() {
+
+            $('.slider').bxSlider({
+                randomStart: false,
+                pager: false,
+                auto: true,
+                controls: false,
+                speed: 1000,
+                autoHover: true,
+                slideWidth: 300,
+            });
+
+
+            /*$("a.fancybox").fancybox();
+
+            $("a.fancybox-media").fancybox({
+                helpers: {
+                    media: true
+                },
+                youtube: {
+                    autoplay: 0
+                }
+            });
+
+            $('.anuncios').carousel({
+                interval: 7000,
+                pause: 'hover',
+            });*/
+        });
+
+    </script>
 {% endblock %}
+
 

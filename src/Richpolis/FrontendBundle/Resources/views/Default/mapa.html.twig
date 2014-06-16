@@ -1,0 +1,73 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+    <style type="text/css" media="all">
+        input[type="checkbox"]{ 
+            width: 20px;
+            height: 20px; 
+        }
+    </style>
+{% endblock %}
+
+{% block contenido %}
+    <article class="mapas">
+        <ul class="mapas">
+            {% for galeria in pagina.galerias %}
+                <li id="mapa-{{ galeria.titulo }}"><img  style="z-index: {{loop.index*100}}" src="{{ galeria.webPath }}" /></li>		
+            {% endfor %}
+        </ul>
+        <form action="#" class="formulario">
+            <h3 class="encabezadoInca">Visualizar:</h3>
+            <div class="grupo-checkbox-icono">
+            <input id="oficinas" type="checkbox" data-imagen="oficinas" value="oficinas">
+            <img src="{{asset('images/keyarts/iconos/oficinas.png')}}"/>
+            <span>{{"Oficinas INCA"|trans}}</span>
+            </div>
+            <img src="{{asset('images/keyarts/iconos/separador.png')}}"/>
+            <div class="grupo-checkbox-icono">
+            <input id="edificacion" type="checkbox" data-imagen="edificacion" value="edificacion">
+            <img src="{{asset('images/keyarts/iconos/edificacion.png')}}"/>
+            <span>{{"Edificación"|trans}}</span>
+            </div>
+            <div class="grupo-checkbox-icono">
+            <input id="hidraulica" type="checkbox" data-imagen="hidraulica" value="hidraulica">
+            <img src="{{asset('images/keyarts/iconos/hidraulica.png')}}"/>
+            <span>{{"Infraestructura hidráulica y sanitaria"|trans}}</span>
+            </div>
+            <div class="grupo-checkbox-icono">
+            <input id="construccion" type="checkbox" data-imagen="construccion" value="construccion">
+            <img src="{{asset('images/keyarts/iconos/construccion.png')}}"/>
+            <span>{{"Construcción, operación y mantenimiento de infraestructura carretera"|trans}}</span>
+            </div>
+            <div class="grupo-checkbox-icono">
+            <input id="consultoria" type="checkbox" data-imagen="consultoria" value="consultoria">
+            <img src="{{asset('images/keyarts/iconos/consultoria.png')}}"/>
+            <span>{{"Consultoria industrial y de transporte e ingenieria legal"|trans}}</span>
+            </div>
+        </form>
+    </article>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{asset('js/main.js')}}"></script>
+    <script>
+        $(document).on("ready", function() {
+            $("input[type=checkbox]").on('click',  function(event) {
+                debugger;
+                var presionado = $(this).is(":checked");
+                var mapa = $(this).data("imagen");
+                if(presionado){
+                    $("#mapa-"+mapa).addClass("show");
+                }else{
+                    $("#mapa-"+mapa).removeClass('show');
+                }
+                
+            });
+        });
+
+    </script>
+{% endblock %}
+
+

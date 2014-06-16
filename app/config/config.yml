@@ -132,18 +132,21 @@ avalanche_imagine:
         publicaciones:
             type:    thumbnail
             options: { size: [310, 210], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
-        autobuses:
+        clientes:
             type:    thumbnail
-            options: { size: [330, 210], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
-        inicio_carrusel:
+            options: { size: [220, 220], mode: inset, cache_type: public, cache_expires: '2 weeks' }
+        quienes_somos_carrusel:
             type:    thumbnail
-            options: { size: [1025, 537], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
-        galerias_noticias:
+            options: { size: [300, 500], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        servicios_carrusel:
             type:    thumbnail
-            options: { size: [500, 500], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
-        galerias_artistas:
+            options: { size: [900, 350], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        proyectos_carrusel:
             type:    thumbnail
-            options: { size: [365, 300], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+            options: { size: [300, 300], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        proyectos_thumbnail:
+            type:    thumbnail
+            options: { size: [300, 250], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
         galerias_productos:
             type:    thumbnail
             options: { size: [510, 330], mode: inset, cache_type: public, cache_expires: '2 weeks' }

@@ -206,6 +206,8 @@ class PaginaController extends Controller
         //$editForm->submit($request->request->get($editForm->getName()),false);
 
         if ($editForm->isValid()) {
+            $entity->preUpload();
+            $entity->upload();
             $em->flush();
 
             return $this->redirect($this->generateUrl('paginas_show', array('id' => $id)));

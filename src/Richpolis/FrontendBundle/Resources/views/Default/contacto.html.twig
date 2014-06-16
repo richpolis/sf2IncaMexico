@@ -12,29 +12,34 @@
 
 {% block contenido %}
     <article class="contacto">
-        <h3 class="centrado">{{"contacto"|trans}}</h3>
-        <div class="mapa row">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.2941356781876!2d-98.89239099999993!3d19.26957099999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce1ece555e3e0f%3A0x6abd410ee1a33173!2sTurismo+Luz+Mg!5e0!3m2!1sen!2s!4v1400185555784" width="1024" height="350" frameborder="0" style="border:0"></iframe>
-        </div>
         <div class="formulario-informacion row">
+            <div class="informacion col-lg-4 col-lg-offset-2">
+                <h3 class="encabezadoInca">
+                    Oficina INCA wtc
+                </h3>
+                <p>
+                    Montecito no. 38 piso 6 oficina 37<br/>
+                    Col. Napoles Mexico DF<br/>
+                    C.P. 03810<br/>
+                    <strong>Teléfono: (0155) 9000 6600 </strong><br/>
+                    inca@incamexico.com
+                </p>
+                <p></p>
+                <h3 class="encabezadoInca">
+                    INCA nuevo leon
+                </h3>
+                <p>
+                    Privada Pno Suarez No. 300, 2-A<br/>
+                    Col. Centro, Monterrey, Nuevo Leon<br/>
+                    C.P. 64000 <br/>
+                    <strong>Teléfono: (0181) 8345 0200 </strong><br/>
+                    inca_mty@incamexico.com<br/>
+                    www.incamexico.com    <br/>
+                </p>
+                
+            </div>
             <div class="formulario col-lg-4">
                 {% include 'FrontendBundle:Default:formContacto.html.twig' with {'form': form } %}
-            </div>
-            <div class="imagen-contacto col-lg-4">
-                <img src="{{asset('images/keyarts/contacto/recepcionista.png')}}" alt=""/>
-            </div>
-            <div class="informacion col-lg-4">
-                <p>
-                    Calle Reforma Manzana #3 Local #4
-                    Col. La Bomba
-                    Chalco, Edo. de Mex.
-                    <br/>
-                    tel1. 5555-5555
-                    tel2. 5555-5555
-                    <br/>
-                    email@turismoplusmg.com.mx
-                </p>
-                <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt=""/>
             </div>
         </div>
     </article>

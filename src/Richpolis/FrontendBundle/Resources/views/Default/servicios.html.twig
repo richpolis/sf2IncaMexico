@@ -15,109 +15,111 @@
     </style>
 {% endblock %}
 
-{% block extra_header %}
-    <div class="container-extra-header" style="height:90px;">
+{% block contenido %}
+        <article class="servicios"></article>
+{% raw %}
+<script type="text/template" id="app_template">
+  <ul class="navegador">
+      {% for servicio in servicios %}  
+        <li class="item" id="item-{{ servicio.slug }}">
+           <a href="#servicio/{{ servicio.slug }}">{{ servicio.servicio }}</a>
+        </li>
+      {% endfor %}
+  </ul>
+            
+  <div class="servicios"></div>
+</script>
+
+<script type="text/template" id="show_template">
+    <div class="servicio active" id="{{ slug }}">
+      <div class="galeria">
+        <ul class="slider">
+         {% for galeria in galerias %}
+          <li><img src="{{galeria.imagen }}" /></li>
+         {% endfor %}
+        </ul>
+      </div>
+      <div class="descripcion">
+       {{ descripcion|raw }}
+      </div>         
     </div>
+</script>
+{% endraw %}
+
 {% endblock %}
 
-{% block contenido %}
-        <article class="servicios">
-            <div class="galeria">
-                <ul class="galeriaContenedor">
-                    {% if servicios is null %}
-                        {% for galeria in range(1,7) %}
-                        <li><a href="#"><img src="http://placehold.it/310x197&text=Galeria{{galeria}}" alt=""></a></li>
-                        {% endfor %}
-                    {%else %}
-                        {% for galeria in servicios.galerias %}
-                        <li>
-                            {% if galeria.isImagen == true %}
-                            <a href="{{galeria.webPath}}" class="fancybox image-wrap" >
-                                <img src="{{galeria.webPath  | apply_filter('publicaciones')}}" alt="{{galeria.titulo}}">
-                            {% else %}
-                            <a href="{{galeria.archivo}}" class="fancybox-media iframe video-wrap">
-                                <img src="{{galeria.thumbnailWebPath}}" alt="{{galeria.titulo}}">
-                            {% endif %}   
-                            <span class="lupa"></span>   
-                            </a>
-                        </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-                <span id="slider-prev"></span>
-                <span id="slider-next"></span>
-            </div>
-            {% if servicios is null %}    
-            <h3>Tipo de logistica</h3>
-            <div class="logistica">
-                <h4>Viaje Sencillo:</h4>
-                <p>Transporte desde el punto de origen al destino final del viaje.</p>
-            </div>            
-            <div class="logistica">
-                <h4>Viaje Redondo:</h4>
-                <p>Transporte de ida y vuelta desde el mismo lugar de origen.</p>
-            </div>
-            <div class="logistica">
-                <h4>Viaje Completo:</h4>
-                <p>Transporte de ida y vuelta, mas la compañia del autobús durante el viaje para la movilidad en el destino.</p>
-            </div>
-            <div class="logistica">
-                <h4>Por hora o por día:</h4>
-                <p>Renta de autobús por un pediodo de tiempo específico.</p>
-            </div>
-            <h3>Motivo del viaje</h3>
-            <ul>
-                <li>Circuitos Turísticos</li>
-                <li>Congresos y convenciones</li>
-                <li>Eventos Sociales</li>
-                <li>Planeación de Viajes</li>
-                <li>Transportación Empresarial</li>
-                <li>Translados</li>
-                <li>Viajes familiares y recreativos</li>
-                <li>Viajes Escolares</li>
-                <li>Viajes Receptivos (Nacionales y Extranjeros)</li>
-            </ul>
-            <img src="{{asset('images/keyarts/servicios/servicios.jpg')}}" alt="Turismo Plus MG"/>
-            {% else %}
-                {{ servicios.contenido(locale)|raw }}
-                <img src="{{servicios.webPath}}" alt="Turismo Plus MG"/>
-            {% endif %}    
-            
-        </article>
-{% endblock %}
 {% block javascripts %}
 {{ parent() }}
 <script src="{{asset('js/main.js')}}"></script>
 <script src="{{asset('js/jquery.bxslider.js')}}"></script>
-<script>
-    $(document).ready(function(){
-      $('.galeriaContenedor').bxSlider({
-          slideWidth: 310,
-          minSlides: 2,
-          maxSlides: 3,
-          slideMargin: 7,
-          pager: false,
-          nextSelector: '#slider-next',
-          prevSelector: '#slider-prev',
-          nextText: '',
-          prevText: ''
-      });
-    });
-</script>
 <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
 <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+<script src="{{asset('bundles/frontend/js/app_servicios.js')}}"></script> 
 <script>
-    $(document).ready(function() {
-        $("a.fancybox").fancybox();
-                
-        $("a.fancybox-media").fancybox({
-            helpers : {
-                media: true
+$(document).ready(function() {
+    window.api = {
+      url: '/{{locale}}/api/servicios/',
+      cont: {{ servicios | length }},
+      accion: {
+          list: false,
+          show: false,
+          idShow: 0,
+      },
+      datos: [
+        {% for servicio in servicios %}
+            {
+            'id': {{ servicio.id }},   
+            'servicio': '{{servicio.servicio(locale)}}',
+            'slug': '{{servicio.slugLocale(locale)}}',
+            'descripcion': '{{ servicio.descripcion(locale)|raw }}',
+            'galerias': [
+                    {% for galeria in servicio.galerias %}
+                        {
+                        'imagen': '{{ galeria.webPath | apply_filter('servicios_carrusel') }}',
+                        'titulo': '{{ galeria.titulo }}',
+                        },
+                    {% endfor %}
+                ],  
             },
-            youtube : {
-                autoplay: 0
-            }
-        });
+        {% endfor %}
+      ],
+    };
+    $(".loader").fadeIn();
+    window.routers.app = new Servicios.Routers.App();
+    window.collections.servicios = new Servicios.Collections.Servicios(window.api.datos);
+    window.collections.servicios.url = window.api.url;
+    $(".loader").fadeOut();
+    Backbone.history.start({
+        root : '/',
+        pushState:false 
     });
+    
+    
+});
+
+function iniciarSlider(){
+    $('.slider').bxSlider({
+      randomStart: false,
+      pager: true,
+      auto: true,
+      controls: false,
+      speed: 1000,
+      autoHover: true,
+      slideWidth: 900,
+    });
+}
+
+function iniciarFancybox(){
+    $("a.fancybox").fancybox();
+    $("a.fancybox-media").fancybox({
+      helpers : {
+        media: true
+      },
+      youtube : {
+        autoplay: 0
+      }
+    });
+}
+
 </script>
 {% endblock %}

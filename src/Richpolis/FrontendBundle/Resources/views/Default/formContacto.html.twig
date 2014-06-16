@@ -10,6 +10,8 @@
     {% set mensaje="" %}
 {% endif %}
 
+<img src="{{asset('images/keyarts/logocontacto.png')}}" alt=""/>
+                
 <div id="formulario_contacto">
      <form onsubmit="return false;" action="{{path('frontend_contacto')}}" method="post" class="form-contacto {% if error == true %}invalid{% endif %} {% if ok == true %}sent{% endif %}" novalidate="novalidate" role="form">
           <div class="form-group">
@@ -48,7 +50,7 @@
              </span>
          </div> 
          <div class="form-group">
-             <input type="submit" value="{{"Enviar"|trans}}" class="form-contacto-control form-submit btn btn-info" style="font-size: 16px; padding: 5px 40px; float: right;">
+             <input type="submit" value="{{"Enviar"|trans}}" class="form-contacto-control form-submit btn btn-danger" style="font-size: 16px; padding: 5px 40px; float: right;">
              <img class="ajax-loader" src="/images/bx_loader.gif" alt="Enviando ..." style="visibility: hidden;">
          </div>
          {% if ok == true and error == false%}    

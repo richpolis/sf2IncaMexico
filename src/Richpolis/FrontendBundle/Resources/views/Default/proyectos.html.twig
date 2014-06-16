@@ -1,0 +1,202 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+    <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
+    <style>
+    .bx-wrapper .bx-viewport{
+        padding: 0px;
+        border: none;
+        top: 0px;
+        left: 0px;
+        background: transparent;
+    }
+    input[type=range] {
+        -webkit-appearance: none;
+        background: #36a5c6 !important;
+        border-color: #36a5c6 !important;
+        width: 400px;
+        height: 10px;
+        margin: 5px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        width: 1.5em;
+        height: 1.5em;
+        cursor: default;
+        border-radius: 2px;
+        background: #fafafa !important;
+        border: 1px solid #ccc !important;
+    }
+    select {
+      padding:3px;
+      margin: 0;
+      -webkit-border-radius:4px;
+      -moz-border-radius:4px;
+      border-radius:4px;
+      -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+      -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+      box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+      background: #f8f8f8;
+      color:#888;
+      border:none;
+      outline:none;
+      display: inline-block;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      appearance:none;
+      cursor:pointer;
+  }
+    </style>
+{% endblock %}
+
+{% block contenido %}
+ <article class="proyectos">
+   <div class="controles row">
+     <div class="rango col-lg-6">
+         <label for="rangoProyectos">{{"Linea de tiempo"|trans}}:</label> 
+        <input id="rangoProyectos" type="range" name="rangoProyectos" min="{{minimo}}" max="{{maximo}}" value="{{minimo}}">       
+     </div>
+     <div class="combobox col-lg-6">
+         <label for="categoriaProyectos">{{"Categoria"|trans}}:</label> 
+        <select id="categoriaProyectos" name="categoriaProyectos">
+            <option selected value="todos">{{ "Todos"|trans }}</option>
+            {% for categoria in categorias %}
+              <option value="{{categoria.slug}}">{{categoria.nombre(locale)}}</option>
+            {% endfor %}
+        </select>    
+     </div>
+   </div>
+   <div class="contenedorProyectos row"></div>
+ </article>
+{% raw %}
+<script type="text/template" id="item_template">
+       <figure class="imagen">
+         <img src="{{ thumbnail }}" alt="">
+       </figure>
+       <h3 class="titulo">{{ titulo }}</h3>
+       <span class="rango">{{ empezo }} - {{ termino }}</span>
+       <div class="descripcion">
+          {{ descripcionCorta|raw }}
+       </div>
+</script>
+<script type="text/template" id="item_seleccionado_template">
+    <div class="col-lg-offset-1"></div>
+    <div class="contenido">
+        <div class="galeria col-lg-4" id="galeria-proyecto-{{id}}">
+           <ul class="slider">
+             {% for galeria in galerias %}
+               <li>
+                   <a href="{{galeria.imagen}}" title="{{galeria.titulo}}" class="fancybox">
+                     <img class="imagen-thumbnail" src="{{galeria.thumbnail}}" alt="">
+                     <span class="lupa"></span> 
+                   </a>
+               </li>
+             {% endfor %}
+           </ul>
+        </div>
+        <div class="col-lg-6">
+             <span class="closeProyecto"></span>
+             <h3 class="titulo">{{ titulo }}</h3>
+             <span class="rango">{{empezo}} - {{termino}}</span>
+             <ul class="detalles">
+               <li class="detalle cliente"><span>Cliente:</span>{{cliente}}</li>
+               <li class="detalle ubicacion"><span>Ubicacion:</span>{{ubicacion}}</li>
+               <li class="detalle monto"><span>Monto:</span>{{monto}}</li>
+             </ul>
+             <div class="descripcion">
+                {{ descripcion|raw }}
+             </div>
+        </div>
+    </div>
+</script>
+{% endraw %}
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/jquery.bxslider.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+<script src="{{asset('bundles/frontend/js/app_proyectos.js')}}"></script> 
+<script>
+$(document).ready(function() {
+    window.api = {
+      url: '/{{locale}}/api/proyectos/',
+      cont: {{ proyectos | length }},
+      accion: {
+          list: false,
+          show: false,
+          idShow: 0,
+      },
+      datos: [
+        {% for proyecto in proyectos %}
+            {
+            'id': {{ proyecto.id }},   
+            'titulo': '{{ proyecto.titulo(locale) }}',
+            'slug': '{{ proyecto.slugLocale(locale) }}',
+            'descripcion': '{{ proyecto.descripcion(locale)|raw }}',
+            'descripcionCorta': '{{ proyecto.descripcion(locale)|slice(0,250)|raw  }}',
+            'cliente': '{{proyecto.cliente}}',
+            'ubicacion': '{{proyecto.ubicacion}}',
+            'monto': '{{proyecto.monto}}',
+            'categoria': '{{ proyecto.categoria.slug }}',
+            'thumbnail': '{{ proyecto.galerias[0].webPath | apply_filter('proyectos_thumbnail') }}',
+            'empezo': {{proyecto.empezo}},
+            'termino': {{proyecto.termino}},
+            'galerias': [
+                    {% for galeria in proyecto.galerias %}
+                        {
+                        'thumbnail': '{{ galeria.webPath | apply_filter('proyectos_carrusel') }}',
+                        'imagen': '{{ galeria.webPath }}',
+                        'titulo': '{{ galeria.titulo }}',
+                        },
+                    {% endfor %}
+                ],  
+            },
+        {% endfor %}
+      ],
+    };
+    $(".loader").fadeIn();
+    debugger;
+    window.routers.app = new Proyectos.Routers.App();
+    window.collections.proyectos = new Proyectos.Collections.Proyectos(window.api.datos);
+    window.collections.proyectos.url = window.api.url;
+    $(".loader").fadeOut();
+    Backbone.history.start({
+        root : '/',
+        pushState:false 
+    });
+    
+    
+});
+
+function iniciarSlider(){
+    $('.slider').bxSlider({
+      randomStart: false,
+      pager: true,
+      auto: true,
+      controls: false,
+      speed: 1000,
+      autoHover: true,
+      slideWidth: 300,
+    });
+}
+
+function iniciarFancybox(){
+    $("a.fancybox").fancybox();
+    $("a.fancybox-media").fancybox({
+      helpers : {
+        media: true
+      },
+      youtube : {
+        autoplay: 0
+      }
+    });
+}
+
+</script>
+{% endblock %}

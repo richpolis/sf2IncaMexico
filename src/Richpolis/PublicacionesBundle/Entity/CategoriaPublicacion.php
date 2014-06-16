@@ -137,12 +137,12 @@ class CategoriaPublicacion
     public function getNombre($locale)
     {
         if($locale == "es"){
-            $this->nombreEs = $value;
+            $value = $this->nombreEs;
         }else if($locale == "en"){
-            $this->nombreEn = $value;
+            $value = $this->nombreEn;
         }
 
-        return $this;
+        return $value;
     }
 
     /**

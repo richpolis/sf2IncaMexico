@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use JMS\Serializer\Annotation as Serializer;
 
 
+
 /**
  * Servicio
  *
@@ -224,6 +225,17 @@ class Servicio
     public function setSlugAtValue()
     {
         $this->slug = RpsStms::slugify($this->getServicioEs());
+    }
+
+    public function getSlugLocale($locale)
+    {
+        $slug = '';
+        if($locale == 'es'){
+            $slug = RpsStms::slugify($this->getServicioEs());    
+        }elseif($locale == 'en'){
+            $slug = RpsStms::slugify($this->getServicioEn());
+        }
+        return $slug;
     }
     
     /*** uploads ***/

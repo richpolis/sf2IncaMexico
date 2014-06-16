@@ -1,33 +1,137 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
+{% block cuerpo_inicial  %} class="inicio" {% endblock %}
+
+{% set numImagenes = pagina.galerias | length %}
+
 {% block stylesheets %}
     {{  parent()  }}
-    <style>
-    .bx-wrapper .bx-viewport{
-        padding: 0px;
-        border: none;
-        top: 0px;
-        left: 0px;
-    }
-    
+    <style type="text/css" media="all">
+    	.cb-slideshow,
+		.cb-slideshow:after { 
+		    position: fixed;
+		    width: 100%;
+		    height: 100%;
+		    top: 0px;
+		    left: 0px;
+		    z-index: 0; 
+		}
+		.cb-slideshow:after { 
+		    content: '';
+		    background: transparent url(../images/pattern.png) repeat top left; 
+		}
+		.cb-slideshow > .item { 
+		    width: 100%;
+		    height: 100%;
+		    position: absolute;
+		    top: 0px;
+		    left: 0px;
+		    color: transparent;
+		    background-size: cover;
+		    background-position: 50% 50%;
+		    background-repeat: none;
+		    opacity: 0;
+		    z-index: 0;
+			-webkit-backface-visibility: hidden;
+		    -webkit-animation: imageAnimation {{numImagenes*6}}s linear infinite 0s;
+		    -moz-animation: imageAnimation {{numImagenes*6}}s linear infinite 0s;
+		    -o-animation: imageAnimation {{numImagenes*6}}s linear infinite 0s;
+		    -ms-animation: imageAnimation {{numImagenes*6}}s linear infinite 0s;
+		    animation: imageAnimation {{numImagenes*6}}s linear infinite 0s; 
+		}
+
+		{% for galeria in pagina.galerias %}
+			{% if loop.index > 1 %}
+			.cb-slideshow > .item:nth-child({{loop.index}}){
+				background-image: url('{{galeria.webPath}}'); 
+			    -webkit-animation-delay: {{(loop.index-1)*6}}s;
+			    -moz-animation-delay: {{(loop.index-1)*6}}s;
+			    -o-animation-delay: {{(loop.index-1)*6}}s;
+			    -ms-animation-delay: {{(loop.index-1)*6}}s;
+			    animation-delay: {{(loop.index-1)*6}}s; 
+			}
+			{% else %}
+			.cb-slideshow > .item:nth-child(1){
+				background-image: url('{{galeria.webPath}}'); 
+			}
+			{% endif %}
+		{% endfor  %}
+
+		/* Animation for the slideshow images */
+		@-webkit-keyframes imageAnimation { 
+		    0% { opacity: 0; -webkit-animation-timing-function: ease-in; }
+		    8% { opacity: 1; -webkit-animation-timing-function: ease-out; }
+		    17% { opacity: 1 }
+		    60% { opacity: 0 }
+		    100% { opacity: 0 }
+		}
+		@-moz-keyframes imageAnimation { 
+		    0% { opacity: 0; -moz-animation-timing-function: ease-in; }
+		    8% { opacity: 1; -moz-animation-timing-function: ease-out; }
+		    17% { opacity: 1 }
+		    25% { opacity: 0 }
+		    100% { opacity: 0 }
+		}
+		@-o-keyframes imageAnimation { 
+		    0% { opacity: 0; -o-animation-timing-function: ease-in; }
+		    8% { opacity: 1; -o-animation-timing-function: ease-out; }
+		    17% { opacity: 1 }
+		    25% { opacity: 0 }
+		    100% { opacity: 0 }
+		}
+		@-ms-keyframes imageAnimation { 
+		    0% { opacity: 0; -ms-animation-timing-function: ease-in; }
+		    8% { opacity: 1; -ms-animation-timing-function: ease-out; }
+		    17% { opacity: 1 }
+		    25% { opacity: 0 }
+		    100% { opacity: 0 }
+		}
+		@keyframes imageAnimation { 
+		    0% { opacity: 0; animation-timing-function: ease-in; }
+		    8% { opacity: 1; animation-timing-function: ease-out; }
+		    17% { opacity: 1 }
+		    25% { opacity: 0 }
+		    100% { opacity: 0 }
+		}
+		
+		/* Show at least something when animations not supported */
+		.no-cssanimations .cb-slideshow .item{
+			opacity: 1;
+		}
+	
     </style>
 {% endblock %}
 
+{% block background_slider %}
+	<div class="cb-slideshow">
+	{% for galeria in pagina.galerias %}
+		<div id="imagen-{{loop.index}}" class="item"></div>
+	{% endfor %}
+	</div>
+{% endblock %}
+
 {% block contenido %}
-            <article class="inicio">
-                
-            </article>
-                                
+   	<article class="inicio">
+	    <div class="mostrarServicios">
+	    	<a class="flecha" href="#" title="">
+	    		{{"Resumen de Servicios"|trans}}
+	    		<img src="{{asset('images/keyarts/flecharesumen.png')}}" alt=""/>
+	    	</a>
+	    </div>
+	    <ul class="servicios">
+	    	{% for servicio in servicios %}
+	    		<li class="item">
+	    			<figure class="imagen-portada">
+	    				<img src="{{servicio.galerias[0].webPath}}" alt=""/>
+	    			</figure>
+	    			<h4 class="titulo">{{servicio.servicio(locale)}}</h4>
+	    		</li>
+	    	{% endfor %}
+	    </ul>
+    </article>
 {% endblock %}
 {% block javascripts %}
-{{ parent() }}
-<script src="{{asset('js/main.js')}}"></script>
-<script>
-$(document).on("ready",function(){
-        
-
-});
-
-</script>
+    {{ parent() }}
+    <script src="{{asset('js/main.js')}}"></script>
 {% endblock %}
 

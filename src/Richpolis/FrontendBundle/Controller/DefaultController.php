@@ -9,19 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Richpolis\BackendBundle\Utils\Youtube;
-use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
-
 use Richpolis\FrontendBundle\Entity\Contacto;
 use Richpolis\FrontendBundle\Form\ContactoType;
-
-use Richpolis\FrontendBundle\Entity\Cotizador;
-use Richpolis\FrontendBundle\Form\CotizadorType;
-
-use Richpolis\FrontendBundle\Entity\UsuarioNewsletter;
-use Richpolis\FrontendBundle\Form\UsuarioNewsletterType;
-
-use Richpolis\GaleriasBundle\Entity\Galeria;
 
 class DefaultController extends Controller
 {
@@ -45,14 +34,15 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $inicio = $em->getRepository('PaginasBundle:Pagina')
                 ->findOneBy(array('pagina'=>'inicio'));
-        
+        $servicios = $em->getRepository('PublicacionesBundle:Servicio')->findActivos();
         return array(
-
+          'pagina'=>$inicio,
+          'servicios'=>$servicios
         );
     }
     
     /**
-     * @Route("/{_locale}/nosotros", name="frontend_nosotros", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Route("/{_locale}/quienes-somos", name="frontend_nosotros", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
      * @Template()
      */
     public function nosotrosAction()
@@ -66,14 +56,38 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/{_locale}/mapa", name="frontend_sector_region", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Template()
+     */
+    public function mapaAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mapas = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'mapa'));
+        return array(
+            'pagina'=>$mapas
+        );
+    }
+    /**
      * @Route("/{_locale}/proyectos", name="frontend_proyectos", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
      * @Template()
      */
     public function proyectosAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
+                ->findActivos();
+        $proyectos = $em->getRepository('PublicacionesBundle:Publicacion')
+                ->findActivos();
+        $minimo = $em->getRepository('PublicacionesBundle:Publicacion')
+                ->getMinEmpezo();
+        $maximo = $em->getRepository('PublicacionesBundle:Publicacion')
+                ->getMaxTermino();                       
         return array(
-
+            'categorias'=>$categorias,
+            'proyectos' =>$proyectos,
+            'minimo' => $minimo,
+            'maximo' => $maximo
         );
     }
     
@@ -84,8 +98,10 @@ class DefaultController extends Controller
     public function clientesAction()
     {
         $em = $this->getDoctrine()->getManager();
-
+        $clientes = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'clientes'));
         return array(
+            'pagina'=>$clientes
         );
     }
     
@@ -96,13 +112,43 @@ class DefaultController extends Controller
     public function serviciosAction()
     {
         $em = $this->getDoctrine()->getManager();
+        
+        $servicios = $em->getRepository('PublicacionesBundle:Servicio')->findActivos();
+
+        $servicioActual = $servicios[0];
 
         return array(
+          'servicios'=>$servicios,
+          'servicioActual'=>$servicioActual
         );
     }
     
+    /**
+     * @Route("/{_locale}/servicios/{slug}", name="frontend_servicios_por_slug", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Template("FrontendBundle:Default:servicios.html.twig")
+     */
+    public function servicioAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $servicios = $em->getRepository('PublicacionesBundle:Servicio')->findActivos();
+
+        $servicioActual = $servicios[0];        
+
+        foreach($servicios as $servicio){
+          if($servicio->getSlug()==$slug){
+            $servicioActual=$servicio;
+            break;            
+          }
+        }
+        
+        return array(
+          'servicios'=>$servicios,
+          'servicioActual'=>$servicioActual
+        );
+    }
     
-    private function getPublicacionesPorFilas($categorias){
+    private function getProyectosPorFilas($categorias){
         $arreglo = array();
         $largo = 0;
         $paginas = 0;
