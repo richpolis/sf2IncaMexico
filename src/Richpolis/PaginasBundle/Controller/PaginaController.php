@@ -330,7 +330,11 @@ class PaginaController extends Controller
                 $registro->setTipoArchivo(RpsStms::TIPO_ARCHIVO_IMAGEN);
                 //unset($result["filename"],$result['original'],$result['titulo'],$result['contenido']);
                 $em->persist($registro);
-                $registro->crearThumbnail();
+                if($pagina->getPagina()=="clientes"){
+                    $this->crearThumbnailClientes($registro);
+                }else{
+                    $registro->crearThumbnail();    
+                }
                 $pagina->getGalerias()->add($registro);
                 $em->flush();
             }
@@ -401,6 +405,51 @@ class PaginaController extends Controller
         $response = new \Symfony\Component\HttpFoundation\JsonResponse();
         $response->setData(array("ok"=>true));
         return $response;
+    }
+
+    /*
+     * Crea el thumbnail especifico para la pagina de clientes
+     * 
+     * @return void
+     */
+    public function crearThumbnailClientes(Galeria $galeria,$width=123,$height=123,$path=""){
+        $imagine    = new \Imagine\Gd\Imagine();
+        $collage    = $imagine->create(new \Imagine\Image\Box(123, 123));
+        $mode       = \Imagine\Image\ImageInterface::THUMBNAIL_INSET;
+        $image      = $imagine->open($galeria->getAbsolutePath());
+        $sizeImage  = $image->getSize();
+        if(strlen($path)==0){
+            $path = $galeria->getAbosluteThumbnailPath();
+        }
+        if($height == null){
+            $height = $sizeImage->getHeight();
+            if($height>123){
+                $height = 123;
+            }
+        }
+        if($width == null){
+            $width = $sizeImage->getWidth();
+            if($width>123){
+                $width = 123;
+            }
+        }
+        $size   =new \Imagine\Image\Box($width,$height);
+        $image->thumbnail($size,$mode)->save($path);
+        $image = $imagine->open($path);
+        $size = $image->getSize();
+        if((123 - $size->getWidth())>1){
+            $width = ceil((123 - $size->getWidth())/2);
+        }else{
+            $width = 0;
+        }
+        if((123 - $size->getHeight())>1){
+            $height = ceil((123 - $size->getHeight())/2);
+        }else{
+            $height =0;
+        }    
+        $centrado = new \Imagine\Image\Point($width, $height);
+        $collage->paste($image,$centrado);
+        $collage->save($path);        
     }
     
 }

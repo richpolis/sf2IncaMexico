@@ -140,7 +140,7 @@ avalanche_imagine:
             options: { size: [300, 500], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
         servicios_carrusel:
             type:    thumbnail
-            options: { size: [900, 350], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+            options: { size: [987, 371], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
         proyectos_carrusel:
             type:    thumbnail
             options: { size: [430, 340], mode: outbound, cache_type: public, cache_expires: '2 weeks' }

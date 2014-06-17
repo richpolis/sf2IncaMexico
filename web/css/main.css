@@ -30,6 +30,7 @@ body.inicio {
   position: absolute;
   top: 10px;
   left: 10px;
+  z-index: 1000;
 }
 #menu-toggle {
   display: none;
@@ -276,17 +277,20 @@ article.nosotros .col-derecha {
   padding-right: 10px;
 }
 article.servicios {
-  margin: 10px;
+  margin: 0px 10px 10px;
   position: relative;
 }
 article.servicios ul.navegador {
-  margin: 0px;
-  padding: 0px;
+  margin: 0px 0px 10px;
+  padding: 20px 0px;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 0px;
+  top: 0px;
   z-index: 1000;
   overflow: hidden;
+  border-bottom: 1px solid #fbd7b7;
+  width: 100%;
+  text-align: right;
 }
 article.servicios ul.navegador li.item {
   list-style: none;
@@ -299,7 +303,7 @@ article.servicios ul.navegador li.item {
 article.servicios ul.navegador li.item a {
   text-transform: uppercase;
   text-decoration: none;
-  color: #e64f30;
+  color: #d74934;
   -webkit-transition: all 0.5 ease-in;
   -moz-transition: all 0.5 ease-in;
   -ms-transition: all 0.5 ease-in;
@@ -308,12 +312,13 @@ article.servicios ul.navegador li.item a {
   font-size: 22px;
   line-height: 22px;
   font-weight: bold;
+  font-family: 'proxima_novasemibold';
 }
 article.servicios ul.navegador li.item a:hover {
-  color: #ffa500;
+  color: #f48624;
 }
 article.servicios ul.navegador li.active a {
-  color: #ffa500;
+  color: #f48624;
 }
 article.servicios ul.navegador li.item:first-child {
   border-left: none;
@@ -330,8 +335,11 @@ article.servicios .servicios .servicio {
   display: none;
 }
 article.servicios .servicios .servicio .galeria {
-  height: 370px;
+  height: 371px;
+  width: 987px;
+  margin: 0 auto;
   margin-bottom: 20px;
+  position: relative;
 }
 article.servicios .servicios .servicio .galeria > li {
   width: 900px;
@@ -340,6 +348,18 @@ article.servicios .servicios .servicio .galeria > li {
 article.servicios .servicios .servicio .galeria > li img {
   width: 100%;
   height: 100%;
+}
+article.servicios .servicios .servicio .galeria span.titulo-servicio {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 24px;
+  color: #fff;
+  background-color: rgba(0,0,0,0.8);
+  padding: 3px 10px;
+  z-index: 1000;
+  text-transform: uppercase;
+  font-family: 'proxima_novasemibold';
 }
 article.servicios .servicios .servicio .descripcion {
   text-align: left;
@@ -358,13 +378,16 @@ article.clientes .listado {
   margin: 0 auto;
   padding: 0px;
   list-style: none;
+width
 }
 article.clientes .listado .cliente {
-  border: 1px solid #808080;
+  border: 1px solid #d3d3d3;
   display: inline-block;
   vertical-align: top;
-  height: 110px;
-  width: 110px;
+  height: 123px;
+  width: 123px;
+  margin: 0px;
+  padding: 0px;
 }
 article.clientes .listado .cliente img {
   width: 100%;
@@ -388,6 +411,16 @@ article.contacto h3.encabezadoInca {
 }
 article.contacto #formulario_contacto label {
   text-transform: capitalize;
+}
+article.contacto #formulario_contacto .form-submit {
+  background-color: #79004a;
+  color: #fff;
+  opacity: 0.8;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+}
+article.contacto #formulario_contacto .form-submit:hover {
+  opacity: 1;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
 article.mapas {
   position: relative;
