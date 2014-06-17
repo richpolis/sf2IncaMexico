@@ -116,6 +116,16 @@ class CategoriaPublicacionController extends Controller {
      */
     public function newAction() {
         $entity = new CategoriaPublicacion();
+        
+        $max = $this->getDoctrine()->getRepository('PublicacionesBundle:CategoriaPublicacion')
+                ->getMaxPosicion();
+
+        if (!is_null($max)) {
+            $entity->setPosition($max + 1);
+        } else {
+            $entity->setPosition(1);
+        }
+        
         $form = $this->createCreateForm($entity);
 
         return array(

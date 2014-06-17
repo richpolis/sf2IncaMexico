@@ -44,8 +44,14 @@
             <div class="clearfix"></div>
             <!-- Breadcrumb -->
             <div class="bread-crumb">
-                <a href="{{path('publicaciones')}}"><i class="fa fa-home"></i>Proyectos</a> 
-                <!-- Divider -->
+                <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
+                <Divider>
+                <span class="divider">/</span> 
+                <a href="{{path('categorias_publicaciones')}}" class="bread-current">{{entity.categoria}}</a>
+                <Divider>
+                <span class="divider">/</span>
+                <a href="{{path('publicaciones')}}" class="bread-current">Proyectos</a>
+                <Divider>
                 <span class="divider">/</span> 
                 <a href="{{path('publicaciones_new')}}" class="bread-current">Nuevo Proyecto</a>
             </div>
@@ -93,7 +99,7 @@
                             </div>
                             <div class="widget-foot">
                                 <button id="botonRegresar" class="btn btn-default">Regresar</button>
-                                <button id="botonGuardar" class="btn btn-primary">Crear {{categoria}}</button>
+                                <button id="botonGuardar" class="btn btn-primary">Crear proyecto</button>
 
                             </div>
                         </div>  

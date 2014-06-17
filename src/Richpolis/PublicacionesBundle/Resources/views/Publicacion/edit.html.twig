@@ -44,9 +44,15 @@
             <div class="clearfix"></div>
             <!-- Breadcrumb -->
             <div class="bread-crumb">
-                <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a> 
-                <!-- Divider -->
+                <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
+                <Divider>
                 <span class="divider">/</span> 
+                <a href="{{path('categorias_publicaciones')}}" class="bread-current">{{entity.categoria}}</a>
+                <Divider>
+                <span class="divider">/</span>
+                <a href="{{path('publicaciones')}}" class="bread-current">Proyectos</a>
+                <Divider>
+                <span class="divider">/</span>
                 <a href="{{path('publicaciones_edit',{'id':entity.id})}}" class="bread-current">Editar proyecto</a>
             </div>
             <div class="clearfix"></div>

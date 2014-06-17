@@ -14,6 +14,8 @@
     <article class="contacto">
         <div class="formulario-informacion row">
             <div class="informacion col-lg-4 col-lg-offset-2">
+                {% if pagina is null %}
+                
                 <h3 class="encabezadoInca">
                     Oficina INCA wtc
                 </h3>
@@ -36,7 +38,9 @@
                     inca_mty@incamexico.com<br/>
                     www.incamexico.com    <br/>
                 </p>
-                
+                {% else %}
+                    {{ pagina.contenido(locale) | raw }}
+                {% endif %}    
             </div>
             <div class="formulario col-lg-4">
                 {% include 'FrontendBundle:Default:formContacto.html.twig' with {'form': form } %}
