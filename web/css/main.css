@@ -13,6 +13,7 @@ body.inicio {
   margin: 0 auto;
   text-align: center;
   max-width: 100%;
+  min-width: 1024px;
   padding: 0;
   z-index: 1000;
   margin-bottom: 10px;
@@ -21,8 +22,9 @@ body.inicio {
   background-color: #79004a;
   padding: 10px;
   position: relative;
-  height: 120px;
+  height: 116px;
   width: auto;
+  font-family: 'proxima_novasemibold';
 }
 #logo {
   position: absolute;
@@ -73,13 +75,13 @@ nav #menu {
 }
 nav #menu > li {
   float: left;
-  height: 120px;
+  height: 116px;
   width: 20%;
   list-style: none;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  border-left: 1px solid #808080;
+  border-left: 1px solid #934977;
 }
 nav #menu > li > a {
   font-size: 18px;
@@ -89,8 +91,8 @@ nav #menu > li > a {
   text-decoration: none;
   text-align: center;
   line-height: 140px;
-  height: 120px;
-  border-bottom: 5px solid #79004a;
+  height: 116px;
+  background: url("../images/keyarts/menuback.png") repeat-x;
   display: block;
   width: 100%;
   -webkit-transition: border-bottom 0.5s ease;
@@ -101,7 +103,7 @@ nav #menu > li > a {
 }
 nav #menu > li:hover > a,
 nav #menu > li.active > a {
-  border-bottom: 5px solid #dc8533;
+  background: url("../images/keyarts/menuback_over.png") repeat-x;
 }
 nav #menu li {
   position: relative;
@@ -110,11 +112,13 @@ nav #menu li {
 nav #menu li ul.submenu {
   display: none;
   left: 0px;
-  bottom: -35px;
+  bottom: -40px;
   padding-top: 10px;
   position: absolute;
   width: 100%;
   z-index: 9999;
+  margin: 0px;
+  padding-left: 0px;
 }
 nav #menu li ul.submenu ul.submenu {
   margin-top: -1px;
@@ -135,10 +139,23 @@ nav #menu li ul.submenu > li > a {
   -ms-transition: background-color 0.5s ease;
   -o-transition: background-color 0.5s ease;
   transition: background-color 0.5s ease;
+  width: 100%;
+  text-align: left;
+  position: relative;
 }
 nav #menu li ul.submenu > li > a:hover {
-  background-color: #dc8533;
   color: #fff;
+}
+nav #menu li ul.submenu > li > a:before {
+  bottom: 100%;
+  right: 20%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  border-bottom-color: #79004a;
+  border-width: 5px;
 }
 nav #menu li ul.submenu > li:last-child > a {
   -webkit-border-radius: 0 0 2px 2px;
@@ -173,17 +190,22 @@ article.inicio .mostrarServicios {
   -ms-transition: all 1s ease;
   -o-transition: all 1s ease;
   transition: all 1s ease;
+  background-color: #79004a;
+  margin-right: 10px;
+  padding: 20px;
+  text-align: left;
 }
 article.inicio .mostrarServicios a.flecha {
   font-size: 24px;
-  height: 50px;
-  width: 400px;
+  height: 33px;
+  width: 300px;
   color: #fff;
   font-weight: bold;
   text-transform: capitalize;
-  background-color: #79004a;
-  margin-left: 10px;
-  padding: 20px;
+  background: url("../images/keyarts/flecharesumen.png") no-repeat 264px center;
+  padding: 0px;
+  font-family: 'proxima_novasemibold';
+  display: block;
 }
 article.inicio ul.servicios {
   margin: 0 auto;
@@ -236,8 +258,9 @@ article.inicio:hover .mostrarServicios {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
 }
 article.nosotros {
-  margin: 10px;
+  margin: 40px 10px 10px;
   overflow: hidden;
+  color: #535353;
 }
 article.nosotros .col-izquierda {
   width: 350px;
@@ -276,7 +299,7 @@ article.servicios ul.navegador li.item {
 article.servicios ul.navegador li.item a {
   text-transform: uppercase;
   text-decoration: none;
-  color: #f00;
+  color: #e64f30;
   -webkit-transition: all 0.5 ease-in;
   -moz-transition: all 0.5 ease-in;
   -ms-transition: all 0.5 ease-in;
@@ -429,24 +452,28 @@ article.mapas .formulario span {
   width: 230px;
 }
 article.proyectos {
-  margin: 10px;
+  padding: 10px;
 }
 article.proyectos .contenedorProyectos {
   padding: 10px 50px;
 }
 article.proyectos .controles {
   height: 50px;
-  margin-top: 10px;
+  padding: 0px 50px 80px;
 }
 article.proyectos .controles .rango label {
-  color: #f00;
+  color: #e64f30;
   text-transform: uppercase;
   font-size: 20px;
+  font-family: 'proxima_novasemibold';
+  display: block;
+  text-align: left;
 }
 article.proyectos .controles .combobox label {
-  color: #008000;
+  color: #1eb98f;
   text-transform: uppercase;
   font-size: 20px;
+  font-family: 'proxima_novasemibold';
 }
 article.proyectos .controles .combobox select {
   width: 300px;
@@ -471,14 +498,16 @@ article.proyectos .proyecto figure.imagen img {
 article.proyectos .proyecto h3.titulo {
   text-transform: uppercase;
   font-size: 20px;
-  color: #f00;
+  color: #e64f30;
   margin: 10px 0px 0px;
   font-weight: bold;
+  font-family: 'proxima_novasemibold';
 }
 article.proyectos .proyecto span.rango {
   font-size: 18px;
-  color: #008000;
+  color: #1eb98f;
   font-weight: bold;
+  font-family: 'proxima_novasemibold';
 }
 article.proyectos .proyecto.seleccionado {
   border: 1px solid #808080;
@@ -510,10 +539,11 @@ article.proyectos .proyecto.seleccionado h3.titulo {
   text-transform: capitalize;
   margin: 0px 0px 5px 0px;
   font-size: 24px;
+font
 }
 article.proyectos .proyecto.seleccionado span.rango {
   font-size: 20px;
-  color: #f00;
+  color: #e64f30;
   margin: 0px 0px 10px;
 }
 article.proyectos .proyecto.seleccionado ul.detalles {
@@ -537,7 +567,7 @@ article.proyectos .proyecto.seleccionado ul.detalles li.detalle span {
   padding-right: 5px;
 }
 article.proyectos .proyecto.seleccionado .descripcion {
-  color: #808080;
+  color: #666;
   font-size: 16px;
 }
 @media all and (max-width: 700px) {

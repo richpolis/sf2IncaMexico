@@ -115,16 +115,18 @@
 	    <div class="mostrarServicios">
 	    	<a class="flecha" href="#" title="">
 	    		{{"Resumen de Servicios"|trans}}
-	    		<img src="{{asset('images/keyarts/flecharesumen.png')}}" alt=""/>
+	    		<!--img src="{{asset('')}}" alt=""/-->
 	    	</a>
 	    </div>
 	    <ul class="servicios">
 	    	{% for servicio in servicios %}
 	    		<li class="item">
+	    		    <a href="{{path('frontend_servicios',{'_locale':locale})}}#servicio/{{servicio.slug}}">
 	    			<figure class="imagen-portada">
 	    				<img src="{{servicio.galerias[0].webPath}}" alt=""/>
 	    			</figure>
 	    			<h4 class="titulo">{{servicio.servicio(locale)}}</h4>
+	    			</a>
 	    		</li>
 	    	{% endfor %}
 	    </ul>

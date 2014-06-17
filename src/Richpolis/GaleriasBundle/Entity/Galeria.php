@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Galeria
  *
- * @ORM\Table()
+ * @ORM\Table(name="galerias")
  * @ORM\Entity(repositoryClass="Richpolis\GaleriasBundle\Repository\GaleriaRepository")
  * @ORM\HasLifecycleCallbacks()
  * 
