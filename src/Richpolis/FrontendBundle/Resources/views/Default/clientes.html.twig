@@ -15,7 +15,7 @@
             <div class="listado">
               {% for galeria in pagina.galerias %}  
               <div class="cliente bwWrapper">
-                <img src="{{galeria.webPath | apply_filter('clientes') }}" alt="" width="110" height="110"/>
+                <img src="{{galeria.thumbnailWebPath }}" alt="" width="123" height="123"/>
               </div>
               {% endfor %}
             </div>

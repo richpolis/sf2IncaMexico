@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700&amp;subset=latin,latin-ext);
+
 body{
 	font-size: 13px;
 	line-height: 22px;
@@ -2144,7 +2145,7 @@ footer .copy{
 }
 
 .encabezado-login{
-	background: #f3f3f3;
+	background: #79004A;
 	height: 80px;
 	position: absolute;
 	top: 0px;
@@ -2154,10 +2155,11 @@ footer .copy{
 	z-index: 10000;
 }
 .encabezado-login img{
-	margin-top: 10px;
+	margin-top: 5px;
+    max-height: 75px;
 }
 .pie-login{
-	background: #f3f3f3;
+	background: #79004A;
 	height: 120px;
 	position: absolute;
 	bottom: 0px;
