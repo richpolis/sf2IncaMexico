@@ -4,6 +4,7 @@
     {{  parent()  }}
     <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
     <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
+    <link rel="stylesheet" href="{{asset('css/galeria.google.css')}}"/>
     <style>
     .bx-wrapper .bx-viewport{
         padding: 0px;
@@ -58,6 +59,7 @@
       cursor:pointer;
   }
     </style>
+    <script src="{{asset('js/modernizer.js')}}"></script>
 {% endblock %}
 
 {% block contenido %}
@@ -77,10 +79,11 @@
         </select>    
      </div>
    </div>
-   <div class="contenedorProyectos row"></div>
+   <ul id="og-grid" class="contenedorProyectos og-grid"></ul>
  </article>
 {% raw %}
 <script type="text/template" id="item_template">
+	<a href="#" data-id="registro-{{id}}">
        <figure class="imagen">
          <img src="{{ thumbnail }}" alt="">
        </figure>
@@ -89,34 +92,36 @@
        <div class="descripcion">
           {{ descripcionCorta|raw }}
        </div>
+    </a>   
 </script>
 <script type="text/template" id="item_seleccionado_template">
-    <div class="col-lg-offset-1"></div>
-    <div class="contenido">
-        <div class="galeria col-lg-4" id="galeria-proyecto-{{id}}">
-           <ul class="slider">
-             {% for galeria in galerias %}
-               <li>
-                   <a href="{{galeria.imagen}}" title="{{galeria.titulo}}" class="fancybox">
-                     <img class="imagen-thumbnail" src="{{galeria.thumbnail}}" alt="">
-                     <span class="lupa"></span> 
-                   </a>
-               </li>
-             {% endfor %}
-           </ul>
-        </div>
-        <div class="col-lg-6">
-             <span class="closeProyecto"></span>
-             <h3 class="titulo">{{ titulo }}</h3>
-             <span class="rango">{{empezo}} - {{termino}}</span>
-             <ul class="detalles">
-               <li class="detalle cliente"><span>Cliente:</span>{{cliente}}</li>
-               <li class="detalle ubicacion"><span>Ubicacion:</span>{{ubicacion}}</li>
-               <li class="detalle monto"><span>Monto:</span>{{monto}}</li>
-             </ul>
-             <div class="descripcion">
-                {{ descripcion|raw }}
-             </div>
+	<div class="og-expander" style="transition: height 350ms ease; -webkit-transition: height 350ms ease; height: 500px;">
+    	<div class="og-expander-inner">
+        	<span class="og-close"></span>
+            <div class="og-fullimg galeria">
+            	<div class="og-loading" style="display: none;"></div>
+                <ul class="slider">
+                 {% for galeria in galerias %}
+                   <li>
+                       <a href="{{galeria.imagen}}" title="{{galeria.titulo}}" class="fancybox">
+                         <img class="imagen-thumbnail" src="{{galeria.thumbnail}}" alt="">
+                         <span class="lupa"></span> 
+                       </a>
+                   </li>
+                 {% endfor %}
+            </div>
+            <div class="og-details">
+                <h3 class="titulo">{{ titulo }}</h3>
+                 <span class="rango">{{empezo}} - {{termino}}</span>
+                 <ul class="detalles">
+                   <li class="detalle cliente"><span>Cliente:</span>{{cliente}}</li>
+                   <li class="detalle ubicacion"><span>Ubicacion:</span>{{ubicacion}}</li>
+                   <li class="detalle monto"><span>Monto:</span>{{monto}}</li>
+                 </ul>
+                 <div class="descripcion">
+                    {{ descripcion|raw }}
+                 </div>
+            </div>
         </div>
     </div>
 </script>
@@ -130,6 +135,7 @@
 <script src="{{asset('js/jquery.bxslider.js')}}"></script>
 <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
 <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+<script src="{{asset('js/grid.js')}}"></script> 
 <script src="{{asset('bundles/frontend/js/app_proyectos.js')}}"></script> 
 <script>
 $(document).ready(function() {

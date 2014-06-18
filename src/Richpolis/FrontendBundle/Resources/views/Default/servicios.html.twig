@@ -35,7 +35,11 @@
       <div class="galeria">
         <ul class="slider">
          {% for galeria in galerias %}
-          <li><img src="{{galeria.imagen }}" /></li>
+          <li>
+            <a href="{{galeria.imagen}}" class="fancybox" title="{{galeria.titulo}}">
+              <img src="{{galeria.thumbnail }}" />
+             </a> 
+          </li>
          {% endfor %}
         </ul>
         <span class="titulo-servicio">{{servicio}}</span> 
@@ -76,7 +80,8 @@ $(document).ready(function() {
             'galerias': [
                     {% for galeria in servicio.galerias %}
                         {
-                        'imagen': '{{ galeria.webPath | apply_filter('servicios_carrusel') }}',
+                        'thumbnail': '{{ galeria.webPath | apply_filter('servicios_carrusel') }}',
+                        'imagen': '{{ galeria.webPath }}',
                         'titulo': '{{ galeria.titulo }}',
                         },
                     {% endfor %}

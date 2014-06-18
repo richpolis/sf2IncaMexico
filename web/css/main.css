@@ -488,6 +488,7 @@ article.proyectos {
 }
 article.proyectos .contenedorProyectos {
   padding: 10px 50px;
+  
 }
 article.proyectos .controles {
   height: 50px;
@@ -518,6 +519,9 @@ article.proyectos .proyecto {
   -ms-transition: all 2s ease-in;
   -o-transition: all 2s ease-in;
   transition: all 2s ease-in;
+  display: inline-block;
+  vertical-align: top;
+  list-style: none;
 }
 article.proyectos .proyecto figure.imagen img {
   -webkit-box-shadow: 0 0 1px 1px rgba(100,100,100,0.8);
@@ -541,67 +545,8 @@ article.proyectos .proyecto span.rango {
   font-weight: bold;
   font-family: 'proxima_novasemibold';
 }
-article.proyectos .proyecto.seleccionado {
-  border: 1px solid #808080;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 2px 1px 0 rgba(100,100,100,0.8);
-  -moz-box-shadow: 0 2px 1px 0 rgba(100,100,100,0.8);
-  -ms-box-shadow: 0 2px 1px 0 rgba(100,100,100,0.8);
-  -o-box-shadow: 0 2px 1px 0 rgba(100,100,100,0.8);
-  box-shadow: 0 2px 1px 0 rgba(100,100,100,0.8);
-  padding: 50px;
-  position: relative;
-}
-article.proyectos .proyecto.seleccionado span.closeProyecto {
-  height: 18px;
-  width: 18px;
-  position: absolute;
-  top: -40px;
-  right: -200px;
-  z-index: 100;
-  cursor: pointer;
-  background: url("../images/keyarts/cerrarproyecto.png") no-repeat center center;
-  display: block;
-}
-article.proyectos .proyecto.seleccionado h3.titulo {
-  text-transform: capitalize;
-  margin: 0px 0px 5px 0px;
-  font-size: 24px;
-font
-}
-article.proyectos .proyecto.seleccionado span.rango {
-  font-size: 20px;
-  color: #e64f30;
-  margin: 0px 0px 10px;
-}
-article.proyectos .proyecto.seleccionado ul.detalles {
-  margin: 0px 0px 10px;
-  padding: 0;
-}
-article.proyectos .proyecto.seleccionado ul.detalles li.detalle {
-  color: #79004a;
-  font-size: 16px;
-  text-transform: capitalize;
-  list-style: none;
-  font-weight: bold;
-}
-article.proyectos .proyecto.seleccionado ul.detalles li.detalle span {
-  color: #808080;
-  font-size: 14px;
-  width: 100px;
-  text-align: right;
-  display: inline-block;
-  vertical-align: top;
-  padding-right: 5px;
-}
-article.proyectos .proyecto.seleccionado .descripcion {
-  color: #666;
-  font-size: 16px;
-}
+
+
 @media all and (max-width: 700px) {
   .container nav {
     position: absolute;

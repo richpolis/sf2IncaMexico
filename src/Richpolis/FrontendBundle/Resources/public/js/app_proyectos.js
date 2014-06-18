@@ -18,52 +18,75 @@ Proyectos.Models.Proyecto = Backbone.Model.extend({
       slug: '',
       galerias: [],
       seleccionado: false,
+      visible: true, 
     }
 });
 
 Proyectos.Collections.Proyectos = Backbone.Collection.extend({
     model: Proyectos.Models.Proyecto,
+    filtrarResultados: function(){
+        this.each(function (proyecto) {
+            var categoria = ( proyecto.get('categoria')==this.categoria || this.categoria == 'todos' );
+        	var rango = (proyecto.get('empezo') >= this.empezo);
+            if( rango && categoria){
+                proyecto.set({visible: true});
+            }else{
+                proyecto.set({visible: false});
+            }
+		});
+    }
 });
+
+
 
 //esta vista es para visualizar el show_template
 Proyectos.Views.ItemView = Backbone.View.extend({
-    tagName: 'div',
+    tagName: 'li',
     className: 'proyecto',
     template: swig.compile($("#item_template").html()),
     events: {
         'click figure.imagen':'seleccionarProyecto', 
-        'click .closeProyecto': 'normalProyecto'
+        'click .og-close': 'cerrarProyecto'
     },
-    normalProyecto: function(){
+    cerrarProyecto: function(){
         this.model.set({seleccionado: false});
     },
     seleccionarProyecto: function(){
         this.model.set({seleccionado: true});
     },
     initialize: function() {
-        this.model.on("change:seleccionado", this.render, this);
+        this.model.on("change:seleccionado", this.mostrarExpander, this);
+        this.model.on("change:visible",this.mostrar,this);
     },
     render: function() {
-        if(!this.model.get('seleccionado')){
-            var data = this.model.toJSON();
-            var html = this.template(data);
-            this.$el.html(html);
-            this.$el.removeClass('seleccionado col-lg-10');    
-            this.$el.addClass('col-lg-4');
+        var data = this.model.toJSON();
+        var html = this.template(data);
+        this.$el.html(html);
+        return this;
+    },
+    mostrarExpander: function() {
+        var self = this;
+        if(this.model.get('seleccionado')){
+        	var data = this.model.toJSON();
+            var template = swig.compile($("#item_seleccionado_template").html())
+            var html = template(data);
+            this.$el.append(html);
+            this.$el.addClass('og-expanded');    
+            this.iniciarComponentes();    
         }else{
-            this.renderSeleccionado()
+            this.$el.find(".og-expander").fadeOut("fast",function(){
+                self.$el.find(".og-expander").remove();
+            });
+            this.$el.removeClass('og-expanded');
         }
         return this;
     },
-    renderSeleccionado: function() {
-        var data = this.model.toJSON();
-        var template = swig.compile($("#item_seleccionado_template").html())
-        var html = template(data);
-        this.$el.html(html);
-        this.$el.addClass('seleccionado col-lg-10');    
-        this.$el.removeClass('col-lg-4');
-        this.iniciarComponentes();
-        return this;
+    mostrar: function(){
+      if(this.model.get("visible")){
+          this.$el.fadeIn("fast");
+      }else{
+          this.$el.fadeOut("fast");
+      }  
     },
     iniciarComponentes: function(){
         iniciarSlider();
@@ -78,12 +101,12 @@ Proyectos.Views.ListView = Backbone.View.extend({
     tagName: 'article',
     //template: swig.compile($("#app_template").html()),
     events: {
-        "change #categoriaProyectos": "search",
-        "change #rangoProyectos": "search"
+        "change #categoriaProyectos": "seleccionarProyectos",
+        "change #rangoProyectos": "seleccionarProyectos"
     },
-    search: function(event){
+    seleccionarProyectos: function(event){
         event.preventDefault();
-        this.render();
+        this.collection.filtrarResultados();
     },
     AddOne: function(proyecto) {
         var indice = 0;
@@ -97,16 +120,17 @@ Proyectos.Views.ListView = Backbone.View.extend({
             window.views.proyectos = [];
         }
 
-        if( rango && categoria) {
+        //if( rango && categoria) {
             window.views.proyectos[indice]= new Proyectos.Views.ItemView({model: proyecto});
             var html = window.views.proyectos[indice].render().el;
             this.$el.find(".contenedorProyectos").append(html); 
-        }    
+        //}    
     },
     render: function() {
         this.empezo = $("#rangoProyectos").val();
         this.categoria = $("#categoriaProyectos").val();
         this.renderAll();
+        this.iniciarGrid();
         return this;
     },
     renderAll: function(){
@@ -126,7 +150,10 @@ Proyectos.Views.ListView = Backbone.View.extend({
             window.views.proyectos[cont].remove();
         }
     },
-
+    iniciarGrid: function(){
+      Grid.init();
+    },
+    
 });
 
 Proyectos.Routers.App = Backbone.Router.extend({
