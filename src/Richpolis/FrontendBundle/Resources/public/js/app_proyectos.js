@@ -25,9 +25,12 @@ Proyectos.Models.Proyecto = Backbone.Model.extend({
 Proyectos.Collections.Proyectos = Backbone.Collection.extend({
     model: Proyectos.Models.Proyecto,
     filtrarResultados: function(){
+        var self = this;
+        this.empezo = $("#rangoProyectos").val();
+        this.categoria = $("#categoriaProyectos").val();
         this.each(function (proyecto) {
-            var categoria = ( proyecto.get('categoria')==this.categoria || this.categoria == 'todos' );
-        	var rango = (proyecto.get('empezo') >= this.empezo);
+            var categoria = ( proyecto.get('categoria')==self.categoria || self.categoria == 'todos' );
+            var rango = (proyecto.get('empezo') >= self.empezo);
             if( rango && categoria){
                 proyecto.set({visible: true});
             }else{
@@ -67,7 +70,7 @@ Proyectos.Views.ItemView = Backbone.View.extend({
     mostrarExpander: function() {
         var self = this;
         if(this.model.get('seleccionado')){
-        	var data = this.model.toJSON();
+            var data = this.model.toJSON();
             var template = swig.compile($("#item_seleccionado_template").html())
             var html = template(data);
             this.$el.append(html);
@@ -110,8 +113,6 @@ Proyectos.Views.ListView = Backbone.View.extend({
     },
     AddOne: function(proyecto) {
         var indice = 0;
-        var categoria = ( proyecto.get('categoria')==this.categoria || this.categoria == 'todos' );
-        var rango = (proyecto.get('empezo') >= this.empezo);
         
         if(window.views.proyectos && window.views.proyectos.length){
             indice = window.views.proyectos.length;
@@ -127,8 +128,8 @@ Proyectos.Views.ListView = Backbone.View.extend({
         //}    
     },
     render: function() {
-        this.empezo = $("#rangoProyectos").val();
-        this.categoria = $("#categoriaProyectos").val();
+        this.collection.empezo = $("#rangoProyectos").val();
+        this.collection.categoria = $("#categoriaProyectos").val();
         this.renderAll();
         this.iniciarGrid();
         return this;

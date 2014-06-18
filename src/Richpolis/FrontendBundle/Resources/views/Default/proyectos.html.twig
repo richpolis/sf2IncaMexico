@@ -154,7 +154,7 @@ $(document).ready(function() {
             'titulo': '{{ proyecto.titulo(locale) }}',
             'slug': '{{ proyecto.slugLocale(locale) }}',
             'descripcion': '{{ proyecto.descripcion(locale)|raw }}',
-            'descripcionCorta': '{{ proyecto.descripcion(locale)|slice(0,250)|raw  }}',
+            'descripcionCorta': '{{ proyecto.descripcion(locale)|slice(0,100)|raw  }}',
             'cliente': '{{proyecto.cliente}}',
             'ubicacion': '{{proyecto.ubicacion}}',
             'monto': '{{proyecto.monto}}',
