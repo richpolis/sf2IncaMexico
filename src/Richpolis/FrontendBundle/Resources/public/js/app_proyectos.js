@@ -26,7 +26,7 @@ Proyectos.Collections.Proyectos = Backbone.Collection.extend({
     model: Proyectos.Models.Proyecto,
     filtrarResultados: function(){
         var self = this;
-        this.empezo = $("#rangoProyectos").val();
+        this.empezo = $("#yearSelect").val();
         this.categoria = $("#categoriaProyectos").val();
         this.each(function (proyecto) {
             var categoria = ( proyecto.get('categoria')==self.categoria || self.categoria == 'todos' );
@@ -51,11 +51,14 @@ Proyectos.Views.ItemView = Backbone.View.extend({
         'click figure.imagen':'seleccionarProyecto', 
         'click .og-close': 'cerrarProyecto'
     },
-    cerrarProyecto: function(){
+    cerrarProyecto: function(event){
+        event.preventDefault();
         this.model.set({seleccionado: false});
     },
-    seleccionarProyecto: function(){
+    seleccionarProyecto: function(event){
+        event.preventDefault();
         this.model.set({seleccionado: true});
+        
     },
     initialize: function() {
         this.model.on("change:seleccionado", this.mostrarExpander, this);
@@ -74,27 +77,44 @@ Proyectos.Views.ItemView = Backbone.View.extend({
             var template = swig.compile($("#item_seleccionado_template").html())
             var html = template(data);
             this.$el.append(html);
-            this.$el.addClass('og-expanded');    
-            this.iniciarComponentes();    
+            this.$el.addClass('og-expanded');
+            this.$el.find(".og-expander").css({height: '500px'});
+            this.iniciarComponentes();
+            this.scrollToDown();
         }else{
-            this.$el.find(".og-expander").fadeOut("fast",function(){
-                self.$el.find(".og-expander").remove();
-            });
+            this.$el.find(".og-expander").css({height: '0px'})
+            this.$el.find(".og-expander").delay(1000).remove();
             this.$el.removeClass('og-expanded');
+            this.scrollToUp();
         }
         return this;
     },
     mostrar: function(){
+      var self = this;
       if(this.model.get("visible")){
-          this.$el.fadeIn("fast");
+          this.$el.fadeIn("slow");
       }else{
-          this.$el.fadeOut("fast");
+          this.$el.fadeOut("slow");
       }  
     },
     iniciarComponentes: function(){
         iniciarSlider();
         iniciarFancybox();
-    }
+    },
+    scrollToDown: function(){
+      	//obtenemos la posición en la que se encuentra el botón
+        var posicion = this.$el.offset().top;
+
+        //hacemos scroll hasta el botón
+        $("html, body").animate({scrollTop:(posicion+30)+"px"},350);  
+    },
+    scrollToUp: function(){
+      	//obtenemos la posición en la que se encuentra el botón
+        var posicion = this.$el.offset().top;
+
+        //hacemos scroll hasta el botón
+        $("html, body").animate({scrollTop:(posicion-500)+"px"},1000);  
+    },
 });
 
 
@@ -105,7 +125,7 @@ Proyectos.Views.ListView = Backbone.View.extend({
     //template: swig.compile($("#app_template").html()),
     events: {
         "change #categoriaProyectos": "seleccionarProyectos",
-        "change #rangoProyectos": "seleccionarProyectos"
+        "change #yearSelect": "seleccionarProyectos"
     },
     seleccionarProyectos: function(event){
         event.preventDefault();
@@ -152,9 +172,35 @@ Proyectos.Views.ListView = Backbone.View.extend({
         }
     },
     iniciarGrid: function(){
-      Grid.init();
+      debugger;
+      var self = this;
+      var $grid = $( '#og-grid' );
+	  var $items = $grid.children( 'li' );  
+      $grid.imagesLoaded( function() {
+			// save item´s size and offset
+			self.saveItemInfo( true );
+		} );
     },
-    
+    saveItemInfo: function( saveheight ) {
+        debugger;
+        var $grid = $( '#og-grid' );
+	  	var $items = $grid.children( 'li' );
+        $items.each( function() {
+			var $item = $( this );
+			$item.data( 'offsetTop', $item.offset().top );
+			if( saveheight ) {
+				$item.data( 'height', $item.height() );
+			}
+		} );
+	},
+    ocultarItems: function(){
+        var $grid = $( '#og-grid' );
+	  	var $items = $grid.children( 'li' );
+        $items.each( function() {
+			var $item = $( this );
+            $item.fadeOut("fast");
+		} );
+    },
 });
 
 Proyectos.Routers.App = Backbone.Router.extend({

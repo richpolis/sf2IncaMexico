@@ -96,6 +96,11 @@
                             <li><a href="{{path('frontend_nosotros')}}">{{"Quienes somos"|trans}}</a></li>
                         </ul>
                     </li>
+                    <li class="menu-item {% if route == 'frontend_servicios' %} active{% endif %}">
+                        <a href="{{path('frontend_servicios',{'_locale':locale})}}"  >
+                            {{ "servicios"| trans }}
+                        </a>
+                    </li>
                     <li class="parent {% if route == 'frontend_proyectos' %}active{% endif %}">
                         <a href="{{path('frontend_proyectos')}}">
                             {{"Proyectos"|trans}}
@@ -103,11 +108,6 @@
                         <ul class="submenu">
                             <li><a href="{{path('frontend_sector_region')}}">{{"Por sector o región"|trans}}</a></li>
                         </ul>
-                    </li>
-                    <li class="menu-item {% if route == 'frontend_servicios' %} active{% endif %}">
-                        <a href="{{path('frontend_servicios',{'_locale':locale})}}"  >
-                            {{ "servicios"| trans }}
-                        </a>
                     </li>
                     <li class="menu-item {% if route == 'frontend_clientes' %} active{% endif %}">
                         <a href="{{path('frontend_clientes',{'_locale':locale})}}"  >

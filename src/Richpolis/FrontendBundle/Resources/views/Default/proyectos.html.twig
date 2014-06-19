@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
     <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
     <link rel="stylesheet" href="{{asset('css/galeria.google.css')}}"/>
+    <link rel="stylesheet" href="{{asset('css/jquery-ui-1.9.2.custom.min.css')}}"/>
     <style>
     .bx-wrapper .bx-viewport{
         padding: 0px;
@@ -13,30 +14,21 @@
         left: 0px;
         background: transparent;
     }
-    input[type=range] {
-        -webkit-appearance: none;
-        background: #36a5c6 !important;
-        border-color: #36a5c6 !important;
-        width: 100%;
-        height: 10px;
-        margin: 5px;
-        position: relative;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-        width: 1.5em;
-        height: 1.5em;
-        cursor: default;
-        border-radius: 2px;
-        background: #fafafa !important;
-        border: 1px solid #ccc !important;
+    
+    
+    div.ui-slider-range{
+    	background: #7d9432;
     }
     
-    input[type="range"]::after{
-      content: attr(value);
-      color: red;
-      position: absolute;
-      bottom: -10px;
+    
+    #yearSelect{
+    	color: #e64f30;
+        width:100px;
+        font-size: 16px;
+        border: none;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
     }
 
     select {
@@ -48,7 +40,7 @@
       -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
       -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
       box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-      background: #1eb98f;
+      background: #79004a;
       color: white;
       border:none;
       outline:none;
@@ -67,7 +59,8 @@
    <div class="controles row">
      <div class="rango col-lg-6">
          <label for="rangoProyectos">{{"Linea de tiempo"|trans}}:</label> 
-        <input id="rangoProyectos" type="range" name="rangoProyectos" min="{{minimo}}" max="{{maximo}}" value="{{minimo}}">       
+         <div id="slider-range"></div>
+         <input type="text" id="yearSelect" value="{{minimo}}">
      </div>
      <div class="combobox col-lg-6">
          <label for="categoriaProyectos">{{"Categoria"|trans}}:</label> 
@@ -102,8 +95,8 @@
             	<div class="og-loading" style="display: none;"></div>
                 <ul class="slider">
                  {% for galeria in galerias %}
-                   <li>
-                       <a href="{{galeria.imagen}}" title="{{galeria.titulo}}" class="fancybox">
+                   <li class="imagen-width-lupa">
+                       <a href="{{galeria.imagen}}" title="{{galeria.titulo}}" class="fancybox ">
                          <img class="imagen-thumbnail" src="{{galeria.thumbnail}}" alt="">
                          <span class="lupa"></span> 
                        </a>
@@ -116,7 +109,7 @@
                  <ul class="detalles">
                    <li class="detalle cliente"><span>Cliente:</span>{{cliente}}</li>
                    <li class="detalle ubicacion"><span>Ubicacion:</span>{{ubicacion}}</li>
-                   <li class="detalle monto"><span>Monto:</span>{{monto}}</li>
+                   <li class="detalle monto"><span>Inversión de proyecto:</span>{{monto}}</li>
                  </ul>
                  <div class="descripcion">
                     {{ descripcion|raw }}
@@ -135,8 +128,9 @@
 <script src="{{asset('js/jquery.bxslider.js')}}"></script>
 <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
 <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
-<script src="{{asset('js/grid.js')}}"></script> 
-<script src="{{asset('bundles/frontend/js/app_proyectos.js')}}"></script> 
+<script src="{{asset('js/grid.js')}}"></script>
+<script src="{{asset('bundles/frontend/js/app_proyectos.js')}}"></script>
+<script src="{{asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script>
 <script>
 $(document).ready(function() {
     window.api = {
@@ -186,6 +180,20 @@ $(document).ready(function() {
         pushState:false 
     });
     
+    $( "#slider-range" ).slider({
+      range: "min",
+      value: {{minimo}},
+      min: {{minimo}},
+      max: {{maximo}},
+      slide: function( event, ui ) {
+        $( "#yearSelect" ).val(  ui.value );
+        setTimeout(function(){
+        	var left = $("a.ui-slider-handle").css('left');
+        	$( "#yearSelect" ).css({left: left});
+            $("#yearSelect").change();
+        },100);
+      }
+    });
     
 });
 
@@ -197,7 +205,7 @@ function iniciarSlider(){
       controls: false,
       speed: 1000,
       autoHover: true,
-      slideWidth: 300,
+      slideWidth: 430,
     });
 }
 

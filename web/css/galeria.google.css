@@ -3,15 +3,21 @@
 	padding: 20px 0;
 	margin: 0 auto;
 	text-align: center;
-	width: 100%;
+	/*width: 100%;*/
+    width: 1024px;
 }
 
 .og-grid > li {
 	display: inline-block;
 	margin: 10px 5px 0 5px;
 	vertical-align: top;
-	height: 400px;
-        width: 320px;
+	height: 350px;
+    width: 320px;
+    
+}
+
+.og-grid > li.oculto {
+    
 }
 
 .og-grid > li > a,
@@ -20,6 +26,31 @@
 	outline: none;
 	display: block;
 	position: relative;
+    z-index: 500;
+}
+
+.og-grid > li > a img{
+   -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -ms-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+    opacity: 0.8;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+}
+
+
+.og-grid > li > a:hover img{
+    opacity: 1;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+}
+
+.og-grid > li.og-expanded{
+    /*-webkit-transition: height 350ms ease;
+    -moz-transition: height 350ms ease;
+    -o-transition: height 350ms ease;
+    transition: height 350ms ease; 
+    height: 760px;*/
 }
 
 .og-grid > li.og-expanded > a::after {
@@ -30,7 +61,7 @@
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	border-bottom-color: #ddd;
+	border-bottom-color: #E0E0E0;
 	border-width: 15px;
 	left: 50%;
 	margin: -20px 0 0 -15px;
@@ -38,15 +69,22 @@
 
 .og-expander {
 	position: absolute;
-	background: #ddd;
+	/*background: #E0E0E0;*/
+    background: white;
+    border: 2px solid #E0E0E0;
 	top: auto;
 	left: 0;
 	width: 100%;
-	margin-top: 10px;
+	margin-top: 9px;
 	text-align: left;
 	height: 0;
 	overflow: hidden;
-        z-index: 1000;
+    z-index: 2000;
+    -webkit-transition: height 350ms ease;
+    -moz-transition: height 350ms ease;
+    -o-transition: height 350ms ease;
+    transition: height 350ms ease; 
+    /*height: 500px;*/
 }
 
 .og-expander-inner {
@@ -178,6 +216,34 @@ article.proyectos .proyecto .og-expander {
   padding: 50px;
   position: absolute;
 }
+
+article.proyectos .proyecto .og-expander .imagen-width-lupa{
+    position: relative;
+}
+
+article.proyectos .proyecto .og-expander .imagen-width-lupa span.lupa{
+    position: absolute;
+    display: block;
+    opacity: 0;
+    background: url('../images/keyarts/lupa.png') no-repeat center center;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    bottom: 10px;
+    right: 10px;
+    height: 50px;
+    width: 50px;
+    z-index: 1500;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -ms-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+
+article.proyectos .proyecto .og-expander .imagen-width-lupa:hover span.lupa{
+    opacity: 1;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+}
+
 article.proyectos .proyecto .og-expander span.closeProyecto {
   height: 18px;
   width: 18px;
@@ -213,7 +279,7 @@ article.proyectos .proyecto .og-expander ul.detalles li.detalle {
 article.proyectos .proyecto .og-expander ul.detalles li.detalle span {
   color: #808080;
   font-size: 14px;
-  width: 100px;
+  width: 163px;
   text-align: right;
   display: inline-block;
   vertical-align: top;
@@ -242,6 +308,8 @@ article.proyectos .proyecto .og-expander .descripcion {
 	33% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ccc, -15px 30px 1px #ddd; }
 	66% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ddd, -15px 30px 1px #ccc; }
 }
+
+
 
 @media screen and (max-width: 830px) {
 

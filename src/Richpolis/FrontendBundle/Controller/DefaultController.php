@@ -180,6 +180,7 @@ class DefaultController extends Controller
         $contacto = new Contacto();
         $form = $this->createForm(new ContactoType(), $contacto);
         $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
         
         if ($request->getMethod() == 'POST') {
             
@@ -188,7 +189,7 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $datos=$form->getData();
                 
-                $em = $this->getDoctrine()->getManager();
+                
                 $configuracion = $em->getRepository('BackendBundle:Configuraciones')
                                 ->findOneBy(array('slug'=>'email-contacto'));
                 
