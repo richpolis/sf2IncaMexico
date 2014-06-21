@@ -39,9 +39,9 @@ Proyectos.Collections.Proyectos = Backbone.Collection.extend({
             }
 		});
     },
-    comparator: function(proyecto){
-        return proyecto.get("empezo");
-    }
+    /*comparator: function(proyecto){
+        return proyecto.get("termino");
+    }*/
 });
 
 
@@ -192,7 +192,7 @@ Proyectos.Views.ListView = Backbone.View.extend({
     render: function() {
         this.renderAll();
         this.iniciarGrid();
-        this.collection.sort();        
+        //this.collection.sort();        
         return this;
     },
     renderAll: function(){

@@ -88,29 +88,6 @@
             </a>
             <nav class="navegador">
                   <ul id="menu">
-                    <li class="menu-item {% if route == 'frontend_contacto' %} active{% endif %}">
-                        <a href="{{path('frontend_contacto',{'_locale':locale})}}"  >
-                            {{ "contacto"| trans }}
-                        </a>
-                    </li>
-                    <li class="menu-item {% if route == 'frontend_clientes' %} active{% endif %}">
-                        <a href="{{path('frontend_clientes',{'_locale':locale})}}"  >
-                            {{ "clientes"| trans }}
-                        </a>
-                    </li>
-                    <li class="parent {% if route == 'frontend_proyectos' %}active{% endif %}">
-                        <a href="{{path('frontend_proyectos')}}">
-                            {{"Proyectos"|trans}}
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="{{path('frontend_sector_region')}}">{{"Por sector o región"|trans}}</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item {% if route == 'frontend_servicios' %} active{% endif %}">
-                        <a href="{{path('frontend_servicios',{'_locale':locale})}}"  >
-                            {{ "servicios"| trans }}
-                        </a>
-                    </li>
                     <li class="parent {% if route == 'homepage' %}active{% endif %}">
                         <a href="{{path('homepage')}}">
                             {{"inicio"|trans}}
@@ -118,6 +95,29 @@
                         <ul class="submenu">
                             <li><a href="{{path('frontend_nosotros')}}">{{"Quienes somos"|trans}}</a></li>
                         </ul>
+                    </li>
+                    <li class="menu-item {% if route == 'frontend_servicios' %} active{% endif %}">
+                        <a href="{{path('frontend_servicios',{'_locale':locale})}}"  >
+                            {{ "servicios"| trans }}
+                        </a>
+                    </li>
+					<li class="parent {% if route == 'frontend_proyectos' %}active{% endif %}">
+                        <a href="{{path('frontend_proyectos')}}">
+                            {{"Proyectos"|trans}}
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="{{path('frontend_sector_region')}}">{{"Por sector o región"|trans}}</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item {% if route == 'frontend_clientes' %} active{% endif %}">
+                        <a href="{{path('frontend_clientes',{'_locale':locale})}}"  >
+                            {{ "clientes"| trans }}
+                        </a>
+                    </li>
+                    <li class="menu-item {% if route == 'frontend_contacto' %} active{% endif %}">
+                        <a href="{{path('frontend_contacto',{'_locale':locale})}}"  >
+                            {{ "contacto"| trans }}
+                        </a>
                     </li>
                   </ul>
             </nav>

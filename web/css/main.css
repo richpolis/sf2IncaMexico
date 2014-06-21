@@ -80,26 +80,30 @@ nav #menu {
   z-index: -1;
 }
 nav #menu > li {
-  float: right;
+  float: left;
   height: 116px;
-  width: 18%;
-  min-width: 150px;
+  width: 20%;
+  min-width: 100px;
   list-style: none;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border-left: 1px solid #934977;
+  /*
   -webkit-transition: width 0.5s ease;
   -moz-transition: width 0.5s ease;
   -ms-transition: width 0.5s ease;
   -o-transition: width 0.5s ease;
-  transition: width 0.5s ease;  
+  transition: width 0.5s ease;
+  */  
 }
 
+/*
 nav #menu > li:hover,
 nav #menu > li.active{
    width: 23%;
 }
+*/
 
 nav #menu > li > a {
   font-size: 18px;
@@ -532,7 +536,7 @@ article.proyectos .controles .rango label.allYears{
     font-size: 16px;
     line-height: 16px;
     color: gray;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     padding-top: 4px;
 }
 
@@ -596,7 +600,23 @@ article.proyectos .proyecto span.rango {
   font-family: 'proxima_novasemibold';
 }
 
+@media all and (max-width: 700px){
+    article.inicio ul.servicios {
+        opacity: 0;
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    }
+    article.inicio:hover ul.servicios {
+       opacity: 1;
+       filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    }
+    article.inicio ul.servicios .item{
+        display: block;
+        vertical-align: middle;
+        float: left;
+    }
+}
 
+/*
 @media all and (max-width: 700px) {
   .container nav {
     position: absolute;
@@ -663,3 +683,4 @@ article.proyectos .proyecto span.rango {
     background: #333 !important;
   }
 }
+*/

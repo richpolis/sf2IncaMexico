@@ -14,13 +14,11 @@
         left: 0px;
         background: transparent;
     }
-    
-    
+   
     div.ui-slider-range{
     	background: #7d9432;
     }
-    
-    
+   
     #yearSelect{
     	color: #e64f30;
         width:100px;
@@ -58,7 +56,7 @@
  <article class="proyectos">
    <div class="controles row">
      <div class="rango col-lg-6">
-         <label for="rangoProyectos" class="rangoProyectos">{{"Linea de tiempo"|trans}}:</label> 
+         <label for="rangoProyectos" class="rangoProyectos">{{"Línea de tiempo"|trans}}:</label> 
          <div class="todos-los-years">	
          	<input type="checkbox" value="false" id="allYears" name="allYears"/><label for="allYears" class="allYears">{{"Todos los años"|trans}}</label>
          </div>
@@ -66,7 +64,7 @@
          <input type="text" id="yearSelect" value="{{minimo}}" data-minimo="{{minimo}}" data-maximo="{{maximo}}"/>
      </div>
      <div class="combobox col-lg-6">
-         <label for="categoriaProyectos">{{"Categoria"|trans}}:</label> 
+         <label for="categoriaProyectos">{{"Categoría"|trans}}:</label> 
         <select id="categoriaProyectos" name="categoriaProyectos">
             <option selected value="todos">{{ "Todos"|trans }}</option>
             {% for categoria in categorias %}

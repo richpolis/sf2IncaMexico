@@ -43,7 +43,7 @@ class PublicacionRepository extends EntityRepository
         $em=$this->getEntityManager();
        
         $query=$em->createQuery('
-            SELECT MIN(c.termino) as value 
+            SELECT MAX(c.termino) as value 
             FROM PublicacionesBundle:Publicacion c 
             ORDER BY c.position ASC
         ');
@@ -81,7 +81,7 @@ class PublicacionRepository extends EntityRepository
                JOIN p.categoria c 
                WHERE p.isActive = :publicacion 
                AND g.isActive = :galeria 
-               ORDER BY p.empezo ASC, p.termino DESC, g.position ASC
+               ORDER BY p.termino DESC 
         ')->setParameters(array('publicacion'=> true,'galeria'=>true));
         
         return $query->getResult();
