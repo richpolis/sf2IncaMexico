@@ -24,19 +24,23 @@ Proyectos.Models.Proyecto = Backbone.Model.extend({
 
 Proyectos.Collections.Proyectos = Backbone.Collection.extend({
     model: Proyectos.Models.Proyecto,
-    filtrarResultados: function(){
-        var self = this;
-        this.empezo = $("#yearSelect").val();
-        this.categoria = $("#categoriaProyectos").val();
+    filtrarResultados: function(empezo,categoria){
+        debugger;
+        var empezoApp = empezo;
+        var categoriaApp = categoria;
         this.each(function (proyecto) {
-            var categoria = ( proyecto.get('categoria')==self.categoria || self.categoria == 'todos' );
-            var rango = (proyecto.get('empezo') >= self.empezo);
+            debugger;
+            var categoria = ( proyecto.get('categoria')==categoriaApp || categoriaApp == 'todos' );
+            var rango = (proyecto.get('empezo') >= empezoApp);
             if( rango && categoria){
-                proyecto.set({visible: true});
+                proyecto.set({visible: true });
             }else{
-                proyecto.set({visible: false});
+                proyecto.set({visible: false });
             }
 		});
+    },
+    comparator: function(proyecto){
+        return proyecto.get("empezo");
     }
 });
 
@@ -57,8 +61,8 @@ Proyectos.Views.ItemView = Backbone.View.extend({
     },
     seleccionarProyecto: function(event){
         event.preventDefault();
+        $(".og-close").click();
         this.model.set({seleccionado: true});
-        
     },
     initialize: function() {
         this.model.on("change:seleccionado", this.mostrarExpander, this);
@@ -90,11 +94,10 @@ Proyectos.Views.ItemView = Backbone.View.extend({
         return this;
     },
     mostrar: function(){
-      var self = this;
       if(this.model.get("visible")){
           this.$el.fadeIn("slow");
       }else{
-          this.$el.fadeOut("slow");
+          this.$el.fadeOut("fast");
       }  
     },
     iniciarComponentes: function(){
@@ -125,11 +128,50 @@ Proyectos.Views.ListView = Backbone.View.extend({
     //template: swig.compile($("#app_template").html()),
     events: {
         "change #categoriaProyectos": "seleccionarProyectos",
-        "change #yearSelect": "seleccionarProyectos"
+        "change #yearSelect": "yearSelect",
+        "click #allYears": "allYears",
+    },
+    initialize: function(){
+        this.$rango = $("#yearSelect");
+        this.$categoria = $("#categoriaProyectos");
+        this.$allYears = $("#allYears");
     },
     seleccionarProyectos: function(event){
         event.preventDefault();
-        this.collection.filtrarResultados();
+		this.ocultarViewsItems();
+        this.collection.filtrarResultados(this.$rango.val(),this.$categoria.val());
+    },
+    yearSelect: function(event){
+        event.preventDefault();
+        debugger;
+        if(this.$rango.val()==this.$rango.data('minimo')){
+            this.$allYears.fadeOut("fast");
+        }else{
+            if(!this.$allYears.is(":visible")){
+             	this.$allYears.fadeIn("fast");   
+            }
+        }
+        this.ocultarViewsItems();
+        this.collection.filtrarResultados(this.$rango.val(),this.$categoria.val());
+    },
+    allYears: function(event){
+        //event.preventDefault();
+        debugger;
+        var value =document.getElementById("allYears").checked;
+        var minimo=0;
+        if(value){
+            this.$rango.fadeOut("fast");
+            $("#slider-range").fadeOut("fast");
+            minimo = this.$rango.data("minimo");
+        }else{
+            if(!this.$rango.is(":visible")){
+                this.$rango.fadeIn("fast");
+                $("#slider-range").fadeIn("fast");
+            }
+            minimo = this.$rango.val();
+        }
+        this.ocultarViewsItems();
+        this.collection.filtrarResultados(minimo,this.$categoria.val());        
     },
     AddOne: function(proyecto) {
         var indice = 0;
@@ -148,10 +190,9 @@ Proyectos.Views.ListView = Backbone.View.extend({
         //}    
     },
     render: function() {
-        this.collection.empezo = $("#rangoProyectos").val();
-        this.collection.categoria = $("#categoriaProyectos").val();
         this.renderAll();
         this.iniciarGrid();
+        this.collection.sort();        
         return this;
     },
     renderAll: function(){
@@ -172,7 +213,6 @@ Proyectos.Views.ListView = Backbone.View.extend({
         }
     },
     iniciarGrid: function(){
-      debugger;
       var self = this;
       var $grid = $( '#og-grid' );
 	  var $items = $grid.children( 'li' );  
@@ -182,7 +222,6 @@ Proyectos.Views.ListView = Backbone.View.extend({
 		} );
     },
     saveItemInfo: function( saveheight ) {
-        debugger;
         var $grid = $( '#og-grid' );
 	  	var $items = $grid.children( 'li' );
         $items.each( function() {
@@ -193,13 +232,19 @@ Proyectos.Views.ListView = Backbone.View.extend({
 			}
 		} );
 	},
-    ocultarItems: function(){
-        var $grid = $( '#og-grid' );
-	  	var $items = $grid.children( 'li' );
-        $items.each( function() {
-			var $item = $( this );
-            $item.fadeOut("fast");
-		} );
+    ocultarViewsItems: function() {
+        var indice = 0;
+        if(window.views.proyectos && window.views.proyectos.length){
+            indice = window.views.proyectos.length;
+        }else{
+            indice = 0;
+            window.views.proyectos = [];
+        }
+        for(var cont = (indice-1); cont > 0; cont-- ){
+            if(views.proyectos[cont].model.get("visible")){
+                views.proyectos[cont].model.set({visible: false});        
+            }
+        }
     },
 });
 

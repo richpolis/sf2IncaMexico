@@ -58,9 +58,12 @@
  <article class="proyectos">
    <div class="controles row">
      <div class="rango col-lg-6">
-         <label for="rangoProyectos">{{"Linea de tiempo"|trans}}:</label> 
+         <label for="rangoProyectos" class="rangoProyectos">{{"Linea de tiempo"|trans}}:</label> 
+         <div class="todos-los-years">	
+         	<input type="checkbox" value="false" id="allYears" name="allYears"/><label for="allYears" class="allYears">{{"Todos los años"|trans}}</label>
+         </div>
          <div id="slider-range"></div>
-         <input type="text" id="yearSelect" value="{{minimo}}">
+         <input type="text" id="yearSelect" value="{{minimo}}" data-minimo="{{minimo}}" data-maximo="{{maximo}}"/>
      </div>
      <div class="combobox col-lg-6">
          <label for="categoriaProyectos">{{"Categoria"|trans}}:</label> 
@@ -88,7 +91,7 @@
     </a>   
 </script>
 <script type="text/template" id="item_seleccionado_template">
-	<div class="og-expander" style="transition: height 350ms ease; -webkit-transition: height 350ms ease; height: 500px;">
+	<div class="og-expander" style="transition: height 350ms ease; -webkit-transition: height 350ms ease;">
     	<div class="og-expander-inner">
         	<span class="og-close"></span>
             <div class="og-fullimg galeria">

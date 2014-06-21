@@ -67,7 +67,12 @@ nav {
   left: 0px;
 }
 nav #menu {
-  width: calc(100% - 281px);
+  /*width: -moz-calc(100% - 281px);
+  width: -webkit-calc(100% - 281px);
+  width: -o-calc(100% - 281px);
+  width: calc(100% - 281px);*/
+  width: 100%;
+  padding-left: 301px;  
   float: right;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -75,15 +80,27 @@ nav #menu {
   z-index: -1;
 }
 nav #menu > li {
-  float: left;
+  float: right;
   height: 116px;
-  width: 20%;
+  width: 18%;
+  min-width: 150px;
   list-style: none;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border-left: 1px solid #934977;
+  -webkit-transition: width 0.5s ease;
+  -moz-transition: width 0.5s ease;
+  -ms-transition: width 0.5s ease;
+  -o-transition: width 0.5s ease;
+  transition: width 0.5s ease;  
 }
+
+nav #menu > li:hover,
+nav #menu > li.active{
+   width: 23%;
+}
+
 nav #menu > li > a {
   font-size: 18px;
   font-weight: bold;
@@ -96,11 +113,6 @@ nav #menu > li > a {
   background: url("../images/keyarts/menuback.png") repeat-x;
   display: block;
   width: 100%;
-  -webkit-transition: border-bottom 0.5s ease;
-  -moz-transition: border-bottom 0.5s ease;
-  -ms-transition: border-bottom 0.5s ease;
-  -o-transition: border-bottom 0.5s ease;
-  transition: border-bottom 0.5s ease;
 }
 nav #menu > li:hover > a,
 nav #menu > li.active > a {
@@ -500,7 +512,39 @@ article.proyectos .controles .rango{
     height: 70px;
 }
 
-article.proyectos .controles .rango label {
+article.proyectos .controles .rango .todos-los-years{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 0px 10px;
+}
+
+article.proyectos .controles .rango input[type="checkbox"]{
+    padding: 5px;
+    font-size: 16px;
+    width: 18px;
+    height: 18px;
+    margin-top: 0px;
+    background-color: #7d9432;
+}
+
+article.proyectos .controles .rango label.allYears{
+    font-size: 16px;
+    line-height: 16px;
+    color: gray;
+    text-transform: uppercase;
+    padding-top: 4px;
+}
+
+article.proyectos .controles .rango label.allYears,
+article.proyectos .controles .rango input[type="checkbox"]{
+    display: inline-block;
+    vertical-align: middle;
+    height: 18px;
+}
+
+
+article.proyectos .controles .rango label.rangoProyectos {
   color: #e64f30;
   text-transform: uppercase;
   font-size: 20px;
@@ -509,7 +553,7 @@ article.proyectos .controles .rango label {
   text-align: left;
 }
 article.proyectos .controles .combobox label {
-  color: #1eb98f;
+  color: #79004a;
   text-transform: uppercase;
   font-size: 20px;
   font-family: 'proxima_novasemibold';

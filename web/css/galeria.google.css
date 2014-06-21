@@ -13,7 +13,6 @@
 	vertical-align: top;
 	height: 350px;
     width: 320px;
-    
 }
 
 .og-grid > li.oculto {
@@ -30,19 +29,19 @@
 }
 
 .og-grid > li > a img{
-   -webkit-transition: opacity 0.5s ease;
+    -webkit-transition: opacity 0.5s ease;
     -moz-transition: opacity 0.5s ease;
     -ms-transition: opacity 0.5s ease;
     -o-transition: opacity 0.5s ease;
     transition: opacity 0.5s ease;
-    opacity: 0.8;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+    opacity: 1;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
 
 
 .og-grid > li > a:hover img{
-    opacity: 1;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    opacity: 0.8;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
 }
 
 .og-grid > li.og-expanded{
